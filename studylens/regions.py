@@ -27,6 +27,48 @@ def _first_ink(line: np.ndarray, skip: int) -> int | None:
 
 def enclosing_box(ink: np.ndarray, box: list[float], max_grow: float = 4.0, pad: int = 3,
                   agree_px: int = 6) -> list[float] | None:
+    """Box of the closed shape around the text ``box``, or None (see module docstring).
+
+    Tries rays that start at the text's edges; if the text overflows its shape (long labels in tight
+    boxes), falls back to rays along the rows just above / below the text, starting from its centre.
+    """
+    b = _enclosing_box_edges(ink, box, max_grow, pad, agree_px)
+    return b if b is not None else _enclosing_box_centre(ink, box, max_grow, agree_px)
+
+
+def _enclosing_box_centre(ink: np.ndarray, box: list[float], max_grow: float, agree_px: int) -> list[float] | None:
+    h, w = ink.shape
+    x1, y1, x2, y2 = (int(round(v)) for v in box)
+    tw, th = max(1, x2 - x1), max(1, y2 - y1)
+    cx = (x1 + x2) // 2
+    reach_x, reach_y = int(tw * max_grow + 60), int(th * max_grow + 60)
+    rows = [y for y in (y1 - 4, y1 - 7, y2 + 4, y2 + 7) if 0 <= y < h]
+    if len(rows) < 2:
+        return None
+    left, right = [], []
+    for y in rows:
+        lft = ink[y, max(0, cx - reach_x): cx][::-1]
+        rgt = ink[y, cx: min(w, cx + reach_x)]
+        li, ri = np.flatnonzero(lft), np.flatnonzero(rgt)
+        if not li.size or not ri.size:
+            return None
+        left.append(cx - int(li[0]))
+        right.append(cx + int(ri[0]))
+    if max(left) - min(left) > agree_px or max(right) - min(right) > agree_px:
+        return None
+    bx1, bx2 = float(np.median(left)), float(np.median(right))
+    if bx2 - bx1 < 0.6 * tw:  # hit something narrower than the text: not its enclosing shape
+        return None
+    cols = [int(bx1 + (bx2 - bx1) * f) for f in (0.3, 0.5, 0.7)]
+    up = [_first_ink(ink[max(0, y1 - 3 - reach_y): max(0, y1 - 3), c][::-1], 0) for c in cols]
+    down = [_first_ink(ink[min(h, y2 + 3): min(h, y2 + 3 + reach_y), c], 0) for c in cols]
+    if any(v is None for v in up + down) or max(up) - min(up) > agree_px or max(down) - min(down) > agree_px:
+        return None
+    return [bx1, y1 - 3 - float(np.median(up)), bx2, y2 + 3 + float(np.median(down))]
+
+
+def _enclosing_box_edges(ink: np.ndarray, box: list[float], max_grow: float, pad: int,
+                         agree_px: int) -> list[float] | None:
     """Box of the closed shape around the text ``box`` [x1, y1, x2, y2], or None.
 
     ``max_grow``: the shape may be at most this many times the text size (+ 60 px) on each axis.

@@ -35,6 +35,33 @@ as an architecture diagram:
 > - **linking references to parts**;
 > - option matching, citation checking and the abstention rule. Details: [`docs/model_and_prompts.md`](docs/model_and_prompts.md).
 
+## Screenshots
+
+Captured from the running app with `scripts/make_screenshots.py` (bundled synthetic sample "Web service
+architecture", question *"How does a request from the client reach the database?"*).
+
+**1 · Diagram and scene graph.** OCR parts, regions (boxes found by image analysis), arrows, editable before asking.
+
+![Extraction and scene graph](docs/figures/ui_1_extraction.png)
+
+**2 · Answer with references.** The green box is computed by NetworkX. The explanation's references are linked to
+graph parts and flows, and the live pipeline shows each stage.
+
+![Answer with references](docs/figures/ui_2_answer.png)
+
+| **3 · Click a flow reference: the arrows animate** | **4 · Click a part reference: it is spotlighted** |
+|---|---|
+| ![Flow highlight](docs/figures/ui_3_flow.png) | ![Part spotlight](docs/figures/ui_4_spotlight.png) |
+
+**5 · Compare with plain AI.** E1 (OCR text only), E2 (image only) and E3 (graph query) on the same question,
+each drawn live.
+
+![Comparison pipelines](docs/figures/ui_5_compare.png)
+
+**6 · Evaluation tab.** Results with confidence intervals, paired tests and per-question browsers.
+
+![Evaluation tab](docs/figures/ui_6_evaluation.png)
+
 ## Features (implemented and tested)
 
 | Feature | Status |

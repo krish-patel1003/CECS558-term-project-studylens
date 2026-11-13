@@ -1,5 +1,5 @@
 \documentclass[10pt,letterpaper]{article}
-\usepackage[margin=0.6in]{geometry}
+\usepackage[margin=0.55in]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{microtype}
@@ -11,93 +11,81 @@
 \usepackage{titlesec}
 \usepackage{xurl}
 \usepackage[hidelinks]{hyperref}
-\usepackage{xcolor}
+\usepackage{needspace}
 
 \setlist{nosep,leftmargin=1.1em}
 \titleformat{\section}{\normalsize\bfseries}{\thesection.}{0.4em}{}
-\titlespacing*{\section}{0pt}{5pt}{1pt}
+\titlespacing*{\section}{0pt}{4pt}{1pt}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{2pt}
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
-\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
-\renewcommand{\arraystretch}{1.05}
-\newcommand{\todo}[1]{\colorbox{yellow}{\textbf{#1}}}
+\renewcommand{\arraystretch}{1.0}
 
 \begin{document}
 
 \begin{center}
-{\large\bfseries StudyLens: Graph-Grounded Diagram Q\&A}\\[2pt]
-CECS 458/558 Term Project \textperiodcentered{} Phase 2: Prototype Progress Report\\[1pt]
-\textbf{Krish Patel} \textperiodcentered{} November 2026 \textperiodcentered{}
+{\large\bfseries StudyLens: Understanding Diagrams with Checkable, Highlighted Answers}\\[2pt]
+CECS 458/558 Term Project \textperiodcentered{} Phase 2: Prototype Progress Report \textperiodcentered{} November 2026\\[1pt]
+Team: \textbf{Krish Patel} (sole member, as in Phase~1; all design, implementation, training, evaluation and documentation)\\[1pt]
 Repository: \url{https://github.com/krish-patel1003/CECS558-term-project-studylens}
 \end{center}
 
-\section{Objective and Current Scope}
-StudyLens helps students check AI answers about diagrams. It extracts a diagram's entities and arrows into a graph, answers structural questions from that graph, cites the supporting arrow, and abstains when no arrow supports an answer. \textbf{Phase 2 scope:} the MVP loop (upload $\rightarrow$ extract $\rightarrow$ review/correct graph $\rightarrow$ ask $\rightarrow$ grounded answer with highlighted evidence or abstention) and a pilot E2-vs-E3 evaluation on synthetic diagrams. Stretch features from Phase 1 (quizzes, PDFs, history, LoRA) are out of scope.
+\section{Objective and value}
+Students increasingly ask general AI assistants about textbook figures, slides and system diagrams, but those answers cannot be checked against the figure: Phase~1 showed that vision-language models (VLMs) read labels well but get arrows wrong. \textbf{StudyLens helps a student understand any diagram} (flowcharts, architectures, food webs, life cycles, anatomy) by first building an explicit, editable \emph{scene graph} of the diagram, then answering in plain language where \textbf{every part or flow mentioned is a clickable reference that highlights it on the image}, and structural facts (``what feeds into X'', ``is there a path'') are \textbf{computed by NetworkX}, not guessed. Value over a general assistant: the student sees \emph{where} each claim comes from, can correct a wrong arrow, and gets the same exact answer every time for structural questions.
 
-\section{Completed Features (verified in the repository)}
+\section{What is built (all in the repository, 100 automated tests)}
 \begin{itemize}
-\item \textbf{Web app} (FastAPI + single-page HTML/JS): PNG/JPEG upload (validated, $\le$5\,MB, processed in memory, never stored); diagram with an SVG overlay of extracted boxes and arrows; editable arrow list; Q\&A panel showing evidence arrows in red, or an ``Abstained'' card.
-\item \textbf{AI extraction:} Qwen2.5-VL-3B-Instruct (zero-shot, local, bf16 on Apple M4/MPS) returns JSON entities, boxes and arrows. Our parser repairs the JSON, rescales boxes and drops arrows to unknown entities.
-\item \textbf{Graph QA (not AI):} rule-based question typing + NetworkX for direct inputs/outputs, upstream/downstream, arrow check (reports reversed arrows), path, counts and start/end. It abstains on unknown entities, non-structural questions or empty results.
-\item \textbf{Clearly labelled non-AI fallback} (\texttt{EXTRACTOR\_BACKEND=annotation}) returns gold graphs for bundled samples, so graders can run the UI without the 7.5\,GB model.
-\item \textbf{Baseline E2} in the UI (``ask the VLM directly'') and an \textbf{evaluation harness} (E2/E3/E3*, extraction P/R/F1). \textbf{34 passing tests}; docs for setup, architecture, code, prompts and licences.
+\item \textbf{Upload and extraction} (FastAPI + single-page UI): any common image format ($\le$10\,MB, processed in memory, never stored); an \emph{Extract} button with a progress bar driven by real server events.
+\item \textbf{Diagram Scene Graph}, OCR-anchored so the model never writes coordinates: PaddleOCR text and boxes; deterministic grouping of text into parts; \textbf{enclosing-shape regions} by image analysis; arrows listed by Qwen2.5-VL-3B \emph{by part name}; one batch grounding call for parts outside shapes (anatomy-style labels). The graph is editable before asking.
+\item \textbf{Answers with references}: graph query (keyword rules, else Qwen used only as a parser) $\rightarrow$ NetworkX facts; Qwen writes the explanation; mentions are \textbf{linked to graph parts deterministically}; consecutive mentions joined by arrows become \emph{flow} references. Clicking a reference spotlights the part; a flow is animated arrow by arrow.
+\item \textbf{Compare with plain AI}: E1 (PaddleOCR text $\rightarrow$ Qwen), E2 (image $\rightarrow$ Qwen), E3 (graph query, model fallback with checked arrow citations, abstention), each drawn live as an architecture diagram.
+\item \textbf{Training and evaluation}: AI2D loader with gold graphs and gold part locations; LoRA fine-tuning of extraction; a 304-question synthetic pilot; AI2D evaluation scripts; a Colab notebook for full runs; an Evaluation tab in the app.
 \end{itemize}
 
-\section{System Architecture}
+\section{Architecture}
 \begin{center}
-\includegraphics[width=0.93\textwidth]{../../docs/figures/architecture.png}
+\includegraphics[width=0.66\textwidth]{../../docs/figures/architecture.png}\hfill
+\includegraphics[width=0.32\textwidth]{../../docs/figures/ui_4_spotlight.png}\\[-1pt]
+{\small\textbf{Figure 1.} Left: data flow (green = learned model, blue = deterministic code). Right: clicking reference ``Database'' in an answer spotlights it.}
 \end{center}
-\vspace{-4pt}
-The server is stateless: the graph lives in the browser and is sent back with each question, so student corrections are used immediately.
 
-\section{Data and Model/Algorithm}
-\textbf{Data:} 10 synthetic diagrams generated by our seeded script (flowchart, food chain, a \emph{counterfactual} food chain with all arrows reversed, water cycle, web architecture, photosynthesis, and 3 graphs with nonsense labels) with exact gold graphs and 79 templated questions (direct inputs/outputs, arrow checks incl. reversed, paths, and 19 questions whose correct response is to abstain). No third-party data was used in Phase 2; AI2D integration is deferred.
-\textbf{Model:} Qwen2.5-VL-3B-Instruct (Qwen Research License: \emph{non-commercial only}; weights not redistributed), one extraction prompt, greedy decoding. \textbf{Algorithm:} deterministic NetworkX queries over the extracted graph. The model does not write E3 answers.
+\section{Data and models}
+\textbf{AI2D} (4,903 real science diagrams, human-written questions): training uses the official train split only; evaluation the test split. Its licence is the \emph{AI2 non-commercial licence} (no redistribution), correcting Phase~1's ``CC BY-SA''; the data, raw outputs and adapter stay out of the repository. \textbf{Synthetic pilot} (ours, committed): 27 diagrams, 304 questions with exact answers, varied wording, 12 knowledge-free graphs (nonsense labels) and 4 \emph{counterfactual} diagrams with reversed arrows. \textbf{Models:} Qwen2.5-VL-3B-Instruct (Qwen Research Licence, non-commercial); PaddleOCR PP-OCRv5 (Apache-2.0); \textbf{LoRA} (rank 16, attention projections, 800 AI2D training examples at 448\,px, bf16 on an Apple M4): validation loss 0.593 $\rightarrow$ 0.540.
 
-\section{Preliminary Results (pilot, n = 79 questions, 10 diagrams; actual run)}
-Method: identical 79 questions for each condition; E2 = Qwen2.5-VL-3B answers from the image; E3 = Qwen extracts the graph, deterministic QA answers; E3* = gold graph + same QA. One run on an Apple M4 (MPS). Raw outputs and scoring rules in \texttt{results/} and \texttt{docs/evaluation.md}.
-
-{\small
-\begin{tabularx}{\textwidth}{@{}Lrrrr@{}}
+\needspace{14\baselineskip}
+\section{Results}
+\textbf{Synthetic pilot} (304 questions, single run, Apple M4; 95\% bootstrap CIs; exact McNemar tests vs E2):\\[2pt]
+{\small\begin{tabularx}{\textwidth}{@{}lLccc@{}}
 \toprule
-\textbf{Question kind (n)} & \textbf{E2 direct VLM} & \textbf{E3 VLM graph + QA} & \textbf{E3* gold graph} \\
+& Condition & All (304) & Structural (254) & vs E2, structural \\
 \midrule
-Direct inputs / outputs (30) & 20 (67\%) & 17 (57\%) & 30 \\
-Arrow drawn A$\rightarrow$B: ``Does A point to B?'' (10) & 9 (90\%) & 7 (70\%) & 10 \\
-Reversed: ``Does B point to A?'' (10) & \textbf{1 (10\%)} & \textbf{8 (80\%)} & 10 \\
-Path exists? (10) & 7 (70\%) & 6 (60\%) & 10 \\
-Should abstain (19) & 12 (63\%) & 16 (84\%) & 19 \\
-\midrule
-\textbf{All (79)} & \textbf{49 (62\%)} & \textbf{54 (68\%)} & \textbf{79 (100\%)} \\
+E1 & OCR text $\rightarrow$ Qwen (no image) & 31.6\% [26.6, 36.8] & 18.1\% & worse, $p<$0.001 \\
+E2 & image $\rightarrow$ Qwen (plain VLM) & 49.7\% [44.1, 55.3] & 45.3\% & -- \\
+E3-vlm & image + graph, the model decides & 37.2\% [31.9, 42.8] & 42.9\% & n.s., $p$=0.52 (all questions: worse) \\
+E3-zs & graph query, zero-shot graph & \textbf{56.6\%} [51.0, 61.8] & \textbf{60.6\%} & better, $p<$0.001 \\
+E3-ft & graph query, fine-tuned graph & \textbf{53.9\%} [48.4, 59.5] & \textbf{57.9\%} & better, $p$=0.0005 \\
+E3* & graph query, gold graph (upper bound) & 91.8\% [88.8, 94.7] & 100\% & better \\
 \bottomrule
-\end{tabularx}}
+\end{tabularx}}\\[2pt]
+\textbf{Findings.} (1)~Structure helps when \emph{code} answers from it: E3 beats the plain VLM on structural questions (also on knowledge-free graphs: 48\% vs 33\%, $p$=0.002), while handing the graph to the model (E3-vlm) does not help. (2)~Extraction is the bottleneck: arrow F1 is 0.61 (zero-shot) and 0.56 (fine-tuned) vs 100\% with the gold graph. (3)~On reversed-arrow diagrams the extractor ``corrects'' arrows to textbook direction (E3 19--25\% vs E3* 100\%): the failure the proposal predicted shows up at extraction, and editing the graph fixes it. (4)~The LoRA adapter lowered loss but did not improve extraction on these out-of-domain diagrams ($p$=0.41 vs zero-shot). (5)~E3 abstains poorly on non-arrow questions (the 3B parser misread ``How large is X?'' as an arrow count). The keyword rules were debugged on pilot questions, so E3 numbers are optimistic.
 
-\textbf{Extraction:} entity F1 1.00, directed-edge F1 0.68 (P 0.70, R 0.67); 5/10 diagrams perfect; 8 reversed edges, 5 on the counterfactual diagram, where Qwen output the biologically ``expected'' arrows instead of the drawn ones. Mean latency 86\,s per extraction, 16\,s per direct answer.
-\textbf{Interpretation:} E3 vs E2 is \emph{not} significant at this size (21 discordant questions, 13 vs 8; exact sign test $p=0.38$). Observed: E2 answers ``Yes'' to 9/10 reversed-arrow questions; E3 cites the opposite arrow. All E3 errors come from extraction (E3* = 100\% on templated questions the rules were built for). \textbf{Demo:} a new JPEG (thermostat loop) was extracted fully correctly; ``What feeds into Sensor?'' abstained; in the UI, deleting the wrong Grass$\rightarrow$Rabbit edge and adding Rabbit$\rightarrow$Grass fixed the answer (Fig.~2).
+\textbf{Measured design decisions.} Zero-shot boxes from one JSON call: box centre on the right part only 11\% (the model invents a layout) $\rightarrow$ boxes now come from OCR and shape analysis: \textbf{148/149} pilot labels located exactly (IoU $\ge$ 0.7). Leader-line tracing reached only 35.6\% on 10,857 AI2D training lines (not used); batch grounding located 18/32 AI2D part labels. Arrows requested by part id were chained in list order; by name, arrow F1 0.67--0.91. Asked to write reference ids itself, the model wrote none $\rightarrow$ references are linked deterministically.
+
+\textbf{In progress: AI2D grounded-explanation evaluation} (50 test diagrams, 433 annotated part locations, 65 multiple-choice questions; script \texttt{evaluate\_grounding.py}): does a highlighted reference land on the annotated part (leader-line tip or labelled object) for StudyLens vs the same VLM asked to explain and draw its own boxes (its native grounding), plus E2 vs E3 accuracy. Results will be reported in \texttt{docs/evaluation.md}; full runs are prepared for Colab.
 
 \begin{center}
-\includegraphics[width=0.49\textwidth]{../../docs/figures/ui_counterfactual_extraction_error.jpg}\hfill
-\includegraphics[width=0.49\textwidth]{../../docs/figures/ui_after_user_correction.jpg}\\[-1pt]
-{\small\textbf{Figure 2.} Actual prototype screenshots (qwen backend). Left: Qwen extracted Grass$\rightarrow$Rabbit although the drawn arrow points Rabbit$\rightarrow$Grass; the cited evidence edge (red) visibly contradicts the image. Right: after the user corrects the edge, the graph-grounded answer is ``Yes'' with evidence Rabbit$\rightarrow$Grass.}
+\includegraphics[height=1.95in]{../../docs/figures/ui_2_answer.png}\hspace{0.15in}
+\includegraphics[height=1.95in]{../../docs/figures/ui_3_flow.png}\\[-1pt]
+{\small\textbf{Figure 2.} Left: answer to ``How does a request from the client reach the database?'' (green: computed by NetworkX; numbered chips: references linked to the graph; live pipeline). Right: clicking a flow reference animates its arrows.}
 \end{center}
 
-\section{Known Limitations}
-\begin{itemize}
-\item Graph QA is only as good as the extracted graph: wrong edges give confident, wrong but \emph{inspectable} answers (20 of 25 E3 errors). Edge direction on unfamiliar or counterfactual diagrams is the main weakness.
-\item Rule-based question parser: supports listed structural intents only; not tested on free-form paraphrases. Approximate VLM boxes; no confidence scores; $\sim$1.5\,min per diagram on a laptop.
-\item Evaluation is a small synthetic pilot (one run, string-matched E2 scoring checked by hand); no AI2D, OCR (E1) or ablations yet. Qwen2.5-VL-3B is licensed for non-commercial research only.
-\end{itemize}
+\section{Changes from Phase 1}
+Plain HTML/JS front end instead of Next.js; AI2D's official split instead of a seeded 70/10/20 split; our own 304-question pilot instead of the Hou et al.\ suite (no licence); PaddleOCR used for the scene graph and E1. Stretch goals done: LoRA fine-tuning and graph correction (not yet: quizzes, PDFs, history). Emphasis moved from answering arrow questions to explaining whole diagrams with highlighted references, keeping deterministic graph queries for structural facts.
 
-\section{Remaining Tasks (Phase 3)}
-\begin{itemize}
-\item Scale evaluation: AI2D subset (licence to confirm), Hou et al.\ diagrams, a larger counterfactual set, paraphrased/free-form questions, and paired bootstrap CIs for E2 vs E3.
-\item Improve extraction direction accuracy: arrowhead-focused prompting, two-pass extraction, OCR (PaddleOCR) for labels, and ablations (no OCR / no coordinates); optional LoRA (E4).
-\item Flag low-confidence or contradictory edges for user review; an LLM fallback for question parsing that still answers only through graph queries.
-\item Demo video, failure analysis, final report.
-\end{itemize}
+\section{Limitations}
+Answers are only as good as the extracted graph (e.g.\ 10 of 29 arrows found on a dense 40-box architecture). Explanation sentences come from a 3B model and can state things the diagram does not show; references and computed facts are reliable, and the UI says so. Laptop speed: 45\,s--7.5\,min per scene graph, 50--140\,s per explanation. The adapter (older output format) is not used by the scene graph. English only; academic prototype, non-commercial (model and data licences).
 
-\section{Team Responsibilities}
-\textbf{Krish Patel} (sole team member, as in Phase 1): all current work, including extraction, graph QA, web app, synthetic data, evaluation, documentation and reports. \todo{Confirm, or add members and their roles.}
+\section{Next steps (final submission, Dec 17)}
+Guided walkthrough and quiz generator built from the scene graph; retrain the extractor on scene-graph targets plus direction-randomised synthetic diagrams; hide labels before extracting arrows and verify each arrow; check explanation claims against the graph; full AI2D runs on Colab and FlowVQA for flowcharts; a small blind human rating of explanations; demo video and final report.
 
 \end{document}
