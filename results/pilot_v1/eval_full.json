@@ -1,0 +1,3593 @@
+{
+ "summary": {
+  "n_diagrams": 10,
+  "n_questions": 79,
+  "conditions": [
+   "E2",
+   "E3",
+   "E3*"
+  ],
+  "accuracy": {
+   "predecessors": {
+    "E2": {
+     "correct": 14,
+     "n": 20
+    },
+    "E3": {
+     "correct": 12,
+     "n": 20
+    },
+    "E3*": {
+     "correct": 20,
+     "n": 20
+    }
+   },
+   "ALL": {
+    "E2": {
+     "correct": 49,
+     "n": 79
+    },
+    "E3": {
+     "correct": 54,
+     "n": 79
+    },
+    "E3*": {
+     "correct": 79,
+     "n": 79
+    }
+   },
+   "successors": {
+    "E2": {
+     "correct": 6,
+     "n": 10
+    },
+    "E3": {
+     "correct": 5,
+     "n": 10
+    },
+    "E3*": {
+     "correct": 10,
+     "n": 10
+    }
+   },
+   "edge_true": {
+    "E2": {
+     "correct": 9,
+     "n": 10
+    },
+    "E3": {
+     "correct": 7,
+     "n": 10
+    },
+    "E3*": {
+     "correct": 10,
+     "n": 10
+    }
+   },
+   "edge_reversed": {
+    "E2": {
+     "correct": 1,
+     "n": 10
+    },
+    "E3": {
+     "correct": 8,
+     "n": 10
+    },
+    "E3*": {
+     "correct": 10,
+     "n": 10
+    }
+   },
+   "path": {
+    "E2": {
+     "correct": 7,
+     "n": 10
+    },
+    "E3": {
+     "correct": 6,
+     "n": 10
+    },
+    "E3*": {
+     "correct": 10,
+     "n": 10
+    }
+   },
+   "unsupported_no_edge": {
+    "E2": {
+     "correct": 4,
+     "n": 9
+    },
+    "E3": {
+     "correct": 6,
+     "n": 9
+    },
+    "E3*": {
+     "correct": 9,
+     "n": 9
+    }
+   },
+   "unsupported_non_structural": {
+    "E2": {
+     "correct": 8,
+     "n": 10
+    },
+    "E3": {
+     "correct": 10,
+     "n": 10
+    },
+    "E3*": {
+     "correct": 10,
+     "n": 10
+    }
+   }
+  },
+  "wall_time_s": 2169.1,
+  "extraction_micro": {
+   "entities": {
+    "tp": 55,
+    "pred": 55,
+    "gold": 55,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "edges": {
+    "tp": 32,
+    "pred": 46,
+    "gold": 48,
+    "precision": 0.696,
+    "recall": 0.667,
+    "f1": 0.681
+   }
+  },
+  "reversed_edges_total": 8,
+  "mean_extraction_latency_s": 86.4,
+  "mean_direct_answer_latency_s": 16.2
+ },
+ "extraction": [
+  {
+   "file": "diagram_01.png",
+   "title": "Abstract chain",
+   "latency_s": 66.46,
+   "entities": {
+    "tp": 4,
+    "pred": 4,
+    "gold": 4,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "edges": {
+    "tp": 3,
+    "pred": 3,
+    "gold": 3,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "reversed_edges": [],
+   "missing_edges": [],
+   "extra_edges": [],
+   "raw_output": "```json\n{\n  \"entities\": [\n    {\n      \"label\": \"A\",\n      \"bbox_2d\": [18, 294, 170, 325]\n    },\n    {\n      \"label\": \"B\",\n      \"bbox_2d\": [186, 294, 358, 325]\n    },\n    {\n      \"label\": \"C\",\n      \"bbox_2d\": [414, 294, 586, 325]\n    },\n    {\n      \"label\": \"D\",\n      \"bbox_2d\": [642, 294, 814, 325]\n    }\n  ],\n  \"arrows\": [\n    {\n      \"from\": \"A\",\n      \"to\": \"B\"\n    },\n    {\n      \"from\": \"B\",\n      \"to\": \"C\"\n    },\n    {\n      \"from\": \"C\",\n      \"to\": \"D\"\n    }\n  ]\n}\n```",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "A",
+      "bbox": [
+       18.080357142857142,
+       300.0,
+       170.75892857142858,
+       331.6326530612245
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n2",
+      "label": "B",
+      "bbox": [
+       186.83035714285714,
+       300.0,
+       359.5982142857143,
+       331.6326530612245
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n3",
+      "label": "C",
+      "bbox": [
+       415.8482142857143,
+       300.0,
+       588.6160714285714,
+       331.6326530612245
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n4",
+      "label": "D",
+      "bbox": [
+       644.8660714285714,
+       300.0,
+       817.6339285714286,
+       331.6326530612245
+      ],
+      "confidence": null
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n3",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": null
+     }
+    ],
+    "source": "qwen2.5-vl-3b",
+    "image_size": [
+     900,
+     600
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "title": "Data-processing flowchart",
+   "latency_s": 75.99,
+   "entities": {
+    "tp": 6,
+    "pred": 6,
+    "gold": 6,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "edges": {
+    "tp": 5,
+    "pred": 5,
+    "gold": 5,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "reversed_edges": [],
+   "missing_edges": [],
+   "extra_edges": [],
+   "raw_output": "```json\n{\n  \"entities\": [\n    {\n      \"label\": \"Input\",\n      \"bbox_2d\": [10, 184, 135, 297]\n    },\n    {\n      \"label\": \"Parse\",\n      \"bbox_2d\": [146, 184, 289, 297]\n    },\n    {\n      \"label\": \"Validate\",\n      \"bbox_2d\": [300, 184, 443, 297]\n    },\n    {\n      \"label\": \"Reject\",\n      \"bbox_2d\": [454, 184, 607, 297]\n    },\n    {\n      \"label\": \"Store\",\n      \"bbox_2d\": [618, 184, 761, 297]\n    },\n    {\n      \"label\": \"Report\",\n      \"bbox_2d\": [772, 184, 915, 297]\n    }\n  ],\n  \"arrows\": [\n    {\n      \"from\": \"Input\",\n      \"to\": \"Parse\"\n    },\n    {\n      \"from\": \"Parse\",\n      \"to\": \"Validate\"\n    },\n    {\n      \"from\": \"Validate\",\n      \"to\": \"Store\"\n    },\n    {\n      \"from\": \"Validate\",\n      \"to\": \"Reject\"\n    },\n    {\n      \"from\": \"Store\",\n      \"to\": \"Report\"\n    }\n  ]\n}\n```",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Input",
+      "bbox": [
+       10.044642857142858,
+       187.75510204081633,
+       135.60267857142858,
+       303.0612244897959
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n2",
+      "label": "Parse",
+      "bbox": [
+       146.65178571428572,
+       187.75510204081633,
+       290.29017857142856,
+       303.0612244897959
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n3",
+      "label": "Validate",
+      "bbox": [
+       301.3392857142857,
+       187.75510204081633,
+       444.9776785714286,
+       303.0612244897959
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n4",
+      "label": "Reject",
+      "bbox": [
+       456.0267857142857,
+       187.75510204081633,
+       609.7098214285714,
+       303.0612244897959
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n5",
+      "label": "Store",
+      "bbox": [
+       620.7589285714286,
+       187.75510204081633,
+       764.3973214285714,
+       303.0612244897959
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n6",
+      "label": "Report",
+      "bbox": [
+       775.4464285714286,
+       187.75510204081633,
+       919.0848214285714,
+       303.0612244897959
+      ],
+      "confidence": null
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n3",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n3",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n5",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": null
+     }
+    ],
+    "source": "qwen2.5-vl-3b",
+    "image_size": [
+     900,
+     600
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "title": "Food chain (energy flow)",
+   "latency_s": 79.02,
+   "entities": {
+    "tp": 6,
+    "pred": 6,
+    "gold": 6,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "edges": {
+    "tp": 5,
+    "pred": 5,
+    "gold": 5,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "reversed_edges": [],
+   "missing_edges": [],
+   "extra_edges": [],
+   "raw_output": "```json\n{\n  \"entities\": [\n    {\n      \"label\": \"Sun\",\n      \"bbox_2d\": [10, 164, 135, 289]\n    },\n    {\n      \"label\": \"Grass\",\n      \"bbox_2d\": [170, 164, 343, 289]\n    },\n    {\n      \"label\": \"Rabbit\",\n      \"bbox_2d\": [388, 164, 561, 289]\n    },\n    {\n      \"label\": \"Fox\",\n      \"bbox_2d\": [606, 164, 779, 289]\n    },\n    {\n      \"label\": \"Deer\",\n      \"bbox_2d\": [388, 308, 561, 432]\n    },\n    {\n      \"label\": \"Wolf\",\n      \"bbox_2d\": [606, 308, 779, 432]\n    }\n  ],\n  \"arrows\": [\n    {\n      \"from\": \"Sun\",\n      \"to\": \"Grass\"\n    },\n    {\n      \"from\": \"Grass\",\n      \"to\": \"Rabbit\"\n    },\n    {\n      \"from\": \"Grass\",\n      \"to\": \"Deer\"\n    },\n    {\n      \"from\": \"Rabbit\",\n      \"to\": \"Fox\"\n    },\n    {\n      \"from\": \"Deer\",\n      \"to\": \"Wolf\"\n    }\n  ]\n}\n```",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Sun",
+      "bbox": [
+       10.044642857142858,
+       167.3469387755102,
+       135.60267857142858,
+       294.8979591836735
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n2",
+      "label": "Grass",
+      "bbox": [
+       170.75892857142858,
+       167.3469387755102,
+       344.53125,
+       294.8979591836735
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n3",
+      "label": "Rabbit",
+      "bbox": [
+       389.7321428571429,
+       167.3469387755102,
+       563.5044642857143,
+       294.8979591836735
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n4",
+      "label": "Fox",
+      "bbox": [
+       608.7053571428571,
+       167.3469387755102,
+       782.4776785714286,
+       294.8979591836735
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n5",
+      "label": "Deer",
+      "bbox": [
+       389.7321428571429,
+       314.2857142857143,
+       563.5044642857143,
+       440.81632653061223
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n6",
+      "label": "Wolf",
+      "bbox": [
+       608.7053571428571,
+       314.2857142857143,
+       782.4776785714286,
+       440.81632653061223
+      ],
+      "confidence": null
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n2",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n3",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n5",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": null
+     }
+    ],
+    "source": "qwen2.5-vl-3b",
+    "image_size": [
+     900,
+     600
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "title": "Counterfactual food chain (arrows reversed)",
+   "latency_s": 76.87,
+   "entities": {
+    "tp": 6,
+    "pred": 6,
+    "gold": 6,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "edges": {
+    "tp": 0,
+    "pred": 5,
+    "gold": 5,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "reversed_edges": [
+    "deer->wolf",
+    "grass->deer",
+    "grass->rabbit",
+    "rabbit->fox",
+    "sun->grass"
+   ],
+   "missing_edges": [
+    "deer->grass",
+    "fox->rabbit",
+    "grass->sun",
+    "rabbit->grass",
+    "wolf->deer"
+   ],
+   "extra_edges": [
+    "deer->wolf",
+    "grass->deer",
+    "grass->rabbit",
+    "rabbit->fox",
+    "sun->grass"
+   ],
+   "raw_output": "```json\n{\n  \"entities\": [\n    {\n      \"label\": \"Sun\",\n      \"bbox_2d\": [30, 285, 146, 379]\n    },\n    {\n      \"label\": \"Grass\",\n      \"bbox_2d\": [146, 285, 342, 379]\n    },\n    {\n      \"label\": \"Rabbit\",\n      \"bbox_2d\": [342, 136, 497, 230]\n    },\n    {\n      \"label\": \"Fox\",\n      \"bbox_2d\": [497, 136, 650, 230]\n    },\n    {\n      \"label\": \"Deer\",\n      \"bbox_2d\": [342, 379, 497, 473]\n    },\n    {\n      \"label\": \"Wolf\",\n      \"bbox_2d\": [497, 379, 650, 473]\n    }\n  ],\n  \"arrows\": [\n    {\n      \"from\": \"Sun\",\n      \"to\": \"Grass\"\n    },\n    {\n      \"from\": \"Grass\",\n      \"to\": \"Rabbit\"\n    },\n    {\n      \"from\": \"Grass\",\n      \"to\": \"Deer\"\n    },\n    {\n      \"from\": \"Rabbit\",\n      \"to\": \"Fox\"\n    },\n    {\n      \"from\": \"Deer\",\n      \"to\": \"Wolf\"\n    }\n  ]\n}\n```",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Sun",
+      "bbox": [
+       30.133928571428573,
+       290.81632653061223,
+       146.65178571428572,
+       386.734693877551
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n2",
+      "label": "Grass",
+      "bbox": [
+       146.65178571428572,
+       290.81632653061223,
+       343.5267857142857,
+       386.734693877551
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n3",
+      "label": "Rabbit",
+      "bbox": [
+       343.5267857142857,
+       138.77551020408163,
+       499.21875,
+       234.69387755102042
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n4",
+      "label": "Fox",
+      "bbox": [
+       499.21875,
+       138.77551020408163,
+       652.9017857142858,
+       234.69387755102042
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n5",
+      "label": "Deer",
+      "bbox": [
+       343.5267857142857,
+       386.734693877551,
+       499.21875,
+       482.6530612244898
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n6",
+      "label": "Wolf",
+      "bbox": [
+       499.21875,
+       386.734693877551,
+       652.9017857142858,
+       482.6530612244898
+      ],
+      "confidence": null
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n2",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n3",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n5",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": null
+     }
+    ],
+    "source": "qwen2.5-vl-3b",
+    "image_size": [
+     900,
+     600
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "file": "diagram_05.png",
+   "title": "Water cycle",
+   "latency_s": 50.4,
+   "entities": {
+    "tp": 4,
+    "pred": 4,
+    "gold": 4,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "edges": {
+    "tp": 2,
+    "pred": 3,
+    "gold": 4,
+    "precision": 0.6666666666666666,
+    "recall": 0.5,
+    "f1": 0.5714285714285715
+   },
+   "reversed_edges": [
+    "evaporation->collection"
+   ],
+   "missing_edges": [
+    "collection->evaporation",
+    "precipitation->collection"
+   ],
+   "extra_edges": [
+    "evaporation->collection"
+   ],
+   "raw_output": "```json\n{\n  \"entities\": [\n    {\n      \"label\": \"Evaporation\",\n      \"bbox_2d\": [130, 78, 456, 209]\n    },\n    {\n      \"label\": \"Collection\",\n      \"bbox_2d\": [130, 270, 456, 399]\n    },\n    {\n      \"label\": \"Condensation\",\n      \"bbox_2d\": [497, 78, 823, 209]\n    },\n    {\n      \"label\": \"Precipitation\",\n      \"bbox_2d\": [497, 270, 823, 399]\n    }\n  ],\n  \"arrows\": [\n    {\n      \"from\": \"Evaporation\",\n      \"to\": \"Condensation\"\n    },\n    {\n      \"from\": \"Evaporation\",\n      \"to\": \"Collection\"\n    },\n    {\n      \"from\": \"Condensation\",\n      \"to\": \"Precipitation\"\n    }\n  ]\n}\n```",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Evaporation",
+      "bbox": [
+       130.58035714285714,
+       79.59183673469389,
+       458.0357142857143,
+       213.26530612244898
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n2",
+      "label": "Collection",
+      "bbox": [
+       130.58035714285714,
+       275.51020408163265,
+       458.0357142857143,
+       407.14285714285717
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n3",
+      "label": "Condensation",
+      "bbox": [
+       499.21875,
+       79.59183673469389,
+       826.6741071428571,
+       213.26530612244898
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n4",
+      "label": "Precipitation",
+      "bbox": [
+       499.21875,
+       275.51020408163265,
+       826.6741071428571,
+       407.14285714285717
+      ],
+      "confidence": null
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n3",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": null
+     }
+    ],
+    "source": "qwen2.5-vl-3b",
+    "image_size": [
+     900,
+     600
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "title": "Web service architecture",
+   "latency_s": 68.96,
+   "entities": {
+    "tp": 5,
+    "pred": 5,
+    "gold": 5,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "edges": {
+    "tp": 5,
+    "pred": 5,
+    "gold": 5,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "reversed_edges": [],
+   "missing_edges": [],
+   "extra_edges": [],
+   "raw_output": "```json\n{\n  \"entities\": [\n    {\n      \"label\": \"Client\",\n      \"bbox_2d\": [0, 184, 135, 276]\n    },\n    {\n      \"label\": \"Load Balancer\",\n      \"bbox_2d\": [139, 184, 366, 276]\n    },\n    {\n      \"label\": \"Server 1\",\n      \"bbox_2d\": [370, 100, 597, 200]\n    },\n    {\n      \"label\": \"Database\",\n      \"bbox_2d\": [599, 100, 826, 200]\n    },\n    {\n      \"label\": \"Server 2\",\n      \"bbox_2d\": [370, 298, 597, 398]\n    }\n  ],\n  \"arrows\": [\n    {\n      \"from\": \"Client\",\n      \"to\": \"Load Balancer\"\n    },\n    {\n      \"from\": \"Load Balancer\",\n      \"to\": \"Server 1\"\n    },\n    {\n      \"from\": \"Load Balancer\",\n      \"to\": \"Server 2\"\n    },\n    {\n      \"from\": \"Server 1\",\n      \"to\": \"Database\"\n    },\n    {\n      \"from\": \"Server 2\",\n      \"to\": \"Database\"\n    }\n  ]\n}\n```",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Client",
+      "bbox": [
+       0.0,
+       187.75510204081633,
+       135.60267857142858,
+       281.6326530612245
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n2",
+      "label": "Load Balancer",
+      "bbox": [
+       139.62053571428572,
+       187.75510204081633,
+       367.63392857142856,
+       281.6326530612245
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n3",
+      "label": "Server 1",
+      "bbox": [
+       371.6517857142857,
+       102.04081632653062,
+       599.6651785714286,
+       204.08163265306123
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n4",
+      "label": "Database",
+      "bbox": [
+       601.6741071428571,
+       102.04081632653062,
+       829.6875,
+       204.08163265306123
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n5",
+      "label": "Server 2",
+      "bbox": [
+       371.6517857142857,
+       304.0816326530612,
+       599.6651785714286,
+       406.12244897959187
+      ],
+      "confidence": null
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n2",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n3",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n5",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": null
+     }
+    ],
+    "source": "qwen2.5-vl-3b",
+    "image_size": [
+     900,
+     600
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "title": "Photosynthesis inputs and outputs",
+   "latency_s": 128.9,
+   "entities": {
+    "tp": 6,
+    "pred": 6,
+    "gold": 6,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "edges": {
+    "tp": 5,
+    "pred": 5,
+    "gold": 5,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "reversed_edges": [],
+   "missing_edges": [],
+   "extra_edges": [],
+   "raw_output": "```json\n{\n  \"entities\": [\n    {\n      \"label\": \"Light\",\n      \"bbox_2d\": [30, 85, 147, 169]\n    },\n    {\n      \"label\": \"Water\",\n      \"bbox_2d\": [30, 200, 147, 284]\n    },\n    {\n      \"label\": \"CO2\",\n      \"bbox_2d\": [30, 300, 147, 384]\n    },\n    {\n      \"label\": \"Chloroplast\",\n      \"bbox_2d\": [165, 100, 392, 272]\n    },\n    {\n      \"label\": \"Glucose\",\n      \"bbox_2d\": [360, 150, 517, 233]\n    },\n    {\n      \"label\": \"Oxygen\",\n      \"bbox_2d\": [360, 250, 517, 333]\n    }\n  ],\n  \"arrows\": [\n    {\n      \"from\": \"Light\",\n      \"to\": \"Chloroplast\"\n    },\n    {\n      \"from\": \"Water\",\n      \"to\": \"Chloroplast\"\n    },\n    {\n      \"from\": \"CO2\",\n      \"to\": \"Chloroplast\"\n    },\n    {\n      \"from\": \"Chloroplast\",\n      \"to\": \"Glucose\"\n    },\n    {\n      \"from\": \"Chloroplast\",\n      \"to\": \"Oxygen\"\n    }\n  ]\n}\n```",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Light",
+      "bbox": [
+       30.133928571428573,
+       86.73469387755102,
+       147.65625,
+       172.44897959183675
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n2",
+      "label": "Water",
+      "bbox": [
+       30.133928571428573,
+       204.08163265306123,
+       147.65625,
+       289.7959183673469
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n3",
+      "label": "CO2",
+      "bbox": [
+       30.133928571428573,
+       306.12244897959187,
+       147.65625,
+       391.83673469387753
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n4",
+      "label": "Chloroplast",
+      "bbox": [
+       165.73660714285714,
+       102.04081632653062,
+       393.75,
+       277.55102040816325
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n5",
+      "label": "Glucose",
+      "bbox": [
+       361.6071428571429,
+       153.06122448979593,
+       519.3080357142858,
+       237.75510204081633
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n6",
+      "label": "Oxygen",
+      "bbox": [
+       361.6071428571429,
+       255.10204081632654,
+       519.3080357142858,
+       339.7959183673469
+      ],
+      "confidence": null
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n2",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n3",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n4",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n4",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": null
+     }
+    ],
+    "source": "qwen2.5-vl-3b",
+    "image_size": [
+     900,
+     600
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "title": "Nonsense-label graph 1",
+   "latency_s": 109.52,
+   "entities": {
+    "tp": 6,
+    "pred": 6,
+    "gold": 6,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "edges": {
+    "tp": 3,
+    "pred": 5,
+    "gold": 6,
+    "precision": 0.6,
+    "recall": 0.5,
+    "f1": 0.5454545454545454
+   },
+   "reversed_edges": [
+    "krell->yoma"
+   ],
+   "missing_edges": [
+    "krell->zorp",
+    "yoma->krell",
+    "yoma->vint"
+   ],
+   "extra_edges": [
+    "krell->vint",
+    "krell->yoma"
+   ],
+   "raw_output": "```json\n{\n  \"entities\": [\n    {\n      \"label\": \"Blick\",\n      \"bbox_2d\": [35, 78, 160, 149]\n    },\n    {\n      \"label\": \"Krell\",\n      \"bbox_2d\": [160, 78, 385, 149]\n    },\n    {\n      \"label\": \"Silk\",\n      \"bbox_2d\": [385, 78, 510, 149]\n    },\n    {\n      \"label\": \"Yoma\",\n      \"bbox_2d\": [35, 210, 160, 281]\n    },\n    {\n      \"label\": \"Vint\",\n      \"bbox_2d\": [160, 210, 385, 281]\n    },\n    {\n      \"label\": \"Zorp\",\n      \"bbox_2d\": [385, 210, 510, 281]\n    }\n  ],\n  \"arrows\": [\n    {\n      \"from\": \"Blick\",\n      \"to\": \"Krell\"\n    },\n    {\n      \"from\": \"Krell\",\n      \"to\": \"Silk\"\n    },\n    {\n      \"from\": \"Krell\",\n      \"to\": \"Yoma\"\n    },\n    {\n      \"from\": \"Krell\",\n      \"to\": \"Vint\"\n    },\n    {\n      \"from\": \"Vint\",\n      \"to\": \"Zorp\"\n    }\n  ]\n}\n```",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Blick",
+      "bbox": [
+       35.15625,
+       79.59183673469389,
+       160.71428571428572,
+       152.0408163265306
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n2",
+      "label": "Krell",
+      "bbox": [
+       160.71428571428572,
+       79.59183673469389,
+       386.71875,
+       152.0408163265306
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n3",
+      "label": "Silk",
+      "bbox": [
+       386.71875,
+       79.59183673469389,
+       512.2767857142858,
+       152.0408163265306
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n4",
+      "label": "Yoma",
+      "bbox": [
+       35.15625,
+       214.28571428571428,
+       160.71428571428572,
+       286.734693877551
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n5",
+      "label": "Vint",
+      "bbox": [
+       160.71428571428572,
+       214.28571428571428,
+       386.71875,
+       286.734693877551
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n6",
+      "label": "Zorp",
+      "bbox": [
+       386.71875,
+       214.28571428571428,
+       512.2767857142858,
+       286.734693877551
+      ],
+      "confidence": null
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n2",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n2",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n5",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": null
+     }
+    ],
+    "source": "qwen2.5-vl-3b",
+    "image_size": [
+     900,
+     600
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "title": "Nonsense-label graph 2",
+   "latency_s": 94.66,
+   "entities": {
+    "tp": 6,
+    "pred": 6,
+    "gold": 6,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "edges": {
+    "tp": 2,
+    "pred": 5,
+    "gold": 5,
+    "precision": 0.4,
+    "recall": 0.4,
+    "f1": 0.4000000000000001
+   },
+   "reversed_edges": [],
+   "missing_edges": [
+    "quan->krell",
+    "silk->blick",
+    "tesh->silk"
+   ],
+   "extra_edges": [
+    "krell->silk",
+    "tesh->krell",
+    "tesh->quan"
+   ],
+   "raw_output": "```json\n{\n  \"entities\": [\n    {\n      \"label\": \"Tesh\",\n      \"bbox_2d\": [105, 84, 236, 179]\n    },\n    {\n      \"label\": \"Krell\",\n      \"bbox_2d\": [280, 100, 411, 194]\n    },\n    {\n      \"label\": \"Blick\",\n      \"bbox_2d\": [555, 84, 686, 179]\n    },\n    {\n      \"label\": \"Quan\",\n      \"bbox_2d\": [105, 240, 236, 333]\n    },\n    {\n      \"label\": \"Silk\",\n      \"bbox_2d\": [280, 240, 411, 333]\n    },\n    {\n      \"label\": \"Vint\",\n      \"bbox_2d\": [555, 240, 686, 333]\n    }\n  ],\n  \"arrows\": [\n    {\n      \"from\": \"Tesh\",\n      \"to\": \"Krell\"\n    },\n    {\n      \"from\": \"Tesh\",\n      \"to\": \"Quan\"\n    },\n    {\n      \"from\": \"Krell\",\n      \"to\": \"Vint\"\n    },\n    {\n      \"from\": \"Krell\",\n      \"to\": \"Silk\"\n    },\n    {\n      \"from\": \"Quan\",\n      \"to\": \"Silk\"\n    }\n  ]\n}\n```",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Tesh",
+      "bbox": [
+       105.46875,
+       85.71428571428572,
+       237.05357142857144,
+       182.6530612244898
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n2",
+      "label": "Krell",
+      "bbox": [
+       281.25,
+       102.04081632653062,
+       412.83482142857144,
+       197.9591836734694
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n3",
+      "label": "Blick",
+      "bbox": [
+       557.4776785714286,
+       85.71428571428572,
+       689.0625,
+       182.6530612244898
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n4",
+      "label": "Quan",
+      "bbox": [
+       105.46875,
+       244.89795918367346,
+       237.05357142857144,
+       339.7959183673469
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n5",
+      "label": "Silk",
+      "bbox": [
+       281.25,
+       244.89795918367346,
+       412.83482142857144,
+       339.7959183673469
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n6",
+      "label": "Vint",
+      "bbox": [
+       557.4776785714286,
+       244.89795918367346,
+       689.0625,
+       339.7959183673469
+      ],
+      "confidence": null
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n1",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n2",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n2",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n4",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": null
+     }
+    ],
+    "source": "qwen2.5-vl-3b",
+    "image_size": [
+     900,
+     600
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "title": "Nonsense-label graph 3",
+   "latency_s": 112.73,
+   "entities": {
+    "tp": 6,
+    "pred": 6,
+    "gold": 6,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "edges": {
+    "tp": 2,
+    "pred": 5,
+    "gold": 5,
+    "precision": 0.4,
+    "recall": 0.4,
+    "f1": 0.4000000000000001
+   },
+   "reversed_edges": [
+    "zorp->mivo"
+   ],
+   "missing_edges": [
+    "krell->tesh",
+    "mivo->zorp",
+    "rulo->mivo"
+   ],
+   "extra_edges": [
+    "rulo->krell",
+    "tesh->mivo",
+    "zorp->mivo"
+   ],
+   "raw_output": "```json\n{\n  \"entities\": [\n    {\n      \"label\": \"Rulo\",\n      \"bbox_2d\": [105, 84, 236, 179]\n    },\n    {\n      \"label\": \"Tesh\",\n      \"bbox_2d\": [280, 100, 411, 194]\n    },\n    {\n      \"label\": \"Zorp\",\n      \"bbox_2d\": [465, 100, 596, 194]\n    },\n    {\n      \"label\": \"Krell\",\n      \"bbox_2d\": [105, 179, 236, 272]\n    },\n    {\n      \"label\": \"Mivo\",\n      \"bbox_2d\": [280, 179, 411, 272]\n    },\n    {\n      \"label\": \"Blick\",\n      \"bbox_2d\": [465, 272, 596, 365]\n    }\n  ],\n  \"arrows\": [\n    {\n      \"from\": \"Rulo\",\n      \"to\": \"Tesh\"\n    },\n    {\n      \"from\": \"Rulo\",\n      \"to\": \"Krell\"\n    },\n    {\n      \"from\": \"Tesh\",\n      \"to\": \"Mivo\"\n    },\n    {\n      \"from\": \"Zorp\",\n      \"to\": \"Mivo\"\n    },\n    {\n      \"from\": \"Mivo\",\n      \"to\": \"Blick\"\n    }\n  ]\n}\n```",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Rulo",
+      "bbox": [
+       105.46875,
+       85.71428571428572,
+       237.05357142857144,
+       182.6530612244898
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n2",
+      "label": "Tesh",
+      "bbox": [
+       281.25,
+       102.04081632653062,
+       412.83482142857144,
+       197.9591836734694
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n3",
+      "label": "Zorp",
+      "bbox": [
+       467.0758928571429,
+       102.04081632653062,
+       598.6607142857143,
+       197.9591836734694
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n4",
+      "label": "Krell",
+      "bbox": [
+       105.46875,
+       182.6530612244898,
+       237.05357142857144,
+       277.55102040816325
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n5",
+      "label": "Mivo",
+      "bbox": [
+       281.25,
+       182.6530612244898,
+       412.83482142857144,
+       277.55102040816325
+      ],
+      "confidence": null
+     },
+     {
+      "id": "n6",
+      "label": "Blick",
+      "bbox": [
+       467.0758928571429,
+       277.55102040816325,
+       598.6607142857143,
+       372.44897959183675
+      ],
+      "confidence": null
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n1",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n2",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n3",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": null
+     },
+     {
+      "source": "n5",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": null
+     }
+    ],
+    "source": "qwen2.5-vl-3b",
+    "image_size": [
+     900,
+     600
+    ],
+    "warnings": []
+   }
+  }
+ ],
+ "records": [
+  {
+   "file": "diagram_01.png",
+   "question": "Which component directly feeds into D?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "C"
+    ]
+   },
+   "E3*": {
+    "answer": "C \u2014 directly feeds into D.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "C \u2014 directly feeds into D.",
+    "status": "answered",
+    "evidence": [
+     "C -> D"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "C",
+    "latency_s": 15.71,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_01.png",
+   "question": "Which component directly feeds into C?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "B"
+    ]
+   },
+   "E3*": {
+    "answer": "B \u2014 directly feeds into C.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "B \u2014 directly feeds into C.",
+    "status": "answered",
+    "evidence": [
+     "B -> C"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "B",
+    "latency_s": 12.73,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_01.png",
+   "question": "What does C point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "D"
+    ]
+   },
+   "E3*": {
+    "answer": "C directly feeds into: D.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "C directly feeds into: D.",
+    "status": "answered",
+    "evidence": [
+     "C -> D"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "D",
+    "latency_s": 9.0,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_01.png",
+   "question": "Does B point to C?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow B -> C.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Yes. The graph has a direct arrow B -> C.",
+    "status": "answered",
+    "evidence": [
+     "B -> C"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 9.64,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_01.png",
+   "question": "Does B point to A?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow B -> A; the arrow between them goes the other way (A -> B).",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "No. There is no arrow B -> A; the arrow between them goes the other way (A -> B).",
+    "status": "answered",
+    "evidence": [
+     "A -> B"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Not shown in the diagram.",
+    "latency_s": 9.44,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_01.png",
+   "question": "Is there a path from B to D?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: B -> C -> D.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Yes. Path: B -> C -> D.",
+    "status": "answered",
+    "evidence": [
+     "B -> C",
+     "C -> D"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 9.35,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_01.png",
+   "question": "Which component directly feeds into A?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of A: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of A: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Not shown in the diagram.",
+    "latency_s": 10.58,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_01.png",
+   "question": "What colour is B in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'B' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "I found 'B' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Not shown in the diagram.",
+    "latency_s": 11.17,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "Which component directly feeds into Report?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Store"
+    ]
+   },
+   "E3*": {
+    "answer": "Store \u2014 directly feeds into Report.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Store \u2014 directly feeds into Report.",
+    "status": "answered",
+    "evidence": [
+     "Store -> Report"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Store",
+    "latency_s": 14.97,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "Which component directly feeds into Store?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Validate"
+    ]
+   },
+   "E3*": {
+    "answer": "Validate \u2014 directly feeds into Store.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Validate \u2014 directly feeds into Store.",
+    "status": "answered",
+    "evidence": [
+     "Validate -> Store"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Validate",
+    "latency_s": 9.18,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "What does Input point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Parse"
+    ]
+   },
+   "E3*": {
+    "answer": "Input directly feeds into: Parse.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Input directly feeds into: Parse.",
+    "status": "answered",
+    "evidence": [
+     "Input -> Parse"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Parse",
+    "latency_s": 12.36,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "Does Validate point to Store?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Validate -> Store.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Yes. The graph has a direct arrow Validate -> Store.",
+    "status": "answered",
+    "evidence": [
+     "Validate -> Store"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 9.51,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "Does Report point to Store?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Report -> Store; the arrow between them goes the other way (Store -> Report).",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "No. There is no arrow Report -> Store; the arrow between them goes the other way (Store -> Report).",
+    "status": "answered",
+    "evidence": [
+     "Store -> Report"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 10.4,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "Is there a path from Validate to Store?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: Validate -> Store.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Yes. Path: Validate -> Store.",
+    "status": "answered",
+    "evidence": [
+     "Validate -> Store"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 11.2,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "Which component directly feeds into Input?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Input: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Input: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Not shown in the diagram.",
+    "latency_s": 12.34,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "What colour is Parse in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Parse' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "I found 'Parse' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Not shown in the diagram.",
+    "latency_s": 10.66,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "Which component directly feeds into Rabbit?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Grass"
+    ]
+   },
+   "E3*": {
+    "answer": "Grass \u2014 directly feeds into Rabbit.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Grass \u2014 directly feeds into Rabbit.",
+    "status": "answered",
+    "evidence": [
+     "Grass -> Rabbit"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Grass",
+    "latency_s": 17.2,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "Which component directly feeds into Deer?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Grass"
+    ]
+   },
+   "E3*": {
+    "answer": "Grass \u2014 directly feeds into Deer.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Grass \u2014 directly feeds into Deer.",
+    "status": "answered",
+    "evidence": [
+     "Grass -> Deer"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Grass",
+    "latency_s": 8.8,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "What does Deer point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Wolf"
+    ]
+   },
+   "E3*": {
+    "answer": "Deer directly feeds into: Wolf.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Deer directly feeds into: Wolf.",
+    "status": "answered",
+    "evidence": [
+     "Deer -> Wolf"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Wolf",
+    "latency_s": 11.6,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "Does Rabbit point to Fox?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Rabbit -> Fox.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Yes. The graph has a direct arrow Rabbit -> Fox.",
+    "status": "answered",
+    "evidence": [
+     "Rabbit -> Fox"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 11.3,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "Does Wolf point to Deer?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Wolf -> Deer; the arrow between them goes the other way (Deer -> Wolf).",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "No. There is no arrow Wolf -> Deer; the arrow between them goes the other way (Deer -> Wolf).",
+    "status": "answered",
+    "evidence": [
+     "Deer -> Wolf"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 12.54,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "Is there a path from Sun to Grass?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: Sun -> Grass.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Yes. Path: Sun -> Grass.",
+    "status": "answered",
+    "evidence": [
+     "Sun -> Grass"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 11.52,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "Which component directly feeds into Sun?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Sun: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Sun: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Not shown in the diagram.",
+    "latency_s": 9.41,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "What colour is Grass in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Grass' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "I found 'Grass' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Green",
+    "latency_s": 9.3,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "Which component directly feeds into Sun?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Grass"
+    ]
+   },
+   "E3*": {
+    "answer": "Grass \u2014 directly feeds into Sun.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Sun: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Grass",
+    "latency_s": 16.24,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "Which component directly feeds into Rabbit?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Fox"
+    ]
+   },
+   "E3*": {
+    "answer": "Fox \u2014 directly feeds into Rabbit.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Grass \u2014 directly feeds into Rabbit.",
+    "status": "answered",
+    "evidence": [
+     "Grass -> Rabbit"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Grass",
+    "latency_s": 10.56,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "What does Wolf point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Deer"
+    ]
+   },
+   "E3*": {
+    "answer": "Wolf directly feeds into: Deer.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "The extracted graph has no arrow that supports an answer here (successors of Wolf: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Deer",
+    "latency_s": 9.32,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "Does Rabbit point to Grass?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Rabbit -> Grass.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "No. There is no arrow Rabbit -> Grass; the arrow between them goes the other way (Grass -> Rabbit).",
+    "status": "answered",
+    "evidence": [
+     "Grass -> Rabbit"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 9.38,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "Does Grass point to Deer?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Grass -> Deer; the arrow between them goes the other way (Deer -> Grass).",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Yes. The graph has a direct arrow Grass -> Deer.",
+    "status": "answered",
+    "evidence": [
+     "Grass -> Deer"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 9.74,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "Is there a path from Grass to Fox?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. The extracted graph has no directed path from Grass to Fox.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Yes. Path: Grass -> Rabbit -> Fox.",
+    "status": "answered",
+    "evidence": [
+     "Grass -> Rabbit",
+     "Rabbit -> Fox"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 8.96,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "Which component directly feeds into Fox?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Fox: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Rabbit \u2014 directly feeds into Fox.",
+    "status": "answered",
+    "evidence": [
+     "Rabbit -> Fox"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Rabbit",
+    "latency_s": 10.02,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "What colour is Deer in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Deer' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "I found 'Deer' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Not shown in the diagram.",
+    "latency_s": 11.34,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_05.png",
+   "question": "Which component directly feeds into Precipitation?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Condensation"
+    ]
+   },
+   "E3*": {
+    "answer": "Condensation \u2014 directly feeds into Precipitation.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Condensation \u2014 directly feeds into Precipitation.",
+    "status": "answered",
+    "evidence": [
+     "Condensation -> Precipitation"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Condensation",
+    "latency_s": 13.38,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_05.png",
+   "question": "Which component directly feeds into Collection?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Precipitation"
+    ]
+   },
+   "E3*": {
+    "answer": "Precipitation \u2014 directly feeds into Collection.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Evaporation \u2014 directly feeds into Collection.",
+    "status": "answered",
+    "evidence": [
+     "Evaporation -> Collection"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Evaporation",
+    "latency_s": 10.61,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_05.png",
+   "question": "What does Collection point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Evaporation"
+    ]
+   },
+   "E3*": {
+    "answer": "Collection directly feeds into: Evaporation.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "The extracted graph has no arrow that supports an answer here (successors of Collection: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Evaporation",
+    "latency_s": 9.03,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_05.png",
+   "question": "Does Condensation point to Precipitation?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Condensation -> Precipitation.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Yes. The graph has a direct arrow Condensation -> Precipitation.",
+    "status": "answered",
+    "evidence": [
+     "Condensation -> Precipitation"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 8.8,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_05.png",
+   "question": "Does Precipitation point to Condensation?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Precipitation -> Condensation; the arrow between them goes the other way (Condensation -> Precipitation).",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "No. There is no arrow Precipitation -> Condensation; the arrow between them goes the other way (Condensation -> Precipitation).",
+    "status": "answered",
+    "evidence": [
+     "Condensation -> Precipitation"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 8.79,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_05.png",
+   "question": "Is there a path from Condensation to Evaporation?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: Condensation -> Precipitation -> Collection -> Evaporation.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "No. The extracted graph has no directed path from Condensation to Evaporation.",
+    "status": "answered",
+    "evidence": [],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Not shown in the diagram.",
+    "latency_s": 12.29,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_05.png",
+   "question": "What colour is Evaporation in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Evaporation' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "I found 'Evaporation' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Not shown in the diagram.",
+    "latency_s": 11.29,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "Which component directly feeds into Database?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Server 1",
+     "Server 2"
+    ]
+   },
+   "E3*": {
+    "answer": "Server 1 and Server 2 \u2014 directly feeds into Database.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Server 1 and Server 2 \u2014 directly feeds into Database.",
+    "status": "answered",
+    "evidence": [
+     "Server 1 -> Database",
+     "Server 2 -> Database"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Server 1, Server 2",
+    "latency_s": 14.65,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "Which component directly feeds into Load Balancer?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Client"
+    ]
+   },
+   "E3*": {
+    "answer": "Client \u2014 directly feeds into Load Balancer.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Client \u2014 directly feeds into Load Balancer.",
+    "status": "answered",
+    "evidence": [
+     "Client -> Load Balancer"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Client",
+    "latency_s": 9.08,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "What does Load Balancer point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Server 1",
+     "Server 2"
+    ]
+   },
+   "E3*": {
+    "answer": "Load Balancer directly feeds into: Server 1 and Server 2.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Load Balancer directly feeds into: Server 1 and Server 2.",
+    "status": "answered",
+    "evidence": [
+     "Load Balancer -> Server 1",
+     "Load Balancer -> Server 2"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Server 1, Server 2, Database",
+    "latency_s": 12.17,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "Does Client point to Load Balancer?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Client -> Load Balancer.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Yes. The graph has a direct arrow Client -> Load Balancer.",
+    "status": "answered",
+    "evidence": [
+     "Client -> Load Balancer"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 12.44,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "Does Load Balancer point to Client?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Load Balancer -> Client; the arrow between them goes the other way (Client -> Load Balancer).",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "No. There is no arrow Load Balancer -> Client; the arrow between them goes the other way (Client -> Load Balancer).",
+    "status": "answered",
+    "evidence": [
+     "Client -> Load Balancer"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 13.1,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "Is there a path from Database to Server 2?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. The extracted graph has no directed path from Database to Server 2.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "No. The extracted graph has no directed path from Database to Server 2.",
+    "status": "answered",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 26.06,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "Which component directly feeds into Client?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Client: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Client: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Load Balancer",
+    "latency_s": 77.35,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "What colour is Load Balancer in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Load Balancer' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "I found 'Load Balancer' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Not shown in the diagram.",
+    "latency_s": 39.73,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "Which component directly feeds into Glucose?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Chloroplast"
+    ]
+   },
+   "E3*": {
+    "answer": "Chloroplast \u2014 directly feeds into Glucose.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Chloroplast \u2014 directly feeds into Glucose.",
+    "status": "answered",
+    "evidence": [
+     "Chloroplast -> Glucose"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Chloroplast",
+    "latency_s": 29.19,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "Which component directly feeds into Oxygen?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Chloroplast"
+    ]
+   },
+   "E3*": {
+    "answer": "Chloroplast \u2014 directly feeds into Oxygen.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Chloroplast \u2014 directly feeds into Oxygen.",
+    "status": "answered",
+    "evidence": [
+     "Chloroplast -> Oxygen"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Chloroplast",
+    "latency_s": 14.77,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "What does Light point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Chloroplast"
+    ]
+   },
+   "E3*": {
+    "answer": "Light directly feeds into: Chloroplast.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Light directly feeds into: Chloroplast.",
+    "status": "answered",
+    "evidence": [
+     "Light -> Chloroplast"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Chloroplast",
+    "latency_s": 11.88,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "Does Light point to Chloroplast?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Light -> Chloroplast.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Yes. The graph has a direct arrow Light -> Chloroplast.",
+    "status": "answered",
+    "evidence": [
+     "Light -> Chloroplast"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 14.6,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "Does Chloroplast point to Water?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Chloroplast -> Water; the arrow between them goes the other way (Water -> Chloroplast).",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "No. There is no arrow Chloroplast -> Water; the arrow between them goes the other way (Water -> Chloroplast).",
+    "status": "answered",
+    "evidence": [
+     "Water -> Chloroplast"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 10.49,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "Is there a path from Light to Chloroplast?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: Light -> Chloroplast.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Yes. Path: Light -> Chloroplast.",
+    "status": "answered",
+    "evidence": [
+     "Light -> Chloroplast"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 10.84,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "Which component directly feeds into Light?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Light: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Light: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Not shown in the diagram.",
+    "latency_s": 12.86,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "What colour is Water in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Water' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "I found 'Water' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Blue",
+    "latency_s": 17.88,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "Which component directly feeds into Zorp?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Krell",
+     "Vint"
+    ]
+   },
+   "E3*": {
+    "answer": "Krell and Vint \u2014 directly feeds into Zorp.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Vint \u2014 directly feeds into Zorp.",
+    "status": "answered",
+    "evidence": [
+     "Vint -> Zorp"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Vint",
+    "latency_s": 30.07,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "Which component directly feeds into Krell?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Blick",
+     "Yoma"
+    ]
+   },
+   "E3*": {
+    "answer": "Blick and Yoma \u2014 directly feeds into Krell.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Blick \u2014 directly feeds into Krell.",
+    "status": "answered",
+    "evidence": [
+     "Blick -> Krell"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Blick",
+    "latency_s": 25.68,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "What does Yoma point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Krell",
+     "Vint"
+    ]
+   },
+   "E3*": {
+    "answer": "Yoma directly feeds into: Krell and Vint.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "The extracted graph has no arrow that supports an answer here (successors of Yoma: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Vint",
+    "latency_s": 22.17,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "Does Yoma point to Vint?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Yoma -> Vint.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "No. The extracted graph has no direct arrow between Yoma and Vint in either direction.",
+    "status": "answered",
+    "evidence": [],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 17.45,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "Does Zorp point to Vint?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Zorp -> Vint; the arrow between them goes the other way (Vint -> Zorp).",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "No. There is no arrow Zorp -> Vint; the arrow between them goes the other way (Vint -> Zorp).",
+    "status": "answered",
+    "evidence": [
+     "Vint -> Zorp"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 12.81,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "Is there a path from Yoma to Vint?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: Yoma -> Vint.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "No. The extracted graph has no directed path from Yoma to Vint.",
+    "status": "answered",
+    "evidence": [],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 14.82,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "Which component directly feeds into Yoma?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Yoma: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Krell \u2014 directly feeds into Yoma.",
+    "status": "answered",
+    "evidence": [
+     "Krell -> Yoma"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Blick",
+    "latency_s": 23.35,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "What colour is Zorp in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Zorp' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "I found 'Zorp' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Not shown in the diagram.",
+    "latency_s": 13.98,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "Which component directly feeds into Silk?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Quan",
+     "Tesh"
+    ]
+   },
+   "E3*": {
+    "answer": "Quan and Tesh \u2014 directly feeds into Silk.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Krell and Quan \u2014 directly feeds into Silk.",
+    "status": "answered",
+    "evidence": [
+     "Krell -> Silk",
+     "Quan -> Silk"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Krell",
+    "latency_s": 37.33,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "Which component directly feeds into Blick?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Silk"
+    ]
+   },
+   "E3*": {
+    "answer": "Silk \u2014 directly feeds into Blick.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Blick: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Krell",
+    "latency_s": 15.7,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "What does Krell point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Vint"
+    ]
+   },
+   "E3*": {
+    "answer": "Krell directly feeds into: Vint.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Krell directly feeds into: Vint and Silk.",
+    "status": "answered",
+    "evidence": [
+     "Krell -> Vint",
+     "Krell -> Silk"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Blick",
+    "latency_s": 23.23,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "Does Quan point to Silk?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Quan -> Silk.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Yes. The graph has a direct arrow Quan -> Silk.",
+    "status": "answered",
+    "evidence": [
+     "Quan -> Silk"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 21.96,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "Does Silk point to Quan?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Silk -> Quan; the arrow between them goes the other way (Quan -> Silk).",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "No. There is no arrow Silk -> Quan; the arrow between them goes the other way (Quan -> Silk).",
+    "status": "answered",
+    "evidence": [
+     "Quan -> Silk"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 41.89,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "Is there a path from Quan to Vint?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: Quan -> Krell -> Vint.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "No. The extracted graph has no directed path from Quan to Vint.",
+    "status": "answered",
+    "evidence": [],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 33.97,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "Which component directly feeds into Tesh?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Tesh: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Tesh: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Krell",
+    "latency_s": 23.28,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "What colour is Blick in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Blick' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "I found 'Blick' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Not shown in the diagram.",
+    "latency_s": 24.41,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "Which component directly feeds into Mivo?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Rulo"
+    ]
+   },
+   "E3*": {
+    "answer": "Rulo \u2014 directly feeds into Mivo.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Tesh and Zorp \u2014 directly feeds into Mivo.",
+    "status": "answered",
+    "evidence": [
+     "Tesh -> Mivo",
+     "Zorp -> Mivo"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Rulo",
+    "latency_s": 29.58,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "Which component directly feeds into Blick?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Mivo"
+    ]
+   },
+   "E3*": {
+    "answer": "Mivo \u2014 directly feeds into Blick.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Mivo \u2014 directly feeds into Blick.",
+    "status": "answered",
+    "evidence": [
+     "Mivo -> Blick"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Mivo",
+    "latency_s": 15.23,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "What does Rulo point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Mivo",
+     "Tesh"
+    ]
+   },
+   "E3*": {
+    "answer": "Rulo directly feeds into: Mivo and Tesh.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Rulo directly feeds into: Tesh and Krell.",
+    "status": "answered",
+    "evidence": [
+     "Rulo -> Tesh",
+     "Rulo -> Krell"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Tesh",
+    "latency_s": 11.4,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "Does Mivo point to Zorp?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Mivo -> Zorp.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "No. There is no arrow Mivo -> Zorp; the arrow between them goes the other way (Zorp -> Mivo).",
+    "status": "answered",
+    "evidence": [
+     "Zorp -> Mivo"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Not shown in the diagram.",
+    "latency_s": 14.07,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "Does Zorp point to Mivo?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Zorp -> Mivo; the arrow between them goes the other way (Mivo -> Zorp).",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Yes. The graph has a direct arrow Zorp -> Mivo.",
+    "status": "answered",
+    "evidence": [
+     "Zorp -> Mivo"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 11.76,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "Is there a path from Rulo to Tesh?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: Rulo -> Tesh.",
+    "status": "answered",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Yes. Path: Rulo -> Tesh.",
+    "status": "answered",
+    "evidence": [
+     "Rulo -> Tesh"
+    ],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Yes",
+    "latency_s": 11.24,
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "Which component directly feeds into Krell?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Krell: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "Rulo \u2014 directly feeds into Krell.",
+    "status": "answered",
+    "evidence": [
+     "Rulo -> Krell"
+    ],
+    "correct": false
+   },
+   "E2": {
+    "answer": "Rulo",
+    "latency_s": 24.68,
+    "correct": false
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "What colour is Blick in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Blick' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   },
+   "E3": {
+    "answer": "I found 'Blick' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "evidence": [],
+    "correct": true
+   },
+   "E2": {
+    "answer": "Not shown in the diagram.",
+    "latency_s": 22.11,
+    "correct": true
+   }
+  }
+ ],
+ "model": "Qwen/Qwen2.5-VL-3B-Instruct",
+ "seed": 458
+}

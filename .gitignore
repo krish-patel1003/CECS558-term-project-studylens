@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.pytest_cache/
+.DS_Store
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+# Model weights are downloaded to the Hugging Face cache, never committed
+*.safetensors
+.claude/
+
+# Downloaded datasets and trained adapters (not redistributed)
+external/
+checkpoints/
+
+# Third-party images downloaded for manual testing (unknown licences): kept local, not published
+data/internet/

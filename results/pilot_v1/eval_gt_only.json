@@ -1,0 +1,1219 @@
+{
+ "summary": {
+  "n_diagrams": 10,
+  "n_questions": 79,
+  "conditions": [
+   "E3*"
+  ],
+  "accuracy": {
+   "predecessors": {
+    "E3*": {
+     "correct": 20,
+     "n": 20
+    }
+   },
+   "ALL": {
+    "E3*": {
+     "correct": 79,
+     "n": 79
+    }
+   },
+   "successors": {
+    "E3*": {
+     "correct": 10,
+     "n": 10
+    }
+   },
+   "edge_true": {
+    "E3*": {
+     "correct": 10,
+     "n": 10
+    }
+   },
+   "edge_reversed": {
+    "E3*": {
+     "correct": 10,
+     "n": 10
+    }
+   },
+   "path": {
+    "E3*": {
+     "correct": 10,
+     "n": 10
+    }
+   },
+   "unsupported_no_edge": {
+    "E3*": {
+     "correct": 9,
+     "n": 9
+    }
+   },
+   "unsupported_non_structural": {
+    "E3*": {
+     "correct": 10,
+     "n": 10
+    }
+   }
+  },
+  "wall_time_s": 0.1
+ },
+ "extraction": [],
+ "records": [
+  {
+   "file": "diagram_01.png",
+   "question": "Which component directly feeds into D?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "C"
+    ]
+   },
+   "E3*": {
+    "answer": "C \u2014 directly feeds into D.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_01.png",
+   "question": "Which component directly feeds into C?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "B"
+    ]
+   },
+   "E3*": {
+    "answer": "B \u2014 directly feeds into C.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_01.png",
+   "question": "What does C point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "D"
+    ]
+   },
+   "E3*": {
+    "answer": "C directly feeds into: D.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_01.png",
+   "question": "Does B point to C?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow B -> C.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_01.png",
+   "question": "Does B point to A?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow B -> A; the arrow between them goes the other way (A -> B).",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_01.png",
+   "question": "Is there a path from B to D?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: B -> C -> D.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_01.png",
+   "question": "Which component directly feeds into A?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of A: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_01.png",
+   "question": "What colour is B in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'B' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "Which component directly feeds into Report?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Store"
+    ]
+   },
+   "E3*": {
+    "answer": "Store \u2014 directly feeds into Report.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "Which component directly feeds into Store?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Validate"
+    ]
+   },
+   "E3*": {
+    "answer": "Validate \u2014 directly feeds into Store.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "What does Input point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Parse"
+    ]
+   },
+   "E3*": {
+    "answer": "Input directly feeds into: Parse.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "Does Validate point to Store?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Validate -> Store.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "Does Report point to Store?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Report -> Store; the arrow between them goes the other way (Store -> Report).",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "Is there a path from Validate to Store?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: Validate -> Store.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "Which component directly feeds into Input?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Input: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_02.png",
+   "question": "What colour is Parse in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Parse' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "Which component directly feeds into Rabbit?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Grass"
+    ]
+   },
+   "E3*": {
+    "answer": "Grass \u2014 directly feeds into Rabbit.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "Which component directly feeds into Deer?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Grass"
+    ]
+   },
+   "E3*": {
+    "answer": "Grass \u2014 directly feeds into Deer.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "What does Deer point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Wolf"
+    ]
+   },
+   "E3*": {
+    "answer": "Deer directly feeds into: Wolf.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "Does Rabbit point to Fox?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Rabbit -> Fox.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "Does Wolf point to Deer?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Wolf -> Deer; the arrow between them goes the other way (Deer -> Wolf).",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "Is there a path from Sun to Grass?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: Sun -> Grass.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "Which component directly feeds into Sun?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Sun: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_03.png",
+   "question": "What colour is Grass in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Grass' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "Which component directly feeds into Sun?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Grass"
+    ]
+   },
+   "E3*": {
+    "answer": "Grass \u2014 directly feeds into Sun.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "Which component directly feeds into Rabbit?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Fox"
+    ]
+   },
+   "E3*": {
+    "answer": "Fox \u2014 directly feeds into Rabbit.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "What does Wolf point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Deer"
+    ]
+   },
+   "E3*": {
+    "answer": "Wolf directly feeds into: Deer.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "Does Rabbit point to Grass?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Rabbit -> Grass.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "Does Grass point to Deer?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Grass -> Deer; the arrow between them goes the other way (Deer -> Grass).",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "Is there a path from Grass to Fox?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. The extracted graph has no directed path from Grass to Fox.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "Which component directly feeds into Fox?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Fox: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_04.png",
+   "question": "What colour is Deer in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Deer' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_05.png",
+   "question": "Which component directly feeds into Precipitation?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Condensation"
+    ]
+   },
+   "E3*": {
+    "answer": "Condensation \u2014 directly feeds into Precipitation.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_05.png",
+   "question": "Which component directly feeds into Collection?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Precipitation"
+    ]
+   },
+   "E3*": {
+    "answer": "Precipitation \u2014 directly feeds into Collection.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_05.png",
+   "question": "What does Collection point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Evaporation"
+    ]
+   },
+   "E3*": {
+    "answer": "Collection directly feeds into: Evaporation.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_05.png",
+   "question": "Does Condensation point to Precipitation?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Condensation -> Precipitation.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_05.png",
+   "question": "Does Precipitation point to Condensation?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Precipitation -> Condensation; the arrow between them goes the other way (Condensation -> Precipitation).",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_05.png",
+   "question": "Is there a path from Condensation to Evaporation?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: Condensation -> Precipitation -> Collection -> Evaporation.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_05.png",
+   "question": "What colour is Evaporation in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Evaporation' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "Which component directly feeds into Database?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Server 1",
+     "Server 2"
+    ]
+   },
+   "E3*": {
+    "answer": "Server 1 and Server 2 \u2014 directly feeds into Database.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "Which component directly feeds into Load Balancer?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Client"
+    ]
+   },
+   "E3*": {
+    "answer": "Client \u2014 directly feeds into Load Balancer.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "What does Load Balancer point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Server 1",
+     "Server 2"
+    ]
+   },
+   "E3*": {
+    "answer": "Load Balancer directly feeds into: Server 1 and Server 2.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "Does Client point to Load Balancer?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Client -> Load Balancer.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "Does Load Balancer point to Client?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Load Balancer -> Client; the arrow between them goes the other way (Client -> Load Balancer).",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "Is there a path from Database to Server 2?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. The extracted graph has no directed path from Database to Server 2.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "Which component directly feeds into Client?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Client: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_06.png",
+   "question": "What colour is Load Balancer in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Load Balancer' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "Which component directly feeds into Glucose?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Chloroplast"
+    ]
+   },
+   "E3*": {
+    "answer": "Chloroplast \u2014 directly feeds into Glucose.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "Which component directly feeds into Oxygen?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Chloroplast"
+    ]
+   },
+   "E3*": {
+    "answer": "Chloroplast \u2014 directly feeds into Oxygen.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "What does Light point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Chloroplast"
+    ]
+   },
+   "E3*": {
+    "answer": "Light directly feeds into: Chloroplast.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "Does Light point to Chloroplast?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Light -> Chloroplast.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "Does Chloroplast point to Water?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Chloroplast -> Water; the arrow between them goes the other way (Water -> Chloroplast).",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "Is there a path from Light to Chloroplast?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: Light -> Chloroplast.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "Which component directly feeds into Light?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Light: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_07.png",
+   "question": "What colour is Water in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Water' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "Which component directly feeds into Zorp?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Krell",
+     "Vint"
+    ]
+   },
+   "E3*": {
+    "answer": "Krell and Vint \u2014 directly feeds into Zorp.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "Which component directly feeds into Krell?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Blick",
+     "Yoma"
+    ]
+   },
+   "E3*": {
+    "answer": "Blick and Yoma \u2014 directly feeds into Krell.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "What does Yoma point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Krell",
+     "Vint"
+    ]
+   },
+   "E3*": {
+    "answer": "Yoma directly feeds into: Krell and Vint.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "Does Yoma point to Vint?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Yoma -> Vint.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "Does Zorp point to Vint?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Zorp -> Vint; the arrow between them goes the other way (Vint -> Zorp).",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "Is there a path from Yoma to Vint?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: Yoma -> Vint.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "Which component directly feeds into Yoma?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Yoma: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_08.png",
+   "question": "What colour is Zorp in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Zorp' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "Which component directly feeds into Silk?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Quan",
+     "Tesh"
+    ]
+   },
+   "E3*": {
+    "answer": "Quan and Tesh \u2014 directly feeds into Silk.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "Which component directly feeds into Blick?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Silk"
+    ]
+   },
+   "E3*": {
+    "answer": "Silk \u2014 directly feeds into Blick.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "What does Krell point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Vint"
+    ]
+   },
+   "E3*": {
+    "answer": "Krell directly feeds into: Vint.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "Does Quan point to Silk?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Quan -> Silk.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "Does Silk point to Quan?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Silk -> Quan; the arrow between them goes the other way (Quan -> Silk).",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "Is there a path from Quan to Vint?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: Quan -> Krell -> Vint.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "Which component directly feeds into Tesh?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Tesh: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_09.png",
+   "question": "What colour is Blick in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Blick' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "Which component directly feeds into Mivo?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Rulo"
+    ]
+   },
+   "E3*": {
+    "answer": "Rulo \u2014 directly feeds into Mivo.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "Which component directly feeds into Blick?",
+   "kind": "predecessors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Mivo"
+    ]
+   },
+   "E3*": {
+    "answer": "Mivo \u2014 directly feeds into Blick.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "What does Rulo point to?",
+   "kind": "successors",
+   "gold": {
+    "type": "set",
+    "value": [
+     "Mivo",
+     "Tesh"
+    ]
+   },
+   "E3*": {
+    "answer": "Rulo directly feeds into: Mivo and Tesh.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "Does Mivo point to Zorp?",
+   "kind": "edge_true",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. The graph has a direct arrow Mivo -> Zorp.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "Does Zorp point to Mivo?",
+   "kind": "edge_reversed",
+   "gold": {
+    "type": "yesno",
+    "value": false
+   },
+   "E3*": {
+    "answer": "No. There is no arrow Zorp -> Mivo; the arrow between them goes the other way (Mivo -> Zorp).",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "Is there a path from Rulo to Tesh?",
+   "kind": "path",
+   "gold": {
+    "type": "yesno",
+    "value": true
+   },
+   "E3*": {
+    "answer": "Yes. Path: Rulo -> Tesh.",
+    "status": "answered",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "Which component directly feeds into Krell?",
+   "kind": "unsupported_no_edge",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "The extracted graph has no arrow that supports an answer here (predecessors of Krell: none found). I won't guess an edge that isn't in the graph. If the diagram does show one, the extraction probably missed it: correct the graph and ask again.",
+    "status": "abstained",
+    "correct": true
+   }
+  },
+  {
+   "file": "diagram_10.png",
+   "question": "What colour is Blick in real life?",
+   "kind": "unsupported_non_structural",
+   "gold": {
+    "type": "abstain"
+   },
+   "E3*": {
+    "answer": "I found 'Blick' in the graph, but your question is not one of the structural question types I can answer from arrows (what feeds into / comes from / leads to an entity, is there an arrow or path between two entities, how many arrows, start/end points). The graph does not encode other facts about it.",
+    "status": "abstained",
+    "correct": true
+   }
+  }
+ ],
+ "model": null,
+ "seed": 458
+}

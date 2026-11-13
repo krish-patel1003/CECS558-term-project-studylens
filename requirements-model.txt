@@ -1,0 +1,10 @@
+# Optional: needed only for the Qwen2.5-VL backend (EXTRACTOR_BACKEND=qwen), direct-VLM answers
+# and scripts/evaluate.py without --no-model.
+# Tested with torch 2.11.0, torchvision 0.26.0, transformers 5.15.0 on Python 3.12 (Apple M4, MPS).
+-r requirements.txt
+torch>=2.3
+torchvision>=0.18
+transformers>=5.0,<6
+huggingface_hub>=0.23
+peft>=0.13  # LoRA fine-tuning and loading the adapter (tested 0.21.2)
+matplotlib>=3.7  # only for scripts/make_figures.py

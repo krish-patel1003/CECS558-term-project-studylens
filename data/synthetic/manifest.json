@@ -1,0 +1,6695 @@
+{
+ "version": 2,
+ "seed": 458,
+ "generator": "scripts/make_synthetic.py",
+ "license": "synthetic, created for this project",
+ "diagrams": [
+  {
+   "file": "diagram_01.png",
+   "title": "Abstract chain",
+   "sha256": "d4ead700e63059fd1f8a487cc67b6676962fa753b381e47f7bec483440aedf85",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "A",
+      "bbox": [
+       45.0,
+       272.0,
+       195.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "B",
+      "bbox": [
+       265.0,
+       272.0,
+       415.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "C",
+      "bbox": [
+       485.0,
+       272.0,
+       635.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "D",
+      "bbox": [
+       705.0,
+       272.0,
+       855.0,
+       328.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "What points to D?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "C"
+      ]
+     },
+     "entities": [
+      "D"
+     ]
+    },
+    {
+     "question": "What does A point to?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "B"
+      ]
+     },
+     "entities": [
+      "A"
+     ]
+    },
+    {
+     "question": "Does C point to D?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "C",
+      "D"
+     ]
+    },
+    {
+     "question": "Is there an arrow from C to B?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "C",
+      "B"
+     ]
+    },
+    {
+     "question": "Is there a path from D to A?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "D",
+      "A"
+     ]
+    },
+    {
+     "question": "Which entities lead to D, directly or indirectly?",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "entities": [
+      "D"
+     ]
+    },
+    {
+     "question": "What is downstream of A, directly or indirectly?",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "entities": [
+      "A"
+     ]
+    },
+    {
+     "question": "Which entities have no incoming arrows?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "A"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which entities have no outgoing arrows?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "D"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into C?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 1
+     },
+     "entities": [
+      "C"
+     ]
+    },
+    {
+     "question": "Where do the arrows into A come from?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "A"
+     ]
+    },
+    {
+     "question": "How large is C usually?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "C"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_02.png",
+   "title": "Data-processing flowchart",
+   "sha256": "cdea357390ec56ba84c258f262db55f9de95771a2e439d5473294003b3652a16",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Input",
+      "bbox": [
+       35.0,
+       272.0,
+       185.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Parse",
+      "bbox": [
+       255.0,
+       272.0,
+       405.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Validate",
+      "bbox": [
+       475.0,
+       272.0,
+       625.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Store",
+      "bbox": [
+       705.0,
+       132.0,
+       855.0,
+       188.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Reject",
+      "bbox": [
+       705.0,
+       412.0,
+       855.0,
+       468.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Report",
+      "bbox": [
+       475.0,
+       72.0,
+       625.0,
+       128.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Which boxes have an arrow going into Report?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Store"
+      ]
+     },
+     "entities": [
+      "Report"
+     ]
+    },
+    {
+     "question": "Where do the arrows from Store go?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Report"
+      ]
+     },
+     "entities": [
+      "Store"
+     ]
+    },
+    {
+     "question": "Does Validate point to Reject?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Validate",
+      "Reject"
+     ]
+    },
+    {
+     "question": "Does Parse point to Input?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Parse",
+      "Input"
+     ]
+    },
+    {
+     "question": "Can you get from Input to Parse by following the arrows?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Input",
+      "Parse"
+     ]
+    },
+    {
+     "question": "Which entities lead to Validate, directly or indirectly?",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Input",
+       "Parse"
+      ]
+     },
+     "entities": [
+      "Validate"
+     ]
+    },
+    {
+     "question": "Name everything reachable from Parse by following the arrows.",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Reject",
+       "Report",
+       "Store",
+       "Validate"
+      ]
+     },
+     "entities": [
+      "Parse"
+     ]
+    },
+    {
+     "question": "Where does the diagram start (no arrows coming in)?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Input"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which entities have no outgoing arrows?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Reject",
+       "Report"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into Parse?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 1
+     },
+     "entities": [
+      "Parse"
+     ]
+    },
+    {
+     "question": "What comes right before Input?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Input"
+     ]
+    },
+    {
+     "question": "What colour is Store in real life?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Store"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_03.png",
+   "title": "Food chain (energy flow)",
+   "sha256": "d9a5322a6763b04269ae2111db5a59da1d95ea809c77d85af4fe7fbd26a1c258",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Sun",
+      "bbox": [
+       35.0,
+       272.0,
+       185.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Grass",
+      "bbox": [
+       255.0,
+       272.0,
+       405.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Rabbit",
+      "bbox": [
+       475.0,
+       172.0,
+       625.0,
+       228.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Deer",
+      "bbox": [
+       475.0,
+       402.0,
+       625.0,
+       458.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Fox",
+      "bbox": [
+       705.0,
+       172.0,
+       855.0,
+       228.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Wolf",
+      "bbox": [
+       705.0,
+       402.0,
+       855.0,
+       458.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "What does the Rabbit eat?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Grass"
+      ]
+     },
+     "entities": [
+      "Rabbit"
+     ]
+    },
+    {
+     "question": "Which organism eats Rabbit?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Fox"
+      ]
+     },
+     "entities": [
+      "Rabbit"
+     ]
+    },
+    {
+     "question": "Does an arrow go from Rabbit to Fox?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Rabbit",
+      "Fox"
+     ]
+    },
+    {
+     "question": "Does Fox point to Rabbit?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Fox",
+      "Rabbit"
+     ]
+    },
+    {
+     "question": "Can you get from Rabbit to Grass by following the arrows?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Rabbit",
+      "Grass"
+     ]
+    },
+    {
+     "question": "Which entities lead to Wolf, directly or indirectly?",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Deer",
+       "Grass",
+       "Sun"
+      ]
+     },
+     "entities": [
+      "Wolf"
+     ]
+    },
+    {
+     "question": "Name everything reachable from Sun by following the arrows.",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Deer",
+       "Fox",
+       "Grass",
+       "Rabbit",
+       "Wolf"
+      ]
+     },
+     "entities": [
+      "Sun"
+     ]
+    },
+    {
+     "question": "Which entities have no incoming arrows?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Sun"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which entities have no outgoing arrows?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Fox",
+       "Wolf"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into Deer?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 1
+     },
+     "entities": [
+      "Deer"
+     ]
+    },
+    {
+     "question": "Which boxes have an arrow going into Sun?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Sun"
+     ]
+    },
+    {
+     "question": "How large is Rabbit usually?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Rabbit"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_04.png",
+   "title": "Counterfactual food chain (arrows reversed)",
+   "sha256": "33cc2496f1681315b6d5639abdfedb82e6f94ad16862fc3b2c0d54d0d5eb030d",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Sun",
+      "bbox": [
+       35.0,
+       272.0,
+       185.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Grass",
+      "bbox": [
+       255.0,
+       272.0,
+       405.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Rabbit",
+      "bbox": [
+       475.0,
+       172.0,
+       625.0,
+       228.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Deer",
+      "bbox": [
+       475.0,
+       402.0,
+       625.0,
+       458.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Fox",
+      "bbox": [
+       705.0,
+       172.0,
+       855.0,
+       228.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Wolf",
+      "bbox": [
+       705.0,
+       402.0,
+       855.0,
+       458.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n2",
+      "target": "n1",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n5",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n6",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "What does Deer feed on?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Wolf"
+      ]
+     },
+     "entities": [
+      "Deer"
+     ]
+    },
+    {
+     "question": "What eats the Fox?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Rabbit"
+      ]
+     },
+     "entities": [
+      "Fox"
+     ]
+    },
+    {
+     "question": "Does Deer point to Grass?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Deer",
+      "Grass"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Rabbit to Fox?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Rabbit",
+      "Fox"
+     ]
+    },
+    {
+     "question": "Is there a path from Fox to Deer?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Fox",
+      "Deer"
+     ]
+    },
+    {
+     "question": "List everything upstream of Grass.",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Deer",
+       "Fox",
+       "Rabbit",
+       "Wolf"
+      ]
+     },
+     "entities": [
+      "Grass"
+     ]
+    },
+    {
+     "question": "Name everything reachable from Rabbit by following the arrows.",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Grass",
+       "Sun"
+      ]
+     },
+     "entities": [
+      "Rabbit"
+     ]
+    },
+    {
+     "question": "Where does the diagram start (no arrows coming in)?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Fox",
+       "Wolf"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which entities have no outgoing arrows?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Sun"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into Sun?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 1
+     },
+     "entities": [
+      "Sun"
+     ]
+    },
+    {
+     "question": "Which boxes have an arrow going into Wolf?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Wolf"
+     ]
+    },
+    {
+     "question": "How large is Fox usually?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Fox"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_05.png",
+   "title": "Water cycle",
+   "sha256": "b257933f0fd06c5d51e0f780b154a2d932e167099eed15de95ed73b89d339842",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Evaporation",
+      "bbox": [
+       375.0,
+       62.0,
+       525.0,
+       118.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Condensation",
+      "bbox": [
+       695.0,
+       272.0,
+       845.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Precipitation",
+      "bbox": [
+       375.0,
+       482.0,
+       525.0,
+       538.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Collection",
+      "bbox": [
+       55.0,
+       272.0,
+       205.0,
+       328.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n1",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Where do the arrows into Condensation come from?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Evaporation"
+      ]
+     },
+     "entities": [
+      "Condensation"
+     ]
+    },
+    {
+     "question": "Evaporation leads directly to what?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Condensation"
+      ]
+     },
+     "entities": [
+      "Evaporation"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Precipitation to Collection?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Precipitation",
+      "Collection"
+     ]
+    },
+    {
+     "question": "Does an arrow go from Collection to Precipitation?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Collection",
+      "Precipitation"
+     ]
+    },
+    {
+     "question": "Can you get from Condensation to Precipitation by following the arrows?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Condensation",
+      "Precipitation"
+     ]
+    },
+    {
+     "question": "How many arrows point into Collection?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 1
+     },
+     "entities": [
+      "Collection"
+     ]
+    },
+    {
+     "question": "What is Condensation made of?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Condensation"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_06.png",
+   "title": "Web service architecture",
+   "sha256": "57a6c1bbb152f096f902ff2df5004bea8ec2bdcc08f1d13f3a1bf24676139642",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Client",
+      "bbox": [
+       35.0,
+       272.0,
+       185.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Load Balancer",
+      "bbox": [
+       265.0,
+       272.0,
+       415.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Server 1",
+      "bbox": [
+       495.0,
+       132.0,
+       645.0,
+       188.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Server 2",
+      "bbox": [
+       495.0,
+       412.0,
+       645.0,
+       468.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Database",
+      "bbox": [
+       715.0,
+       272.0,
+       865.0,
+       328.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Which boxes have an arrow going into Database?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Server 1",
+       "Server 2"
+      ]
+     },
+     "entities": [
+      "Database"
+     ]
+    },
+    {
+     "question": "Server 1 leads directly to what?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Database"
+      ]
+     },
+     "entities": [
+      "Server 1"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Client to Load Balancer?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Client",
+      "Load Balancer"
+     ]
+    },
+    {
+     "question": "Does an arrow go from Server 2 to Load Balancer?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Server 2",
+      "Load Balancer"
+     ]
+    },
+    {
+     "question": "Can you get from Load Balancer to Server 2 by following the arrows?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Load Balancer",
+      "Server 2"
+     ]
+    },
+    {
+     "question": "List everything upstream of Server 2.",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Client",
+       "Load Balancer"
+      ]
+     },
+     "entities": [
+      "Server 2"
+     ]
+    },
+    {
+     "question": "What is downstream of Load Balancer, directly or indirectly?",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Database",
+       "Server 1",
+       "Server 2"
+      ]
+     },
+     "entities": [
+      "Load Balancer"
+     ]
+    },
+    {
+     "question": "Which entities have no incoming arrows?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Client"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which boxes are end points, with no arrows leaving them?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Database"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into Database?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 2
+     },
+     "entities": [
+      "Database"
+     ]
+    },
+    {
+     "question": "What points to Client?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Client"
+     ]
+    },
+    {
+     "question": "How large is Server 1 usually?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Server 1"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_07.png",
+   "title": "Photosynthesis inputs and outputs",
+   "sha256": "db714f9ccdc65ccf024cc563c99dc3611c265230eeed7f7e1e26bb24f9eb4f2d",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Light",
+      "bbox": [
+       55.0,
+       82.0,
+       205.0,
+       138.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Water",
+      "bbox": [
+       55.0,
+       272.0,
+       205.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "CO2",
+      "bbox": [
+       55.0,
+       462.0,
+       205.0,
+       518.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Chloroplast",
+      "bbox": [
+       375.0,
+       272.0,
+       525.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Glucose",
+      "bbox": [
+       695.0,
+       162.0,
+       845.0,
+       218.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Oxygen",
+      "bbox": [
+       695.0,
+       382.0,
+       845.0,
+       438.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "What comes right before Glucose?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Chloroplast"
+      ]
+     },
+     "entities": [
+      "Glucose"
+     ]
+    },
+    {
+     "question": "Light leads directly to what?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Chloroplast"
+      ]
+     },
+     "entities": [
+      "Light"
+     ]
+    },
+    {
+     "question": "Does Water point to Chloroplast?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Water",
+      "Chloroplast"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Chloroplast to CO2?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Chloroplast",
+      "CO2"
+     ]
+    },
+    {
+     "question": "Is there a path from Glucose to Water?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Glucose",
+      "Water"
+     ]
+    },
+    {
+     "question": "List everything upstream of Oxygen.",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "CO2",
+       "Chloroplast",
+       "Light",
+       "Water"
+      ]
+     },
+     "entities": [
+      "Oxygen"
+     ]
+    },
+    {
+     "question": "Name everything reachable from Water by following the arrows.",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Chloroplast",
+       "Glucose",
+       "Oxygen"
+      ]
+     },
+     "entities": [
+      "Water"
+     ]
+    },
+    {
+     "question": "Which entities have no incoming arrows?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "CO2",
+       "Light",
+       "Water"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which entities have no outgoing arrows?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Glucose",
+       "Oxygen"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows end at Glucose?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 1
+     },
+     "entities": [
+      "Glucose"
+     ]
+    },
+    {
+     "question": "What comes right before Light?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Light"
+     ]
+    },
+    {
+     "question": "How large is CO2 usually?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "CO2"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_08.png",
+   "title": "Pond food web",
+   "sha256": "59dee1d6b93cc02ebf489cbf4c40aa49ea001405935cbc56f0ec21e771d9b357",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Algae",
+      "bbox": [
+       35.0,
+       272.0,
+       185.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Water flea",
+      "bbox": [
+       265.0,
+       132.0,
+       415.0,
+       188.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Snail",
+      "bbox": [
+       265.0,
+       412.0,
+       415.0,
+       468.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Small fish",
+      "bbox": [
+       495.0,
+       272.0,
+       645.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Heron",
+      "bbox": [
+       715.0,
+       272.0,
+       865.0,
+       328.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "What does the Heron eat?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Small fish"
+      ]
+     },
+     "entities": [
+      "Heron"
+     ]
+    },
+    {
+     "question": "What eats the Small fish?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Heron"
+      ]
+     },
+     "entities": [
+      "Small fish"
+     ]
+    },
+    {
+     "question": "Does an arrow go from Algae to Snail?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Algae",
+      "Snail"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Snail to Algae?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Snail",
+      "Algae"
+     ]
+    },
+    {
+     "question": "Is there a path from Snail to Algae?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Snail",
+      "Algae"
+     ]
+    },
+    {
+     "question": "Which entities lead to Small fish, directly or indirectly?",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Algae",
+       "Snail",
+       "Water flea"
+      ]
+     },
+     "entities": [
+      "Small fish"
+     ]
+    },
+    {
+     "question": "Name everything reachable from Snail by following the arrows.",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Heron",
+       "Small fish"
+      ]
+     },
+     "entities": [
+      "Snail"
+     ]
+    },
+    {
+     "question": "Where does the diagram start (no arrows coming in)?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Algae"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which boxes are end points, with no arrows leaving them?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Heron"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into Snail?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 1
+     },
+     "entities": [
+      "Snail"
+     ]
+    },
+    {
+     "question": "Which boxes have an arrow going into Algae?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Algae"
+     ]
+    },
+    {
+     "question": "How large is Water flea usually?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Water flea"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_09.png",
+   "title": "Counterfactual pond food web (arrows reversed)",
+   "sha256": "5db6947dd504fd64e02bd68d4968dfcc8d74fab744399887e3f0bca34e9499a0",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Algae",
+      "bbox": [
+       35.0,
+       272.0,
+       185.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Water flea",
+      "bbox": [
+       265.0,
+       132.0,
+       415.0,
+       188.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Snail",
+      "bbox": [
+       265.0,
+       412.0,
+       415.0,
+       468.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Small fish",
+      "bbox": [
+       495.0,
+       272.0,
+       645.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Heron",
+      "bbox": [
+       715.0,
+       272.0,
+       865.0,
+       328.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n2",
+      "target": "n1",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n1",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n5",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "What does Small fish feed on?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Heron"
+      ]
+     },
+     "entities": [
+      "Small fish"
+     ]
+    },
+    {
+     "question": "What eats the Water flea?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Algae"
+      ]
+     },
+     "entities": [
+      "Water flea"
+     ]
+    },
+    {
+     "question": "Does an arrow go from Small fish to Snail?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Small fish",
+      "Snail"
+     ]
+    },
+    {
+     "question": "Does an arrow go from Algae to Snail?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Algae",
+      "Snail"
+     ]
+    },
+    {
+     "question": "Is there a path from Algae to Heron?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Algae",
+      "Heron"
+     ]
+    },
+    {
+     "question": "List everything upstream of Snail.",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Heron",
+       "Small fish"
+      ]
+     },
+     "entities": [
+      "Snail"
+     ]
+    },
+    {
+     "question": "What is downstream of Small fish, directly or indirectly?",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Algae",
+       "Snail",
+       "Water flea"
+      ]
+     },
+     "entities": [
+      "Small fish"
+     ]
+    },
+    {
+     "question": "Where does the diagram start (no arrows coming in)?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Heron"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which boxes are end points, with no arrows leaving them?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Algae"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into Algae?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 2
+     },
+     "entities": [
+      "Algae"
+     ]
+    },
+    {
+     "question": "Which component directly feeds into Heron?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Heron"
+     ]
+    },
+    {
+     "question": "What colour is Algae in real life?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Algae"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_10.png",
+   "title": "Frog life cycle",
+   "sha256": "860efbc1add1ff2ddf28f7574b9cd91f909fd7de2ba018ffddfe2a51366c83ec",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Egg",
+      "bbox": [
+       375.0,
+       62.0,
+       525.0,
+       118.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Tadpole",
+      "bbox": [
+       695.0,
+       272.0,
+       845.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Froglet",
+      "bbox": [
+       375.0,
+       482.0,
+       525.0,
+       538.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Adult frog",
+      "bbox": [
+       55.0,
+       272.0,
+       205.0,
+       328.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n1",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Which boxes have an arrow going into Froglet?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Tadpole"
+      ]
+     },
+     "entities": [
+      "Froglet"
+     ]
+    },
+    {
+     "question": "What comes right after Adult frog?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Egg"
+      ]
+     },
+     "entities": [
+      "Adult frog"
+     ]
+    },
+    {
+     "question": "Does an arrow go from Egg to Tadpole?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Egg",
+      "Tadpole"
+     ]
+    },
+    {
+     "question": "Does Tadpole point to Egg?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Tadpole",
+      "Egg"
+     ]
+    },
+    {
+     "question": "Can you get from Adult frog to Tadpole by following the arrows?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Adult frog",
+      "Tadpole"
+     ]
+    },
+    {
+     "question": "How many arrows end at Tadpole?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 1
+     },
+     "entities": [
+      "Tadpole"
+     ]
+    },
+    {
+     "question": "How large is Tadpole usually?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Tadpole"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_11.png",
+   "title": "Counterfactual frog life cycle (arrows reversed)",
+   "sha256": "46384bed2393aab257bcb283a7a8ae00a9ccce60fb7e35914290d55f771d1940",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Egg",
+      "bbox": [
+       375.0,
+       62.0,
+       525.0,
+       118.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Tadpole",
+      "bbox": [
+       695.0,
+       272.0,
+       845.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Froglet",
+      "bbox": [
+       375.0,
+       482.0,
+       525.0,
+       538.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Adult frog",
+      "bbox": [
+       55.0,
+       272.0,
+       205.0,
+       328.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n2",
+      "target": "n1",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Which component directly feeds into Egg?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Tadpole"
+      ]
+     },
+     "entities": [
+      "Egg"
+     ]
+    },
+    {
+     "question": "What does Tadpole point to?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Egg"
+      ]
+     },
+     "entities": [
+      "Tadpole"
+     ]
+    },
+    {
+     "question": "Does Adult frog point to Froglet?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Adult frog",
+      "Froglet"
+     ]
+    },
+    {
+     "question": "Does an arrow go from Froglet to Adult frog?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Froglet",
+      "Adult frog"
+     ]
+    },
+    {
+     "question": "Is there a path from Tadpole to Adult frog?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Tadpole",
+      "Adult frog"
+     ]
+    },
+    {
+     "question": "How many arrows end at Froglet?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 1
+     },
+     "entities": [
+      "Froglet"
+     ]
+    },
+    {
+     "question": "What is Tadpole made of?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Tadpole"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_12.png",
+   "title": "CI/CD pipeline",
+   "sha256": "ae45f7b76dcd7d9c627da33023f3d04824442b7b25b9d262703fe76307d8626a",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Commit",
+      "bbox": [
+       35.0,
+       272.0,
+       185.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Build",
+      "bbox": [
+       255.0,
+       272.0,
+       405.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Unit tests",
+      "bbox": [
+       475.0,
+       132.0,
+       625.0,
+       188.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Lint",
+      "bbox": [
+       475.0,
+       412.0,
+       625.0,
+       468.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Deploy",
+      "bbox": [
+       705.0,
+       132.0,
+       855.0,
+       188.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Notify",
+      "bbox": [
+       705.0,
+       412.0,
+       855.0,
+       468.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Which boxes have an arrow going into Lint?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Build"
+      ]
+     },
+     "entities": [
+      "Lint"
+     ]
+    },
+    {
+     "question": "Which boxes does Lint feed into directly?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Notify"
+      ]
+     },
+     "entities": [
+      "Lint"
+     ]
+    },
+    {
+     "question": "Does Lint point to Notify?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Lint",
+      "Notify"
+     ]
+    },
+    {
+     "question": "Does an arrow go from Deploy to Unit tests?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Deploy",
+      "Unit tests"
+     ]
+    },
+    {
+     "question": "Can you get from Build to Deploy by following the arrows?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Build",
+      "Deploy"
+     ]
+    },
+    {
+     "question": "Which entities lead to Unit tests, directly or indirectly?",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Build",
+       "Commit"
+      ]
+     },
+     "entities": [
+      "Unit tests"
+     ]
+    },
+    {
+     "question": "Name everything reachable from Commit by following the arrows.",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Build",
+       "Deploy",
+       "Lint",
+       "Notify",
+       "Unit tests"
+      ]
+     },
+     "entities": [
+      "Commit"
+     ]
+    },
+    {
+     "question": "Which entities have no incoming arrows?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Commit"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which boxes are end points, with no arrows leaving them?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Deploy",
+       "Notify"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into Unit tests?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 1
+     },
+     "entities": [
+      "Unit tests"
+     ]
+    },
+    {
+     "question": "What comes right before Commit?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Commit"
+     ]
+    },
+    {
+     "question": "What colour is Build in real life?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Build"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_13.png",
+   "title": "Home network",
+   "sha256": "1c9cbf818f58a2c83dd5383de8660734dfe8fbe5b209097aa1821a9781a1bcdf",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Internet",
+      "bbox": [
+       35.0,
+       272.0,
+       185.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Modem",
+      "bbox": [
+       255.0,
+       272.0,
+       405.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Router",
+      "bbox": [
+       475.0,
+       272.0,
+       625.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Laptop",
+      "bbox": [
+       705.0,
+       82.0,
+       855.0,
+       138.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Printer",
+      "bbox": [
+       705.0,
+       272.0,
+       855.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Phone",
+      "bbox": [
+       705.0,
+       462.0,
+       855.0,
+       518.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "What points to Printer?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Router"
+      ]
+     },
+     "entities": [
+      "Printer"
+     ]
+    },
+    {
+     "question": "Where do the arrows from Internet go?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Modem"
+      ]
+     },
+     "entities": [
+      "Internet"
+     ]
+    },
+    {
+     "question": "Does Router point to Phone?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Router",
+      "Phone"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Phone to Router?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Phone",
+      "Router"
+     ]
+    },
+    {
+     "question": "Can you get from Internet to Modem by following the arrows?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Internet",
+      "Modem"
+     ]
+    },
+    {
+     "question": "List everything upstream of Router.",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Internet",
+       "Modem"
+      ]
+     },
+     "entities": [
+      "Router"
+     ]
+    },
+    {
+     "question": "What is downstream of Modem, directly or indirectly?",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Laptop",
+       "Phone",
+       "Printer",
+       "Router"
+      ]
+     },
+     "entities": [
+      "Modem"
+     ]
+    },
+    {
+     "question": "Which entities have no incoming arrows?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Internet"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which boxes are end points, with no arrows leaving them?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Laptop",
+       "Phone",
+       "Printer"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into Phone?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 1
+     },
+     "entities": [
+      "Phone"
+     ]
+    },
+    {
+     "question": "What comes right before Internet?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Internet"
+     ]
+    },
+    {
+     "question": "How large is Printer usually?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Printer"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_14.png",
+   "title": "Compiler stages",
+   "sha256": "a66633419e63b8c733308240223df612e20b4bcd7f433b2f593d768dd8fa7a7c",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Source code",
+      "bbox": [
+       45.0,
+       102.0,
+       195.0,
+       158.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Lexer",
+      "bbox": [
+       265.0,
+       102.0,
+       415.0,
+       158.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Parser",
+      "bbox": [
+       485.0,
+       102.0,
+       635.0,
+       158.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Type checker",
+      "bbox": [
+       705.0,
+       272.0,
+       855.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Optimizer",
+      "bbox": [
+       485.0,
+       442.0,
+       635.0,
+       498.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Code generator",
+      "bbox": [
+       225.0,
+       442.0,
+       375.0,
+       498.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n1",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n5",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Which component directly feeds into Code generator?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Optimizer"
+      ]
+     },
+     "entities": [
+      "Code generator"
+     ]
+    },
+    {
+     "question": "Lexer leads directly to what?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Parser"
+      ]
+     },
+     "entities": [
+      "Lexer"
+     ]
+    },
+    {
+     "question": "Does Type checker point to Optimizer?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Type checker",
+      "Optimizer"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Parser to Lexer?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Parser",
+      "Lexer"
+     ]
+    },
+    {
+     "question": "Can you get from Code generator to Type checker by following the arrows?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Code generator",
+      "Type checker"
+     ]
+    },
+    {
+     "question": "List everything upstream of Optimizer.",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Lexer",
+       "Parser",
+       "Source code",
+       "Type checker"
+      ]
+     },
+     "entities": [
+      "Optimizer"
+     ]
+    },
+    {
+     "question": "What is downstream of Parser, directly or indirectly?",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Code generator",
+       "Optimizer",
+       "Type checker"
+      ]
+     },
+     "entities": [
+      "Parser"
+     ]
+    },
+    {
+     "question": "Where does the diagram start (no arrows coming in)?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Source code"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which entities have no outgoing arrows?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Code generator"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into Optimizer?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 1
+     },
+     "entities": [
+      "Optimizer"
+     ]
+    },
+    {
+     "question": "What points to Source code?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Source code"
+     ]
+    },
+    {
+     "question": "How large is Optimizer usually?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Optimizer"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_15.png",
+   "title": "Counterfactual water cycle (arrows reversed)",
+   "sha256": "b4700753d6754128bda83106a226b7baeb1d629cc67cd30f4566877007ea3854",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Evaporation",
+      "bbox": [
+       375.0,
+       62.0,
+       525.0,
+       118.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Condensation",
+      "bbox": [
+       695.0,
+       272.0,
+       845.0,
+       328.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Precipitation",
+      "bbox": [
+       375.0,
+       482.0,
+       525.0,
+       538.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Collection",
+      "bbox": [
+       55.0,
+       272.0,
+       205.0,
+       328.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n2",
+      "target": "n1",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n2",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Where do the arrows into Collection come from?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Evaporation"
+      ]
+     },
+     "entities": [
+      "Collection"
+     ]
+    },
+    {
+     "question": "What comes right after Precipitation?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Condensation"
+      ]
+     },
+     "entities": [
+      "Precipitation"
+     ]
+    },
+    {
+     "question": "Does Collection point to Precipitation?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Collection",
+      "Precipitation"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Condensation to Precipitation?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Condensation",
+      "Precipitation"
+     ]
+    },
+    {
+     "question": "Is there a path from Precipitation to Collection?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Precipitation",
+      "Collection"
+     ]
+    },
+    {
+     "question": "How many arrows point into Condensation?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 1
+     },
+     "entities": [
+      "Condensation"
+     ]
+    },
+    {
+     "question": "What is Evaporation made of?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Evaporation"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_16.png",
+   "title": "Nonsense-label graph 1",
+   "sha256": "a589f164661030c511b0a93119a9f54db769f4c1c8a794a9f9b30bf1879bf020",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Yoma",
+      "bbox": [
+       65.0,
+       144.0,
+       215.0,
+       200.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Krell",
+      "bbox": [
+       65.0,
+       413.0,
+       215.0,
+       469.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Vint",
+      "bbox": [
+       375.0,
+       154.0,
+       525.0,
+       210.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Blick",
+      "bbox": [
+       375.0,
+       403.0,
+       525.0,
+       459.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Dube",
+      "bbox": [
+       685.0,
+       134.0,
+       835.0,
+       190.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Quan",
+      "bbox": [
+       685.0,
+       417.0,
+       835.0,
+       473.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n4",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Which component directly feeds into Dube?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Vint"
+      ]
+     },
+     "entities": [
+      "Dube"
+     ]
+    },
+    {
+     "question": "Where do the arrows from Yoma go?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Vint"
+      ]
+     },
+     "entities": [
+      "Yoma"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Yoma to Vint?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Yoma",
+      "Vint"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Dube to Vint?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Dube",
+      "Vint"
+     ]
+    },
+    {
+     "question": "Can you get from Yoma to Blick by following the arrows?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Yoma",
+      "Blick"
+     ]
+    },
+    {
+     "question": "Which entities lead to Quan, directly or indirectly?",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Blick",
+       "Krell",
+       "Vint",
+       "Yoma"
+      ]
+     },
+     "entities": [
+      "Quan"
+     ]
+    },
+    {
+     "question": "Name everything reachable from Krell by following the arrows.",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Blick",
+       "Dube",
+       "Quan",
+       "Vint"
+      ]
+     },
+     "entities": [
+      "Krell"
+     ]
+    },
+    {
+     "question": "Where does the diagram start (no arrows coming in)?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Krell",
+       "Yoma"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which entities have no outgoing arrows?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Dube",
+       "Quan"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows end at Yoma?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 0
+     },
+     "entities": [
+      "Yoma"
+     ]
+    },
+    {
+     "question": "What comes right before Yoma?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Yoma"
+     ]
+    },
+    {
+     "question": "What is Vint made of?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Vint"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_17.png",
+   "title": "Nonsense-label graph 2",
+   "sha256": "f57a6da7fa8c6ce084d7f4736235e0af815a59fa14bab043b1cdd7576b4eed7e",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Quan",
+      "bbox": [
+       65.0,
+       153.0,
+       215.0,
+       209.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Dube",
+      "bbox": [
+       65.0,
+       393.0,
+       215.0,
+       449.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Krell",
+      "bbox": [
+       375.0,
+       162.0,
+       525.0,
+       218.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Tesh",
+      "bbox": [
+       375.0,
+       430.0,
+       525.0,
+       486.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Blick",
+      "bbox": [
+       685.0,
+       115.0,
+       835.0,
+       171.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Vint",
+      "bbox": [
+       685.0,
+       398.0,
+       835.0,
+       454.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "What points to Krell?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Dube"
+      ]
+     },
+     "entities": [
+      "Krell"
+     ]
+    },
+    {
+     "question": "Which boxes does Krell feed into directly?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Vint"
+      ]
+     },
+     "entities": [
+      "Krell"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Krell to Vint?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Krell",
+      "Vint"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Krell to Dube?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Krell",
+      "Dube"
+     ]
+    },
+    {
+     "question": "Can you get from Blick to Vint by following the arrows?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Blick",
+      "Vint"
+     ]
+    },
+    {
+     "question": "Which entities lead to Blick, directly or indirectly?",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Dube",
+       "Quan",
+       "Tesh"
+      ]
+     },
+     "entities": [
+      "Blick"
+     ]
+    },
+    {
+     "question": "What is downstream of Dube, directly or indirectly?",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Blick",
+       "Krell",
+       "Tesh",
+       "Vint"
+      ]
+     },
+     "entities": [
+      "Dube"
+     ]
+    },
+    {
+     "question": "Which entities have no incoming arrows?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Dube",
+       "Quan"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which entities have no outgoing arrows?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Blick",
+       "Vint"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into Quan?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 0
+     },
+     "entities": [
+      "Quan"
+     ]
+    },
+    {
+     "question": "Which boxes have an arrow going into Dube?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Dube"
+     ]
+    },
+    {
+     "question": "What is Blick made of?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Blick"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_18.png",
+   "title": "Nonsense-label graph 3",
+   "sha256": "1efedfc1d39576d254d1982b60ff992b12016673cdf1485b6cf5579e8ccaaf46",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Silk",
+      "bbox": [
+       65.0,
+       117.0,
+       215.0,
+       173.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Krell",
+      "bbox": [
+       65.0,
+       385.0,
+       215.0,
+       441.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Tesh",
+      "bbox": [
+       375.0,
+       132.0,
+       525.0,
+       188.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Mivo",
+      "bbox": [
+       375.0,
+       378.0,
+       525.0,
+       434.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Zorp",
+      "bbox": [
+       685.0,
+       172.0,
+       835.0,
+       228.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Blick",
+      "bbox": [
+       685.0,
+       425.0,
+       835.0,
+       481.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "What comes right before Zorp?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Mivo"
+      ]
+     },
+     "entities": [
+      "Zorp"
+     ]
+    },
+    {
+     "question": "Mivo leads directly to what?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Blick",
+       "Zorp"
+      ]
+     },
+     "entities": [
+      "Mivo"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Mivo to Zorp?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Mivo",
+      "Zorp"
+     ]
+    },
+    {
+     "question": "Does Tesh point to Krell?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Tesh",
+      "Krell"
+     ]
+    },
+    {
+     "question": "Is there a path from Tesh to Zorp?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Tesh",
+      "Zorp"
+     ]
+    },
+    {
+     "question": "List everything upstream of Blick.",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Mivo",
+       "Silk"
+      ]
+     },
+     "entities": [
+      "Blick"
+     ]
+    },
+    {
+     "question": "Name everything reachable from Mivo by following the arrows.",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Blick",
+       "Zorp"
+      ]
+     },
+     "entities": [
+      "Mivo"
+     ]
+    },
+    {
+     "question": "Where does the diagram start (no arrows coming in)?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Krell",
+       "Silk"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which entities have no outgoing arrows?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Blick",
+       "Tesh",
+       "Zorp"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into Silk?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 0
+     },
+     "entities": [
+      "Silk"
+     ]
+    },
+    {
+     "question": "Where do the arrows into Krell come from?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Krell"
+     ]
+    },
+    {
+     "question": "How large is Silk usually?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Silk"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_19.png",
+   "title": "Nonsense-label graph 4",
+   "sha256": "9e1ed29a058bb9702edd5dfca1bcd79d8ec406801eab9a6c80fcbe2805b132d2",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Silk",
+      "bbox": [
+       40.0,
+       171.0,
+       190.0,
+       227.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Tesh",
+      "bbox": [
+       40.0,
+       382.0,
+       190.0,
+       438.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Vint",
+      "bbox": [
+       260.0,
+       149.0,
+       410.0,
+       205.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Mivo",
+      "bbox": [
+       260.0,
+       430.0,
+       410.0,
+       486.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Quan",
+      "bbox": [
+       480.0,
+       132.0,
+       630.0,
+       188.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Krell",
+      "bbox": [
+       480.0,
+       407.0,
+       630.0,
+       463.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n7",
+      "label": "Rulo",
+      "bbox": [
+       700.0,
+       154.0,
+       850.0,
+       210.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n8",
+      "label": "Blick",
+      "bbox": [
+       700.0,
+       375.0,
+       850.0,
+       431.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n6",
+      "target": "n8",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n6",
+      "target": "n7",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n5",
+      "target": "n7",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Which component directly feeds into Mivo?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Tesh"
+      ]
+     },
+     "entities": [
+      "Mivo"
+     ]
+    },
+    {
+     "question": "Silk leads directly to what?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Vint"
+      ]
+     },
+     "entities": [
+      "Silk"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Vint to Quan?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Vint",
+      "Quan"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Rulo to Krell?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Rulo",
+      "Krell"
+     ]
+    },
+    {
+     "question": "Can you get from Blick to Silk by following the arrows?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Blick",
+      "Silk"
+     ]
+    },
+    {
+     "question": "List everything upstream of Krell.",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Mivo",
+       "Tesh"
+      ]
+     },
+     "entities": [
+      "Krell"
+     ]
+    },
+    {
+     "question": "What is downstream of Vint, directly or indirectly?",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Quan",
+       "Rulo"
+      ]
+     },
+     "entities": [
+      "Vint"
+     ]
+    },
+    {
+     "question": "Which entities have no incoming arrows?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Silk",
+       "Tesh"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which boxes are end points, with no arrows leaving them?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Blick",
+       "Rulo"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows end at Quan?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 1
+     },
+     "entities": [
+      "Quan"
+     ]
+    },
+    {
+     "question": "Where do the arrows into Tesh come from?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Tesh"
+     ]
+    },
+    {
+     "question": "How large is Rulo usually?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Rulo"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_20.png",
+   "title": "Nonsense-label graph 5",
+   "sha256": "6c9fd1d4a77fc92471394eaa02de060c5944c977b9e060b82fd9234808810545",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Silk",
+      "bbox": [
+       65.0,
+       162.0,
+       215.0,
+       218.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Krell",
+      "bbox": [
+       65.0,
+       411.0,
+       215.0,
+       467.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Mivo",
+      "bbox": [
+       375.0,
+       121.0,
+       525.0,
+       177.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Tesh",
+      "bbox": [
+       375.0,
+       401.0,
+       525.0,
+       457.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Quan",
+      "bbox": [
+       685.0,
+       156.0,
+       835.0,
+       212.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Rulo",
+      "bbox": [
+       685.0,
+       393.0,
+       835.0,
+       449.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "What comes right before Quan?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Mivo"
+      ]
+     },
+     "entities": [
+      "Quan"
+     ]
+    },
+    {
+     "question": "What comes right after Krell?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Mivo"
+      ]
+     },
+     "entities": [
+      "Krell"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Mivo to Quan?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Mivo",
+      "Quan"
+     ]
+    },
+    {
+     "question": "Does an arrow go from Quan to Mivo?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Quan",
+      "Mivo"
+     ]
+    },
+    {
+     "question": "Is there a path from Quan to Tesh?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Quan",
+      "Tesh"
+     ]
+    },
+    {
+     "question": "Which entities lead to Rulo, directly or indirectly?",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Krell",
+       "Mivo",
+       "Silk"
+      ]
+     },
+     "entities": [
+      "Rulo"
+     ]
+    },
+    {
+     "question": "What is downstream of Krell, directly or indirectly?",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Mivo",
+       "Quan",
+       "Rulo"
+      ]
+     },
+     "entities": [
+      "Krell"
+     ]
+    },
+    {
+     "question": "Which entities have no incoming arrows?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Krell",
+       "Silk"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which entities have no outgoing arrows?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Quan",
+       "Rulo",
+       "Tesh"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows end at Tesh?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 1
+     },
+     "entities": [
+      "Tesh"
+     ]
+    },
+    {
+     "question": "Which component directly feeds into Silk?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Silk"
+     ]
+    },
+    {
+     "question": "How large is Tesh usually?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Tesh"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_21.png",
+   "title": "Nonsense-label graph 6",
+   "sha256": "5068c2663b32a1f1f098195bdd2e18d9219d78e092b8554be4e2d008560835b3",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Silk",
+      "bbox": [
+       65.0,
+       125.0,
+       215.0,
+       181.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Zorp",
+      "bbox": [
+       65.0,
+       398.0,
+       215.0,
+       454.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Blick",
+      "bbox": [
+       375.0,
+       137.0,
+       525.0,
+       193.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Vint",
+      "bbox": [
+       375.0,
+       421.0,
+       525.0,
+       477.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Tesh",
+      "bbox": [
+       685.0,
+       117.0,
+       835.0,
+       173.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Pax",
+      "bbox": [
+       685.0,
+       372.0,
+       835.0,
+       428.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n3",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Where do the arrows into Tesh come from?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Vint"
+      ]
+     },
+     "entities": [
+      "Tesh"
+     ]
+    },
+    {
+     "question": "Where do the arrows from Silk go?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Blick",
+       "Vint"
+      ]
+     },
+     "entities": [
+      "Silk"
+     ]
+    },
+    {
+     "question": "Does Zorp point to Vint?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Zorp",
+      "Vint"
+     ]
+    },
+    {
+     "question": "Does Vint point to Zorp?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Vint",
+      "Zorp"
+     ]
+    },
+    {
+     "question": "Is there a path from Zorp to Silk?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Zorp",
+      "Silk"
+     ]
+    },
+    {
+     "question": "Which entities lead to Pax, directly or indirectly?",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Blick",
+       "Silk"
+      ]
+     },
+     "entities": [
+      "Pax"
+     ]
+    },
+    {
+     "question": "What is downstream of Zorp, directly or indirectly?",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Tesh",
+       "Vint"
+      ]
+     },
+     "entities": [
+      "Zorp"
+     ]
+    },
+    {
+     "question": "Which entities have no incoming arrows?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Silk",
+       "Zorp"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which entities have no outgoing arrows?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Pax",
+       "Tesh"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows end at Zorp?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 0
+     },
+     "entities": [
+      "Zorp"
+     ]
+    },
+    {
+     "question": "What comes right before Silk?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Silk"
+     ]
+    },
+    {
+     "question": "What colour is Vint in real life?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Vint"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_22.png",
+   "title": "Nonsense-label graph 7",
+   "sha256": "ca47bc42bc4d95a57f12202303e6102efe5a53608b66fb527a5a8e893456a8ce",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Vint",
+      "bbox": [
+       65.0,
+       163.0,
+       215.0,
+       219.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Tesh",
+      "bbox": [
+       65.0,
+       431.0,
+       215.0,
+       487.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Yoma",
+      "bbox": [
+       375.0,
+       159.0,
+       525.0,
+       215.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Quan",
+      "bbox": [
+       375.0,
+       395.0,
+       525.0,
+       451.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Dube",
+      "bbox": [
+       685.0,
+       135.0,
+       835.0,
+       191.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Pax",
+      "bbox": [
+       685.0,
+       381.0,
+       835.0,
+       437.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n4",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Where do the arrows into Quan come from?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Tesh",
+       "Vint"
+      ]
+     },
+     "entities": [
+      "Quan"
+     ]
+    },
+    {
+     "question": "What does Vint point to?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Quan",
+       "Yoma"
+      ]
+     },
+     "entities": [
+      "Vint"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Tesh to Quan?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Tesh",
+      "Quan"
+     ]
+    },
+    {
+     "question": "Does Pax point to Yoma?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Pax",
+      "Yoma"
+     ]
+    },
+    {
+     "question": "Is there a path from Vint to Dube?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Vint",
+      "Dube"
+     ]
+    },
+    {
+     "question": "Which entities lead to Quan, directly or indirectly?",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Tesh",
+       "Vint"
+      ]
+     },
+     "entities": [
+      "Quan"
+     ]
+    },
+    {
+     "question": "What is downstream of Vint, directly or indirectly?",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Dube",
+       "Pax",
+       "Quan",
+       "Yoma"
+      ]
+     },
+     "entities": [
+      "Vint"
+     ]
+    },
+    {
+     "question": "Where does the diagram start (no arrows coming in)?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Tesh",
+       "Vint"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which boxes are end points, with no arrows leaving them?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Dube",
+       "Pax"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into Vint?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 0
+     },
+     "entities": [
+      "Vint"
+     ]
+    },
+    {
+     "question": "Where do the arrows into Vint come from?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Vint"
+     ]
+    },
+    {
+     "question": "What colour is Yoma in real life?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Yoma"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_23.png",
+   "title": "Nonsense-label graph 8",
+   "sha256": "ab5d72e4a6c4bc12486e6169d2f80a8bd33c0551750b3e66330c09c5f87185ff",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Tesh",
+      "bbox": [
+       65.0,
+       126.0,
+       215.0,
+       182.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Dube",
+      "bbox": [
+       65.0,
+       389.0,
+       215.0,
+       445.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Rulo",
+      "bbox": [
+       375.0,
+       118.0,
+       525.0,
+       174.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Blick",
+      "bbox": [
+       375.0,
+       387.0,
+       525.0,
+       443.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Pax",
+      "bbox": [
+       685.0,
+       164.0,
+       835.0,
+       220.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Quan",
+      "bbox": [
+       685.0,
+       389.0,
+       835.0,
+       445.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n4",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Which boxes have an arrow going into Blick?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Dube"
+      ]
+     },
+     "entities": [
+      "Blick"
+     ]
+    },
+    {
+     "question": "Which boxes does Blick feed into directly?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Pax",
+       "Quan"
+      ]
+     },
+     "entities": [
+      "Blick"
+     ]
+    },
+    {
+     "question": "Does Dube point to Rulo?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Dube",
+      "Rulo"
+     ]
+    },
+    {
+     "question": "Does Rulo point to Dube?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Rulo",
+      "Dube"
+     ]
+    },
+    {
+     "question": "Is there a path from Quan to Tesh?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Quan",
+      "Tesh"
+     ]
+    },
+    {
+     "question": "Which entities lead to Quan, directly or indirectly?",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Blick",
+       "Dube",
+       "Rulo",
+       "Tesh"
+      ]
+     },
+     "entities": [
+      "Quan"
+     ]
+    },
+    {
+     "question": "What is downstream of Blick, directly or indirectly?",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Pax",
+       "Quan"
+      ]
+     },
+     "entities": [
+      "Blick"
+     ]
+    },
+    {
+     "question": "Which entities have no incoming arrows?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Dube",
+       "Tesh"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which boxes are end points, with no arrows leaving them?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Pax",
+       "Quan"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows end at Tesh?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 0
+     },
+     "entities": [
+      "Tesh"
+     ]
+    },
+    {
+     "question": "Where do the arrows into Tesh come from?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Tesh"
+     ]
+    },
+    {
+     "question": "How large is Quan usually?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Quan"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_24.png",
+   "title": "Nonsense-label graph 9",
+   "sha256": "40baa38b75256f5fbd1d6e16c4ab37a602f9ee0c3d190d9d1be99a65b5efc1a1",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Rulo",
+      "bbox": [
+       65.0,
+       138.0,
+       215.0,
+       194.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Mivo",
+      "bbox": [
+       65.0,
+       401.0,
+       215.0,
+       457.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Tesh",
+      "bbox": [
+       375.0,
+       133.0,
+       525.0,
+       189.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Blick",
+      "bbox": [
+       375.0,
+       379.0,
+       525.0,
+       435.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Dube",
+      "bbox": [
+       685.0,
+       145.0,
+       835.0,
+       201.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Quan",
+      "bbox": [
+       685.0,
+       379.0,
+       835.0,
+       435.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n4",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "What points to Blick?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Mivo",
+       "Rulo"
+      ]
+     },
+     "entities": [
+      "Blick"
+     ]
+    },
+    {
+     "question": "Where do the arrows from Blick go?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Dube"
+      ]
+     },
+     "entities": [
+      "Blick"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Blick to Dube?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Blick",
+      "Dube"
+     ]
+    },
+    {
+     "question": "Does Dube point to Tesh?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Dube",
+      "Tesh"
+     ]
+    },
+    {
+     "question": "Is there a path from Rulo to Blick?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Rulo",
+      "Blick"
+     ]
+    },
+    {
+     "question": "Which entities lead to Dube, directly or indirectly?",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Blick",
+       "Mivo",
+       "Rulo",
+       "Tesh"
+      ]
+     },
+     "entities": [
+      "Dube"
+     ]
+    },
+    {
+     "question": "Name everything reachable from Tesh by following the arrows.",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Dube",
+       "Quan"
+      ]
+     },
+     "entities": [
+      "Tesh"
+     ]
+    },
+    {
+     "question": "Where does the diagram start (no arrows coming in)?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Mivo",
+       "Rulo"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which boxes are end points, with no arrows leaving them?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Dube",
+       "Quan"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into Dube?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 2
+     },
+     "entities": [
+      "Dube"
+     ]
+    },
+    {
+     "question": "Which boxes have an arrow going into Rulo?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Rulo"
+     ]
+    },
+    {
+     "question": "What colour is Mivo in real life?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Mivo"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_25.png",
+   "title": "Nonsense-label graph 10",
+   "sha256": "0ffebdb96618efe6b16bc677df240fe39f3c2f44a142c00832fefc7848530cf6",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Pax",
+      "bbox": [
+       65.0,
+       151.0,
+       215.0,
+       207.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Mivo",
+      "bbox": [
+       65.0,
+       373.0,
+       215.0,
+       429.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Vint",
+      "bbox": [
+       375.0,
+       149.0,
+       525.0,
+       205.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Tesh",
+      "bbox": [
+       375.0,
+       387.0,
+       525.0,
+       443.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Rulo",
+      "bbox": [
+       685.0,
+       162.0,
+       835.0,
+       218.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Blick",
+      "bbox": [
+       685.0,
+       403.0,
+       835.0,
+       459.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n4",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Which component directly feeds into Rulo?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Vint"
+      ]
+     },
+     "entities": [
+      "Rulo"
+     ]
+    },
+    {
+     "question": "Which boxes does Vint feed into directly?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Rulo"
+      ]
+     },
+     "entities": [
+      "Vint"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Pax to Tesh?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Pax",
+      "Tesh"
+     ]
+    },
+    {
+     "question": "Does Blick point to Tesh?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Blick",
+      "Tesh"
+     ]
+    },
+    {
+     "question": "Is there a path from Tesh to Blick?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Tesh",
+      "Blick"
+     ]
+    },
+    {
+     "question": "Which entities lead to Blick, directly or indirectly?",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Pax",
+       "Tesh"
+      ]
+     },
+     "entities": [
+      "Blick"
+     ]
+    },
+    {
+     "question": "Name everything reachable from Mivo by following the arrows.",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Rulo",
+       "Vint"
+      ]
+     },
+     "entities": [
+      "Mivo"
+     ]
+    },
+    {
+     "question": "Where does the diagram start (no arrows coming in)?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Mivo",
+       "Pax"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which boxes are end points, with no arrows leaving them?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Blick",
+       "Rulo"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows end at Vint?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 2
+     },
+     "entities": [
+      "Vint"
+     ]
+    },
+    {
+     "question": "Which component directly feeds into Pax?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Pax"
+     ]
+    },
+    {
+     "question": "How large is Vint usually?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Vint"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_26.png",
+   "title": "Nonsense-label graph 11",
+   "sha256": "3ad3aa5aea22dc72c11a5f7544fc073934fbd1f05d2d71e46b8c55f0feac2faa",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Tesh",
+      "bbox": [
+       65.0,
+       131.0,
+       215.0,
+       187.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Rulo",
+      "bbox": [
+       65.0,
+       372.0,
+       215.0,
+       428.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Mivo",
+      "bbox": [
+       375.0,
+       135.0,
+       525.0,
+       191.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Krell",
+      "bbox": [
+       375.0,
+       380.0,
+       525.0,
+       436.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Vint",
+      "bbox": [
+       685.0,
+       162.0,
+       835.0,
+       218.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Dube",
+      "bbox": [
+       685.0,
+       404.0,
+       835.0,
+       460.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n4",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Which component directly feeds into Mivo?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Rulo",
+       "Tesh"
+      ]
+     },
+     "entities": [
+      "Mivo"
+     ]
+    },
+    {
+     "question": "What comes right after Mivo?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Dube",
+       "Vint"
+      ]
+     },
+     "entities": [
+      "Mivo"
+     ]
+    },
+    {
+     "question": "Does an arrow go from Krell to Dube?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Krell",
+      "Dube"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Mivo to Tesh?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Mivo",
+      "Tesh"
+     ]
+    },
+    {
+     "question": "Can you get from Rulo to Dube by following the arrows?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Rulo",
+      "Dube"
+     ]
+    },
+    {
+     "question": "Which entities lead to Dube, directly or indirectly?",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Krell",
+       "Mivo",
+       "Rulo",
+       "Tesh"
+      ]
+     },
+     "entities": [
+      "Dube"
+     ]
+    },
+    {
+     "question": "Name everything reachable from Mivo by following the arrows.",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Dube",
+       "Vint"
+      ]
+     },
+     "entities": [
+      "Mivo"
+     ]
+    },
+    {
+     "question": "Where does the diagram start (no arrows coming in)?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Rulo",
+       "Tesh"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which entities have no outgoing arrows?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Dube",
+       "Vint"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into Rulo?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 0
+     },
+     "entities": [
+      "Rulo"
+     ]
+    },
+    {
+     "question": "Which boxes have an arrow going into Tesh?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Tesh"
+     ]
+    },
+    {
+     "question": "What colour is Rulo in real life?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Rulo"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "diagram_27.png",
+   "title": "Nonsense-label graph 12",
+   "sha256": "9b166a3d5ec325962d27ca4cb7eb08e835dd7278f34ecf664810d2948d14e1e1",
+   "graph": {
+    "nodes": [
+     {
+      "id": "n1",
+      "label": "Quan",
+      "bbox": [
+       65.0,
+       131.0,
+       215.0,
+       187.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n2",
+      "label": "Tesh",
+      "bbox": [
+       65.0,
+       406.0,
+       215.0,
+       462.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n3",
+      "label": "Pax",
+      "bbox": [
+       375.0,
+       137.0,
+       525.0,
+       193.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n4",
+      "label": "Krell",
+      "bbox": [
+       375.0,
+       431.0,
+       525.0,
+       487.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n5",
+      "label": "Blick",
+      "bbox": [
+       685.0,
+       161.0,
+       835.0,
+       217.0
+      ],
+      "confidence": 1.0
+     },
+     {
+      "id": "n6",
+      "label": "Rulo",
+      "bbox": [
+       685.0,
+       407.0,
+       835.0,
+       463.0
+      ],
+      "confidence": 1.0
+     }
+    ],
+    "edges": [
+     {
+      "source": "n4",
+      "target": "n5",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n3",
+      "target": "n6",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n4",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n1",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     },
+     {
+      "source": "n2",
+      "target": "n3",
+      "relation": "points_to",
+      "confidence": 1.0
+     }
+    ],
+    "source": "annotation",
+    "image_size": [
+     900,
+     600
+    ]
+   },
+   "questions": [
+    {
+     "question": "Where do the arrows into Krell come from?",
+     "kind": "predecessors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Quan"
+      ]
+     },
+     "entities": [
+      "Krell"
+     ]
+    },
+    {
+     "question": "Which boxes does Krell feed into directly?",
+     "kind": "successors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Blick"
+      ]
+     },
+     "entities": [
+      "Krell"
+     ]
+    },
+    {
+     "question": "Does Tesh point to Pax?",
+     "kind": "edge_true",
+     "gold": {
+      "type": "yesno",
+      "value": true
+     },
+     "entities": [
+      "Tesh",
+      "Pax"
+     ]
+    },
+    {
+     "question": "Is there an arrow from Rulo to Pax?",
+     "kind": "edge_reversed",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Rulo",
+      "Pax"
+     ]
+    },
+    {
+     "question": "Is there a path from Rulo to Quan?",
+     "kind": "path",
+     "gold": {
+      "type": "yesno",
+      "value": false
+     },
+     "entities": [
+      "Rulo",
+      "Quan"
+     ]
+    },
+    {
+     "question": "Which entities lead to Pax, directly or indirectly?",
+     "kind": "ancestors",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Quan",
+       "Tesh"
+      ]
+     },
+     "entities": [
+      "Pax"
+     ]
+    },
+    {
+     "question": "What is downstream of Tesh, directly or indirectly?",
+     "kind": "descendants",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Pax",
+       "Rulo"
+      ]
+     },
+     "entities": [
+      "Tesh"
+     ]
+    },
+    {
+     "question": "Where does the diagram start (no arrows coming in)?",
+     "kind": "sources",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Quan",
+       "Tesh"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "Which entities have no outgoing arrows?",
+     "kind": "sinks",
+     "gold": {
+      "type": "set",
+      "value": [
+       "Blick",
+       "Rulo"
+      ]
+     },
+     "entities": []
+    },
+    {
+     "question": "How many arrows point into Pax?",
+     "kind": "count_in",
+     "gold": {
+      "type": "count",
+      "value": 2
+     },
+     "entities": [
+      "Pax"
+     ]
+    },
+    {
+     "question": "What points to Tesh?",
+     "kind": "unsupported_no_edge",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Tesh"
+     ]
+    },
+    {
+     "question": "What is Blick made of?",
+     "kind": "unsupported_non_structural",
+     "gold": {
+      "type": "abstain"
+     },
+     "entities": [
+      "Blick"
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StudyLens</title>
+<link rel="stylesheet" href="/static/style.css?v=0.5.3">
+</head>
+<body>
+<header>
+  <h1>StudyLens</h1>
+  <nav>
+    <button class="tab active" data-tab="ask">Ask</button>
+    <button class="tab" data-tab="eval">Evaluation</button>
+  </nav>
+  <span id="backend" class="badge">checking backend…</span>
+</header>
+
+<main id="tab-ask" class="flow">
+  <section class="panel">
+    <h2>1 · Diagram and graph extraction</h2>
+    <div class="split">
+      <div>
+        <div class="row">
+          <label class="btn">Upload image<input type="file" id="file" accept="image/*,.heic,.heif" hidden></label>
+          <select id="samples"><option value="">…or pick a bundled sample</option></select>
+        </div>
+        <p class="hint" id="limits">Images are processed in memory and not stored on the server.</p>
+        <div id="stage">
+          <img id="img" alt="">
+          <svg id="overlay"></svg>
+          <div id="empty">No diagram loaded</div>
+        </div>
+        <div class="row extract-row">
+          <button id="extractBtn" type="button" disabled>Extract graph</button>
+          <span class="hint" id="extractHint">Choose an image first.</span>
+        </div>
+        <div id="progress" hidden role="status" aria-live="polite">
+          <div class="ptrack"><div class="pfill" id="pfill"></div></div>
+          <div class="pmeta"><span id="plabel"></span><span id="ptime"></span></div>
+          <div class="pcounts" id="pcounts"></div>
+        </div>
+        <p id="status" class="hint"></p>
+        <details id="rawbox" hidden><summary>Raw model output</summary><pre id="raw"></pre></details>
+      </div>
+      <div>
+        <h3>Extracted graph <small id="gsource"></small></h3>
+        <div id="warnings"></div>
+        <div class="cols">
+          <div><h4>Entities</h4><ul id="nodes"></ul></div>
+          <div><h4>Arrows (source → target)</h4><ul id="edges"></ul>
+            <div class="row small">
+              <select id="addSrc"></select> → <select id="addTgt"></select>
+              <button id="addEdge" title="Correct a missed arrow">add</button>
+            </div>
+          </div>
+        </div>
+        <p class="hint" id="graphHint">The graph appears here after extraction. Fix wrong arrows before asking; E3 answers from this graph.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>2 · Ask a question</h2>
+    <form id="askForm">
+      <div class="row"><input id="q" placeholder="Type any question, e.g. What eats the rabbit?  or pick a suggestion below" autocomplete="off">
+      <button type="submit" id="askBtn">Ask</button></div>
+      <div id="chips"></div>
+      <details><summary class="hint">Multiple-choice options (optional)</summary>
+        <textarea id="choices" rows="3" placeholder="one option per line"></textarea></details>
+    </form>
+  </section>
+
+  <section class="panel" id="answerPanel">
+    <h2>3 · Answer <small>every reference is clickable and highlights the part on the diagram</small></h2>
+    <div class="answer-grid">
+      <div>
+        <div class="pipe" id="pipe-EX-wrap"><div id="pipes-main"></div></div>
+      </div>
+      <div>
+        <div id="exAnswer" class="exanswer"><p class="hint">Extract the graph, then ask a question. The answer explains the diagram and cites its parts; click a reference to see it on the image.</p></div>
+        <div id="exRefs"></div>
+      </div>
+    </div>
+    <details id="compareBox">
+      <summary><b>Compare with plain AI</b> <span class="hint">E1 OCR text only · E2 image only · E3 graph query (the evaluated conditions)</span></summary>
+      <div class="row small"><button type="button" id="compareBtn">Run the comparison for this question</button><span class="hint">They run one after another on the same GPU (≈1–2 min).</span></div>
+      <div class="legend"><span class="lg st-pending">waiting</span><span class="lg st-running">running</span><span class="lg st-done">done</span><span class="lg st-skipped">not needed</span><span class="lg st-error">error</span></div>
+      <div class="pipes" id="pipes"></div>
+    </details>
+  </section>
+</main>
+
+<main id="tab-eval" hidden>
+  <section class="panel wide">
+    <div class="row"><h2 style="margin:0">Evaluation results</h2><select id="runs"></select></div>
+    <div id="evalBody"><p class="hint">Loading…</p></div>
+  </section>
+</main>
+<script src="/static/app.js?v=0.5.3"></script>
+</body>
+</html>
