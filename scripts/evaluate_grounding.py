@@ -49,7 +49,7 @@ from PIL import Image  # noqa: E402
 from studylens import qa_nl  # noqa: E402
 from studylens.datasets import ai2d  # noqa: E402
 from studylens.evalkit import Cache, accuracy, mcnemar_exact, norm  # noqa: E402
-from studylens.pipelines import collect, combine_e3, run_explain  # noqa: E402
+from studylens.pipelines import collect, combine_e3, route_e3, run_explain  # noqa: E402
 from studylens.query import structured_answer  # noqa: E402
 from studylens.schema import DiagramGraph  # noqa: E402
 
@@ -62,9 +62,9 @@ Reply with ONLY JSON: {"explanation": "...", "parts": [{"name": "...", "bbox_2d"
 FLOW_CATS = {"foodChainsWebs", "lifeCycles", "waterCNPCycle", "rockCycle", "photosynthesisRespiration"}
 
 
-def sample(n_parts: int, n_flow: int, seed: int, q_per: int):
+def sample(n_parts: int, n_flow: int, seed: int, q_per: int, exclude: set[str] | None = None):
     rng = random.Random(seed)
-    test = ai2d.load("test")
+    test = [d for d in ai2d.load("test") if d.image_id not in (exclude or set())]
     anns = {}
     parts_pool, flow_pool = [], []
     for d in test:
@@ -114,8 +114,16 @@ def main(argv=None) -> int:
     ap.add_argument("--q-per-diagram", type=int, default=3)
     ap.add_argument("--seed", type=int, default=458)
     ap.add_argument("--summarize-only", action="store_true")
+    ap.add_argument("--tag", default="", help="system version: '' = Phase-2 system; 'v2' = learned grouping + "
+                    "explain-and-box + routed E3; 'v3' = v2 + DSG adapter (set QWEN_ADAPTER_PATH, ADAPTER_KIND=dsg)")
+    ap.add_argument("--exclude", default="", help="file of AI2D image ids to leave out of the sample (e.g. the dev set)")
+    ap.add_argument("--write-ids", default="", help="write the sampled image ids to this file")
     args = ap.parse_args(argv)
-    diagrams, items, golds = sample(args.n_parts, args.n_flow, args.seed, args.q_per_diagram)
+    exclude = set(Path(args.exclude).read_text().split()) if args.exclude else set()
+    diagrams, items, golds = sample(args.n_parts, args.n_flow, args.seed, args.q_per_diagram, exclude)
+    if args.write_ids:
+        Path(args.write_ids).write_text("\n".join(d.image_id for d in diagrams) + "\n")
+    K = key_fn(args.tag)
     print(f"{len(diagrams)} diagrams, {len(items)} questions", flush=True)
     cache = Cache(CACHE)
     vlm = ocr = dsg = None
@@ -136,13 +144,13 @@ def main(argv=None) -> int:
         if vlm is None:
             break
         img = Image.open(d.image_path).convert("RGB")
-        if cache.get(f"dsg|{d.image_id}") is None:
+        if cache.get(K("dsg", d.image_id)) is None:
             g = dsg.extract(img)
-            cache.put(f"dsg|{d.image_id}", {"graph": g.to_dict(), "latency_s": round(dsg.last_latency_s, 1)})
-        g = DiagramGraph.from_dict(cache.get(f"dsg|{d.image_id}")["graph"])
-        if cache.get(f"ours|{d.image_id}") is None:
+            cache.put(K("dsg", d.image_id), {"graph": g.to_dict(), "latency_s": round(dsg.last_latency_s, 1)})
+        g = DiagramGraph.from_dict(cache.get(K("dsg", d.image_id))["graph"])
+        if cache.get(K("ours", d.image_id)) is None:
             r = collect(run_explain(vlm, img, g, WALK_Q, locator=dsg.ground))
-            cache.put(f"ours|{d.image_id}", r)
+            cache.put(K("ours", d.image_id), r)
         if cache.get(f"b2|{d.image_id}") is None:
             ts = time.perf_counter()
             raw, scale = vlm._generate(img, B2_PROMPT, 700)
@@ -150,29 +158,35 @@ def main(argv=None) -> int:
         for q in by_img[d.image_id]:
             if cache.get(f"E2|{q.qid}") is None:
                 cache.put(f"E2|{q.qid}", qa_nl.direct_answer(vlm, img, q.text, q.choices))
-            if cache.get(f"Q|{q.qid}") is None:
-                cache.put(f"Q|{q.qid}", structured_answer(q.text, g, q.choices, parser=vlm))
-            s = cache.get(f"Q|{q.qid}")
-            if s["status"] != "answered" and cache.get(f"F|{q.qid}") is None:
+            if cache.get(K("Q", q.qid)) is None:
+                cache.put(K("Q", q.qid), structured_answer(q.text, g, q.choices, parser=vlm))
+            s = cache.get(K("Q", q.qid))
+            if not args.tag and s["status"] != "answered" and cache.get(f"F|{q.qid}") is None:
                 cache.put(f"F|{q.qid}", qa_nl.grounded_answer(vlm, img, q.text, g, q.choices))
         print(f"[{i + 1}/{len(diagrams)}] {d.image_id} ({d.category}) {time.time() - t0:.0f}s", flush=True)
     out = summarize(diagrams, items, golds, cache, args)
     RESULTS.mkdir(exist_ok=True)
-    (RESULTS / "grounding_eval.json").write_text(json.dumps(out, indent=1))
+    (RESULTS / f"grounding_eval{'_' + args.tag if args.tag else ''}{'_test' if args.exclude else ''}.json").write_text(json.dumps(out, indent=1))
     print(json.dumps(out["summary"], indent=1))
     if ocr is not None:
         ocr.close()
     return 0
 
 
+def key_fn(tag: str):
+    """Cache key per system version; the B2 baseline and E2 answers do not depend on it."""
+    return lambda kind, ident: f"{kind}{'_' + tag if tag and kind in ('dsg', 'ours', 'Q') else ''}|{ident}"
+
+
 def summarize(diagrams, items, golds, cache: Cache, args) -> dict:
+    K = key_fn(getattr(args, "tag", ""))
     per_diag = []
     agg = {s: {"refs": 0, "matched": 0, "hits": 0, "gold": 0, "covered": 0, "unmatched": 0} for s in ("OURS", "B2")}
     flow = {"cited": 0, "gold": 0}
     invented = {"OURS": 0, "B2": 0}
     region = defaultdict(lambda: [0, 0])
     for d in diagrams:
-        dg, ours, b2 = cache.get(f"dsg|{d.image_id}"), cache.get(f"ours|{d.image_id}"), cache.get(f"b2|{d.image_id}")
+        dg, ours, b2 = cache.get(K("dsg", d.image_id)), cache.get(K("ours", d.image_id)), cache.get(f"b2|{d.image_id}")
         if not (dg and ours and b2):
             continue
         gold = golds.get(d.image_id, {})
@@ -232,10 +246,18 @@ def summarize(diagrams, items, golds, cache: Cache, args) -> dict:
                                             for k, v in region.items()}
     # multiple choice
     recs = []
+    tagged = bool(getattr(args, "tag", ""))
     for d, q in items:
-        e2, s = cache.get(f"E2|{q.qid}"), cache.get(f"Q|{q.qid}")
-        dg = cache.get(f"dsg|{d.image_id}")
+        e2, s = cache.get(f"E2|{q.qid}"), cache.get(K("Q", q.qid))
+        dg = cache.get(K("dsg", d.image_id))
         if not (e2 and s and dg):
+            continue
+        if tagged:  # routed policy: graph answer for rule-parsed questions, else the image-only answer (E2)
+            res = route_e3(s, e2)
+            recs.append({"qid": q.qid, "category": d.category, "E2": int(e2.get("choice_index") == q.answer),
+                         "E3": int(res.get("choice_index") == q.answer), "E3_abstained": 0,
+                         "E3_no_abstain": int(res.get("choice_index") == q.answer), "query_status": s["status"],
+                         "graph_used": int(res.get("source") == "graph_query")})
             continue
         f = cache.get(f"F|{q.qid}")
         if s["status"] != "answered" and f is None:

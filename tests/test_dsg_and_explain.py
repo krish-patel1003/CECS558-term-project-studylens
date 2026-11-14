@@ -107,3 +107,37 @@ def test_run_explain_with_stub_model():
     res = ev[-1]["result"]
     assert res["status"] == "explained" and any(r["kind"] == "flow" for r in res["references"])
     assert pipelines.collect(pipelines.run_explain(None, Image.new("RGB", (8, 8)), chain_graph(), "q"))["status"] == "error"
+
+
+def test_parse_explain_json_and_answer_boxes():
+    from studylens.explain import augment_with_answer_boxes, parse_explain_json
+    raw = ('{"explanation": "The algae are eaten by the water flea.\\nThen the Gills breathe.", "parts": ['
+           '{"name": "Algae", "bbox_2d": [100, 0, 140, 20]}, {"name": "water flea", "bbox_2d": [40, 0, 60, 20]}, '
+           '{"name": "Gills", "bbox_2d": [0, 40, 20, 60]}, {"name": "Dragon", "bbox_2d": [0, 0, 9, 9]}, {"name": "Small fish", "bbox_2d"')
+    text, parts = parse_explain_json(raw, (2.0, 2.0))
+    assert text.startswith("The algae") and "\n" in text and [p["name"] for p in parts] == ["Algae", "water flea", "Gills", "Dragon"]
+    assert parts[0]["bbox"] == [50.0, 0.0, 70.0, 10.0]
+    g = chain_graph()
+    g.image_size = [200, 100]
+    g.nodes[1].label_bbox = [18, 0, 32, 10]          # water flea's label text sits where its box is centred
+    g.texts = [{"id": "t9", "text": "gills", "box": [0, 0, 5, 5]}]
+    g2, st = augment_with_answer_boxes(g, parts)
+    assert g2.nodes[0].bbox == [50.0, 0.0, 70.0, 10.0] and g2.nodes[0].region_source == "answer"
+    assert st == {"answer_boxes": 1, "rejected_on_label": 1, "added_from_text": 1, "unverified": 1}
+    assert g.nodes[0].bbox == [0, 0, 10, 10]          # the original graph is not modified
+    assert parse_explain_json("Plain text answer.")[0] == "Plain text answer."
+
+
+def test_learned_grouping_path_merges_or_splits_by_model():
+    img = boxed_image()
+    texts = number_texts([{"text": "Load", "score": 0.99, "box": [290, 65, 340, 85]},
+                          {"text": "Balancer", "score": 0.99, "box": [280, 92, 350, 112]},
+                          {"text": "Nucleus", "score": 0.99, "box": [150, 140, 220, 156]},
+                          {"text": "Ribosome", "score": 0.99, "box": [150, 162, 230, 178]}])
+    n = len(__import__("studylens.dsg", fromlist=["pair_features"]).pair_features(texts[0], texts[1], {}, 16, img.size))
+    always = {"mean": [0.0] * n, "scale": [1.0] * n, "coef": [0.0] * n, "intercept": 5.0, "threshold": 0.5}
+    never = {**always, "intercept": -5.0}
+    merged, _ = group_parts(texts, binarise(img), img.size, model=always)
+    split, _ = group_parts(texts, binarise(img), img.size, model=never)
+    assert len(split) == 4 and len(merged) < 4
+    assert "Load Balancer" in {p["label"] for p in merged}

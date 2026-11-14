@@ -148,7 +148,9 @@ def test_run_pipelines_with_stub_models():
     res = ev[-1]["result"]
     assert res["status"] == "graph_answer" and res["answer_nodes"] == ["n4"] and res["explanation"]
     res2 = pipelines.collect(pipelines.run_e3(vlm, img, g, "What colour is the fox?"))
-    assert res2["source"] == "model_fallback" and res2["status"] == "grounded"
+    assert res2["source"] == "model_direct" and res2["status"] == "image_only"
+    res3 = pipelines.collect(pipelines.run_e3(vlm, img, g, "What colour is the fox?", policy="v1"))
+    assert res3["source"] == "model_fallback" and res3["status"] == "grounded"
     r1 = pipelines.collect(pipelines.run_e1(vlm, StubOCR(), img, "What eats grass?", ["Fox", "Rabbit"]))
     assert r1["choice_index"] == 0 and r1["ocr_lines"][0]["text"] == "Fox"
     assert pipelines.collect(pipelines.run_e2(None, img, "q"))["status"] == "error"

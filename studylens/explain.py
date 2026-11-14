@@ -35,6 +35,101 @@ Answer in 3 to 6 sentences (use numbered steps if you describe a process or a fl
 
 _LOCATE = re.compile(r"\{\s*locate\s*:\s*([^}]{1,60})\}", re.I)
 
+# Explain-and-box (default since the AI2D dev analysis): the model explains AND boxes each part it
+# mentions in the same answer. On 100 AI2D dev diagrams its in-answer boxes were right 66% of the time
+# for the same part names where a separate "box each of these labels" call was right 47%.
+EXPLAIN_BOX_PROMPT = """You are a tutor helping a student understand this diagram.
+Parts labelled in the diagram: {names}
+Arrows extracted from the diagram (A -> B means an arrow from A to B; the extraction may contain mistakes, the image is the final authority):
+{arrows}
+{facts}
+Student's question: {question}
+
+Answer in 3 to 6 sentences (use numbered steps if you describe a process or a flow). Mention parts by their names exactly as labelled in the diagram. If the diagram does not show what is asked, say so.
+Then list every part you mentioned with its bounding box in this image.
+Reply with ONLY JSON: {{"explanation": "...", "parts": [{{"name": "...", "bbox_2d": [x1, y1, x2, y2]}}]}}"""
+
+_EXPL = re.compile(r'"explanation"\s*:\s*"((?:[^"\\]|\\.)*)', re.S)
+_PART_BOX = re.compile(r'"name"\s*:\s*"([^"]+)"\s*,\s*"bbox_2d"\s*:\s*\[\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)')
+
+
+def parse_explain_json(raw: str, scale: tuple[float, float] = (1.0, 1.0)) -> tuple[str, list[dict]]:
+    """(explanation text, [{"name", "bbox"} in original pixels]); tolerant of truncated JSON and of
+    plain-text answers (then there are no boxes)."""
+    import json as _json
+
+    raw = raw or ""
+    sx, sy = scale
+    parts = [{"name": m.group(1).strip(), "bbox": [float(m.group(2)) / sx, float(m.group(3)) / sy,
+                                                   float(m.group(4)) / sx, float(m.group(5)) / sy]}
+             for m in _PART_BOX.finditer(raw)]
+    m = _EXPL.search(raw)
+    if m:
+        try:
+            text = _json.loads('"' + m.group(1) + '"')
+        except ValueError:
+            text = m.group(1).replace('\\n', '\n').replace('\\"', '"')
+    else:
+        text = re.sub(r"```(?:json)?|```", "", raw).strip()
+    return text.strip(), parts
+
+
+def _norm_name(s: str) -> str:
+    return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9 ]+", " ", str(s).lower())).strip()
+
+
+def _on_label_text(box, label_box, size) -> bool:
+    """The box is centred on the part's own label text (a common grounding mistake), not on the part."""
+    if not label_box:
+        return False
+    W, H = size or (1000, 1000)
+    pad = 0.01 * max(W, H)
+    cx, cy = (box[0] + box[2]) / 2, (box[1] + box[3]) / 2
+    return label_box[0] - pad <= cx <= label_box[2] + pad and label_box[1] - pad <= cy <= label_box[3] + pad
+
+
+def augment_with_answer_boxes(graph: DiagramGraph, parts: list[dict]) -> tuple[DiagramGraph, dict]:
+    """Use the model's in-answer boxes for scene-graph parts (when not centred on the label text), and add
+    parts the model named that the scene graph lacks but whose name is text read in the diagram
+    (verified by OCR; never invented). Returns (graph copy, stats)."""
+    import difflib
+    import copy
+
+    g = copy.deepcopy(graph)
+    size = tuple(g.image_size) if g.image_size else None
+    by_name = {_norm_name(n.label): n for n in g.nodes}
+    texts = [_norm_name(t.get("text", "")) for t in (g.texts or [])]
+    stats = {"answer_boxes": 0, "rejected_on_label": 0, "added_from_text": 0, "unverified": 0}
+    seen = set()
+    for p in parts:
+        k = _norm_name(p["name"])
+        if not k or k in seen:
+            continue
+        seen.add(k)
+        n = by_name.get(k)
+        if n is None:
+            close = difflib.get_close_matches(k, list(by_name), n=1, cutoff=0.85)
+            n = by_name[close[0]] if close else None
+        b = p["bbox"]
+        if size:
+            b = [max(0.0, min(size[0], b[0])), max(0.0, min(size[1], b[1])), max(0.0, min(size[0], b[2])), max(0.0, min(size[1], b[3]))]
+        if b[2] - b[0] < 2 or b[3] - b[1] < 2:
+            continue
+        if n is not None:
+            if _on_label_text(b, getattr(n, "label_bbox", None), size):
+                stats["rejected_on_label"] += 1
+                continue
+            n.bbox, n.region_source = b, "answer"
+            stats["answer_boxes"] += 1
+        elif any(k == t or (len(k) > 3 and (k in t or t in k)) for t in texts if t):
+            from .schema import Node
+            g.nodes.append(Node(id=f"a{len(g.nodes) + 1}", label=p["name"].strip(), bbox=b, region_source="answer"))
+            by_name[k] = g.nodes[-1]
+            stats["added_from_text"] += 1
+        else:
+            stats["unverified"] += 1  # named something not in the diagram's text: no reference
+    return g, stats
+
 
 def serialise(graph: DiagramGraph) -> tuple[str, str, dict[str, Any]]:
     names = ", ".join(f'"{n.label}"' for n in graph.nodes) or "(none found)"

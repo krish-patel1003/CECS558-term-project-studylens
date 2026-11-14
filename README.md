@@ -114,6 +114,14 @@ redistribution). Train it with `scripts/get_ai2d.py --accept-license` then `scri
 (see [`docs/model_and_prompts.md`](docs/model_and_prompts.md#fine-tuning-what-we-trained)), or run
 zero-shot by leaving `QWEN_ADAPTER_PATH` empty.
 
+**Scene-graph adapter and learned grouping (final phase, in progress).** Two models address the failures
+measured on AI2D (`docs/evaluation.md`, section 2):
+- `scripts/ocr_ai2d_train.py` then `scripts/train_grouping.py`: a small classifier, trained on AI2D train,
+  that decides which OCR lines form one label (`checkpoints/grouping_model.json`, used automatically when present).
+- `scripts/train_dsg_lora.py` (GPU; `notebooks/colab_train_dsg.ipynb` for an A100): one LoRA adapter for
+  grounding labels to parts and reading arrows. Use it with `QWEN_ADAPTER_PATH=checkpoints/dsg_lora` and
+  `ADAPTER_KIND=dsg`.
+
 ## Configuration
 
 All settings are environment variables (or a local, git-ignored `.env`). See [`.env.example`](.env.example).
@@ -168,6 +176,7 @@ python scripts/evaluate.py --no-model                                # pilot, go
 python scripts/evaluate.py --adapter checkpoints/ai2d_lora_r16       # pilot E1/E2/E3 (~2.5 h on an M4, resumable)
 python scripts/get_ai2d.py --accept-license                          # AI2D into external/ (git-ignored)
 python scripts/evaluate_grounding.py --n-parts 60 --n-flow 40       # grounded explanations on AI2D (~6 h on an M4)
+python scripts/evaluate_grounding.py --n-parts 60 --n-flow 40 --tag v2   # same, current system (learned grouping, explain-and-box, routed E3)
 python scripts/evaluate_ai2d.py --adapter checkpoints/ai2d_lora_r16  # AI2D test split (several hours, resumable)
 # full runs on a GPU: notebooks/colab_full_eval.ipynb
 ```

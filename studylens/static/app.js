@@ -198,7 +198,7 @@ function renderGraph() {
   if (!graph.edges.length) { const d = document.createElement("div"); d.textContent = "No arrows were extracted. E3 can only answer from the image for this diagram (labelled as image-only, without evidence). Add arrows below if the diagram has them."; $("warnings").append(d); }
   for (const n of graph.nodes) {
     const li = document.createElement("li");
-    const RS = { shape: ["box", "region = enclosing shape (image analysis)"], grounded: ["AI", "region located by the model (approximate)"], label: ["text", "only the label position is known"] };
+    const RS = { shape: ["box", "region = enclosing shape (image analysis)"], grounded: ["AI", "region located by the model (approximate)"], answer: ["AI", "region boxed by the model in its answer (approximate)"], label: ["text", "only the label position is known"] };
     const rs = RS[n.region_source];
     li.innerHTML = `<span>${esc(n.label)}</span>${rs ? `<span class="rsrc ${esc(n.region_source)}" title="${rs[1]}">${rs[0]}</span>` : ""}`;
     if (answerNodes.has(n.id)) li.className = "ev"; nl.append(li);
@@ -449,7 +449,7 @@ const E3STATUS = {
   abstained: ["warn", "Abstained", "No arrow in the extracted graph supports an answer, so nothing is guessed. If the diagram does show one, add it in step 1 and ask again."],
   grounded: ["ok", "Model answer, cites graph arrows", "The graph query could not apply; the model's cited arrows exist and involve its answer."],
   unsupported: ["warn", "Model answer, NOT supported by the graph", "The graph query could not apply and no extracted arrow supports this answer. It comes from the image alone; treat it with caution."],
-  image_only: ["warn", "Image-only answer", "No arrows were extracted from this diagram, so the answer comes from the image alone and has no evidence."],
+  image_only: ["warn", "Image-only answer", "Not a structural question the graph can answer exactly (or no arrows were extracted), so the answer comes from the image alone and has no evidence."],
   error: ["err", "Error", ""],
 };
 

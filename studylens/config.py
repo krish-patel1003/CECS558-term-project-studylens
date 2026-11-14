@@ -36,6 +36,9 @@ class Settings:
     max_image_side: int = _int("QWEN_MAX_IMAGE_SIDE", 1024)
     # LoRA adapter for extraction produced by scripts/train_lora.py ("" = zero-shot base model)
     qwen_adapter_path: str = os.environ.get("QWEN_ADAPTER_PATH", "")
+    # "extraction": legacy whole-graph adapter (scripts/train_lora.py); "dsg": grounding + arrows adapter
+    # (scripts/train_dsg_lora.py), used by the Diagram Scene Graph calls only
+    adapter_kind: str = os.environ.get("ADAPTER_KIND", "extraction")
     # "dsg" = OCR-anchored Diagram Scene Graph (needs the OCR venv); "legacy" = one-call JSON extraction
     extraction_mode: str = os.environ.get("EXTRACTION_MODE", "dsg")
     max_upload_mb: int = _int("MAX_UPLOAD_MB", 10)

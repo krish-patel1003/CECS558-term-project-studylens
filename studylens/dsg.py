@@ -39,6 +39,35 @@ GROUND_PROMPT = ("For each label below, locate the part of the diagram it names 
                  "connected by a line to a drawing, give the box of the PART the line points to, not of the label text. "
                  "Otherwise give the box of the object or region the label names.\n"
                  "Labels: {labels}\nReply with ONLY a JSON list: [{{\"label\": \"...\", \"bbox_2d\": [x1, y1, x2, y2]}}]")
+# Grounding prompt used with the DSG adapter (scripts/train_dsg_lora.py): leader-line labels -> the point
+# where the line ends on the part (AI2D's annotation), region labels -> the region's box.
+GROUND_PROMPT_V2 = ("For each label below, find the part of the diagram it names. If the label is connected to the drawing "
+                    "by a line, give the point where that line ends on the part as point_2d. If the label names an object or "
+                    "region, give its bounding box as bbox_2d.\n"
+                    "Labels: {labels}\nReply with ONLY a JSON list: [{{\"label\": \"...\", \"point_2d\": [x, y]}} or "
+                    "{{\"label\": \"...\", \"bbox_2d\": [x1, y1, x2, y2]}}]")
+_POINTED = re.compile(r'"label"\s*:\s*"([^"]*)"\s*,\s*"point_2d"\s*:\s*\[\s*([\d.]+)\s*,\s*([\d.]+)\s*\]')
+POINT_BOX_FRAC = 0.04  # a predicted point is highlighted as a square of 4% of the image's longer side
+
+
+def parse_grounding(raw: str, scale: tuple[float, float], size: tuple[int, int]) -> dict[str, list[float]]:
+    """{label lower: box in original pixels} from bbox_2d and/or point_2d answers (model-grid coordinates)."""
+    sx, sy = scale
+    W, H = size
+    out: dict[str, list[float]] = {}
+    for m in _GROUNDED.finditer(raw or ""):
+        b = [float(m.group(2)) / sx, float(m.group(3)) / sy, float(m.group(4)) / sx, float(m.group(5)) / sy]
+        b = [max(0.0, min(W, b[0])), max(0.0, min(H, b[1])), max(0.0, min(W, b[2])), max(0.0, min(H, b[3]))]
+        if b[2] - b[0] > 2 and b[3] - b[1] > 2:
+            out.setdefault(m.group(1).strip().lower(), b)
+    half = POINT_BOX_FRAC * max(W, H) / 2
+    for m in _POINTED.finditer(raw or ""):
+        x, y = float(m.group(2)) / sx, float(m.group(3)) / sy
+        if 0 <= x <= W and 0 <= y <= H:
+            out.setdefault(m.group(1).strip().lower(), [max(0.0, x - half), max(0.0, y - half), min(W, x + half), min(H, y + half)])
+    return out
+
+
 _GROUNDED = re.compile(r'"label"\s*:\s*"([^"]*)"\s*,\s*"bbox_2d"\s*:\s*\[\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)')
 
 _BOX = re.compile(r"\[\s*(-?[\d.]+)\s*,\s*(-?[\d.]+)\s*,\s*(-?[\d.]+)\s*,\s*(-?[\d.]+)\s*\]")
@@ -73,7 +102,139 @@ def _iou(a, b) -> float:
     return ix * iy / u if u > 0 else 0.0
 
 
-def group_parts(texts: list[dict], ink, size: tuple[int, int]) -> tuple[list[dict], str | None]:
+# --------------------------------------------------------------------------- learned grouping
+# A logistic regression over layout features of neighbouring OCR lines decides "same label?"
+# (trained on AI2D train by scripts/train_grouping.py; weights in checkpoints/grouping_model.json).
+def _leader_ink(ink, box, med_h) -> float:
+    """Ink density in thin horizontal bands just left/right of a text line at its vertical centre
+    (a leader line starting at the label shows up here). Max of the two sides."""
+    if ink is None:
+        return 0.0
+    H, W = ink.shape
+    cy = int((box[1] + box[3]) / 2)
+    y0, y1 = max(0, cy - 2), min(H, cy + 3)
+    L = int(max(6, 2 * med_h))
+    best = 0.0
+    for x0, x1 in ((int(box[0]) - L - 2, int(box[0]) - 2), (int(box[2]) + 2, int(box[2]) + L + 2)):
+        x0, x1 = max(0, x0), min(W, x1)
+        if x1 - x0 > 3 and y1 > y0:
+            best = max(best, float(ink[y0:y1, x0:x1].any(axis=0).mean()))
+    return best
+
+
+def candidate_pairs(texts: list[dict], shapes: dict, med_h: float) -> list[tuple[dict, dict]]:
+    """Pairs of lines that could belong to one label: a line and the lines just below it (vertical gap
+    under 2.5 line heights, overlapping or near horizontally), lines on the same row with a small gap,
+    and lines inside the same enclosing shape."""
+    out, seen = [], set()
+    for a in texts:
+        for b in texts:
+            if a is b:
+                continue
+            key = tuple(sorted((a["id"], b["id"])))
+            if key in seen:
+                continue
+            ab, bb = a["box"], b["box"]
+            gap_y = bb[1] - ab[3]
+            ov_x = min(ab[2], bb[2]) - max(ab[0], bb[0])
+            ov_y = min(ab[3], bb[3]) - max(ab[1], bb[1])
+            gap_x = max(bb[0] - ab[2], ab[0] - bb[2])
+            below = (bb[1] + bb[3]) / 2 > (ab[1] + ab[3]) / 2 and -0.5 * med_h <= gap_y <= 2.5 * med_h and ov_x > -1.0 * med_h
+            same_row = ov_y > 0.5 * min(ab[3] - ab[1], bb[3] - bb[1]) and 0 <= gap_x <= 1.5 * med_h and ab[0] < bb[0]
+            sa, sb = shapes.get(a["id"]), shapes.get(b["id"])
+            same_shape = sa is not None and sb is not None and _iou(sa, sb) > 0.8
+            if below or same_row or same_shape:
+                seen.add(key)
+                out.append((a, b) if (ab[1], ab[0]) <= (bb[1], bb[0]) else (b, a))
+    return out
+
+
+def pair_features(a: dict, b: dict, shapes: dict, med_h: float, size, ink=None) -> list[float]:
+    import math as _m
+
+    ab, bb = a["box"], b["box"]
+    ha, hb = max(1.0, ab[3] - ab[1]), max(1.0, bb[3] - bb[1])
+    wa, wb = max(1.0, ab[2] - ab[0]), max(1.0, bb[2] - bb[0])
+    gap_y = (bb[1] - ab[3]) / med_h
+    gap_x = max(bb[0] - ab[2], ab[0] - bb[2], 0) / med_h
+    ov_x = (min(ab[2], bb[2]) - max(ab[0], bb[0])) / min(wa, wb)
+    ov_y = (min(ab[3], bb[3]) - max(ab[1], bb[1])) / min(ha, hb)
+    sa, sb = shapes.get(a["id"]), shapes.get(b["id"])
+    same_shape = float(sa is not None and sb is not None and _iou(sa, sb) > 0.8)
+    ta, tb = a["text"].strip(), b["text"].strip()
+    return [gap_y, min(gap_x, 5.0), ov_x, max(-2.0, ov_y),
+            abs(ab[0] - bb[0]) / med_h, abs((ab[0] + ab[2]) / 2 - (bb[0] + bb[2]) / 2) / med_h, abs(ab[2] - bb[2]) / med_h,
+            _m.log(ha / hb), _m.log(wa / wb), ha / med_h,
+            same_shape, float(sa is not None or sb is not None),
+            float(ta[-1:] in ".:;!?"), float(tb[:1].islower()), float(ta[-1:] in "-,("),
+            min(len(ta.split()), 8) / 8, min(len(tb.split()), 8) / 8,
+            _leader_ink(ink, ab, med_h), _leader_ink(ink, bb, med_h)]
+
+
+def load_grouping_model(path=None) -> dict | None:
+    from pathlib import Path
+
+    p = Path(path) if path else Path(__file__).resolve().parent.parent / "checkpoints" / "grouping_model.json"
+    try:
+        return json.loads(p.read_text())
+    except (OSError, ValueError):
+        return None
+
+
+def _same_label_prob(model: dict, f: list[float]) -> float:
+    import math as _m
+
+    z = model["intercept"] + sum(c * (x - m) / (s or 1.0) for c, x, m, s in zip(model["coef"], f, model["mean"], model["scale"]))
+    return 1.0 / (1.0 + _m.exp(-max(-30.0, min(30.0, z))))
+
+
+def group_parts(texts: list[dict], ink, size: tuple[int, int], model: dict | None = None) -> tuple[list[dict], str | None]:
+    """OCR lines -> part labels. With ``model`` (learned, see scripts/train_grouping.py): union of
+    candidate pairs the classifier calls "same label"; a shape shared by several labels is not used as
+    any one label's region. Without: the original hand rule (``group_parts_rule``)."""
+    if model is None:
+        return group_parts_rule(texts, ink, size)
+    W, H = size
+    shapes = {t["id"]: enclosing_box(ink, t["box"]) for t in texts}
+    heights = sorted(t["box"][3] - t["box"][1] for t in texts) or [10]
+    med_h = max(1.0, heights[len(heights) // 2])
+    free = [t for t in texts if shapes[t["id"]] is None]
+    tops = sorted([t for t in free if (t["box"][1] + t["box"][3]) / 2 < 0.10 * H], key=lambda t: t["box"][1])
+    title = tops[0]["id"] if tops and len(tops) <= 2 else None
+    parent = {t["id"]: t["id"] for t in texts}
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    for a, b in candidate_pairs(texts, shapes, med_h):
+        if title in (a["id"], b["id"]):
+            continue
+        if _same_label_prob(model, pair_features(a, b, shapes, med_h, size, ink)) >= model.get("threshold", 0.5):
+            parent[find(a["id"])] = find(b["id"])
+    groups: dict[str, list[dict]] = {}
+    for t in texts:
+        if t["id"] != title:
+            groups.setdefault(find(t["id"]), []).append(t)
+    parts = []
+    for g in groups.values():
+        g = sorted(g, key=lambda t: (t["box"][1], t["box"][0]))
+        sh = shapes[g[0]["id"]]
+        if sh is not None and not all(shapes[t["id"]] is not None and _iou(shapes[t["id"]], sh) > 0.8 for t in g):
+            sh = None
+        parts.append({"text_ids": [t["id"] for t in g], "label": " ".join(t["text"] for t in g).strip(),
+                      "label_box": _union([t["box"] for t in g]), "shape": sh})
+    # a shape that encloses several labels (e.g. a cell outline) is not the region of any one of them
+    for p in parts:
+        if p["shape"] is not None and sum(q["shape"] is not None and _iou(q["shape"], p["shape"]) > 0.8 for q in parts) > 1:
+            p["shape"] = None
+    parts.sort(key=lambda q: (round(((q["label_box"][1] + q["label_box"][3]) / 2) / 12), q["label_box"][0]))
+    return parts, title
+
+
+def group_parts_rule(texts: list[dict], ink, size: tuple[int, int]) -> tuple[list[dict], str | None]:
     """Deterministic grouping of OCR lines into part labels (no AI).
 
     * lines inside the same enclosing shape form one part (multi-line box labels);
@@ -175,8 +336,15 @@ class DSGExtractor:
 
     name = "dsg (PaddleOCR + Qwen2.5-VL structure + regions)"
 
-    def __init__(self, vlm, ocr, max_grounding: int = 24):
+    def __init__(self, vlm, ocr, max_grounding: int = 24, use_adapter: bool | None = None):
         self.vlm, self.ocr, self.max_grounding = vlm, ocr, max_grounding
+        # The DSG adapter (scripts/train_dsg_lora.py) is used for grounding and arrows when the loaded
+        # adapter is a DSG adapter (ADAPTER_KIND=dsg); question answering always uses the base weights.
+        if use_adapter is None:
+            from .config import settings
+            use_adapter = bool(getattr(vlm, "has_adapter", False)) and settings.adapter_kind == "dsg"
+        self.use_adapter = use_adapter
+        self.grouping = load_grouping_model()  # learned text grouping if trained, else the hand rule
         self.last_raw_output: str | None = None
         self.last_latency_s: float | None = None
 
@@ -185,15 +353,10 @@ class DSGExtractor:
         call per label and ~2x faster). Returns {label: box in original pixels}."""
         if not labels:
             return {}
-        raw, (sx, sy) = self.vlm._generate(image, GROUND_PROMPT.format(labels=json.dumps(labels)), 30 * len(labels) + 40)
-        W, H = image.size
-        out = {}
-        for m in _GROUNDED.finditer(raw or ""):
-            b = [float(m.group(2)) / sx, float(m.group(3)) / sy, float(m.group(4)) / sx, float(m.group(5)) / sy]
-            b = [max(0.0, min(W, b[0])), max(0.0, min(H, b[1])), max(0.0, min(W, b[2])), max(0.0, min(H, b[3]))]
-            if b[2] - b[0] > 2 and b[3] - b[1] > 2:
-                out[m.group(1).strip().lower()] = b
-        return out
+        tmpl = GROUND_PROMPT_V2 if self.use_adapter else GROUND_PROMPT
+        raw, scale = self.vlm._generate(image, tmpl.format(labels=json.dumps(labels, ensure_ascii=False)), 30 * len(labels) + 40,
+                                        use_adapter=self.use_adapter)
+        return parse_grounding(raw, scale, image.size)
 
     def extract_stream(self, image: Image.Image, ocr_lines: list[dict] | None = None) -> Iterator[dict]:
         t0 = time.perf_counter()
@@ -201,10 +364,13 @@ class DSGExtractor:
         lines = ocr_lines if ocr_lines is not None else self.ocr.read(image)
         texts = number_texts(lines)
         ink = binarise(image)
-        parts, title = group_parts(texts, ink, image.size)
+        parts, title = group_parts(texts, ink, image.size, model=self.grouping)
         yield {"stage": "ocr_done", "n_texts": len(texts), "entities": len(parts), "elapsed_s": round(time.perf_counter() - t0, 1)}
         yield {"stage": "structure"}
-        raw = self.vlm.generate(image, build_arrow_prompt(parts), max_new_tokens=min(3072, 18 * len(parts) + 80))
+        if self.use_adapter:
+            raw, _ = self.vlm._generate(image, build_arrow_prompt(parts), min(3072, 18 * len(parts) + 80), use_adapter=True)
+        else:
+            raw = self.vlm.generate(image, build_arrow_prompt(parts), max_new_tokens=min(3072, 18 * len(parts) + 80))
         self.last_raw_output = raw
         arrows, warnings = parse_arrows(raw, parts)
         yield {"stage": "structure_done", "entities": len(parts), "arrows": len(arrows), "elapsed_s": round(time.perf_counter() - t0, 1)}

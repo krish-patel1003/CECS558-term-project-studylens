@@ -60,12 +60,25 @@ def run_explain(vlm, image, graph: DiagramGraph, question: str, choices: list[st
     yield _ev("EX", "facts", "done" if s["status"] == "answered" else "skipped", status=s["status"], query=s["query"],
               parser=s["parser"], answer=s["answer"] if s["status"] == "answered" else None)
     yield _ev("EX", "explain", "running")
-    prompt = explain_mod.EXPLAIN_PROMPT.format(names=names, arrows=arrows, facts=explain_mod.facts_block(s, graph),
-                                               question=question)
-    raw = vlm.generate(image, prompt, max_new_tokens=250)
-    yield _ev("EX", "explain", "done", latency_s=vlm.last_latency_s)
+    facts = explain_mod.facts_block(s, graph)
+    if hasattr(vlm, "_generate"):  # explain-and-box: one call returns the explanation and a box per part
+        prompt = explain_mod.EXPLAIN_BOX_PROMPT.format(names=names, arrows=arrows, facts=facts, question=question)
+        t1 = time.perf_counter()
+        raw, scale = vlm._generate(image, prompt, 700)
+        latency = round(time.perf_counter() - t1, 2)
+    else:
+        prompt = explain_mod.EXPLAIN_PROMPT.format(names=names, arrows=arrows, facts=facts, question=question)
+        raw, scale = vlm.generate(image, prompt, max_new_tokens=250), (1.0, 1.0)
+        latency = getattr(vlm, "last_latency_s", None)
+    yield _ev("EX", "explain", "done", latency_s=latency)
     yield _ev("EX", "check", "running")
-    text, refs, stats = explain_mod.build_references(raw, graph, s)
+    body, parts = explain_mod.parse_explain_json(raw, scale)
+    g2, box_stats = explain_mod.augment_with_answer_boxes(graph, parts)
+    text, refs, stats = explain_mod.build_references(body, g2, s)
+    for r in refs:
+        if str(r.get("node", "")).startswith("a"):
+            r["provenance"] = "located"  # named by the model, verified against the diagram's OCR text
+    stats.update(box_stats)
     yield _ev("EX", "check", "done", n_refs=stats["n_refs"], mentions=stats["n_mentions"], flows=stats["n_flows"])
     if explain_mod._LOCATE.search(text) and locator is not None:
         yield _ev("EX", "locate", "running")
@@ -146,6 +159,28 @@ def combine_e3(s: dict, f: dict | None, graph: DiagramGraph, abstain_on_query_ab
             "evidence": [], "answer_nodes": [], "method": "Deterministic NetworkX query: no arrow supports an answer"}
 
 
+def trusted_query(s: dict) -> bool:
+    """The graph answer is used only when the question was parsed by the deterministic keyword rules.
+    On AI2D (100 dev diagrams) rule parses were 7/7 correct, Qwen-parser parses 15/22 (it routed
+    non-structural questions such as "outermost layer of the cell?" to the graph)."""
+    return s["status"] == "answered" and str(s.get("parser") or "").startswith("rules")
+
+
+def route_e3(s: dict, direct: dict | None) -> dict:
+    """E3 decision, ``routed`` policy (default since the AI2D dev analysis):
+    * question parsed by the keyword rules and answered by the graph query -> the graph answer;
+    * otherwise -> the model's answer from the image alone (``direct``, as E2). No abstention and no
+      graph in the model's prompt: a noisy graph in the prompt lowered accuracy (AI2D dev: 88 vs 91 of 96)."""
+    if trusted_query(s):
+        return combine_e3(s, None, DiagramGraph(nodes=[], edges=[]))
+    if direct is None:
+        return {"answer": None, "choice_index": None, "status": "error", "source": "model_direct", "evidence": [],
+                "answer_nodes": [], "method": "no model available"}
+    return {"answer": direct.get("answer"), "choice_index": direct.get("choice_index"), "status": "image_only",
+            "source": "model_direct", "evidence": [], "answer_nodes": [],
+            "method": "Not a rule-parsed structural question: Qwen2.5-VL answers from the image (as E2)"}
+
+
 def needs_fallback(s: dict, abstain_on_query_abstain: bool = True) -> bool:
     if s["status"] == "answered":
         return False
@@ -153,8 +188,10 @@ def needs_fallback(s: dict, abstain_on_query_abstain: bool = True) -> bool:
 
 
 def run_e3(vlm, image, graph: DiagramGraph, question: str, choices: list[str] | None = None,
-           explain: bool = True, abstain_on_query_abstain: bool = True) -> Iterator[dict]:
-    """Graph query first; the model's own (citation-checked) answer only if the query cannot apply."""
+           explain: bool = True, abstain_on_query_abstain: bool = True, policy: str = "routed") -> Iterator[dict]:
+    """Graph query first. ``policy="routed"`` (default): graph answer only for rule-parsed questions, else
+    the model's answer from the image. ``policy="v1"``: the Phase-2 pilot behaviour (abstain / checked
+    fallback with the graph in the prompt)."""
     t0 = time.perf_counter()
     yield _ev("E3", "image", "done")
     yield _ev("E3", "extract", "done", entities=len(graph.nodes), arrows=len(graph.edges), source=graph.source)
@@ -167,20 +204,30 @@ def run_e3(vlm, image, graph: DiagramGraph, question: str, choices: list[str] | 
         yield _ev("E3", "query", "skipped", status=s["status"], answer=s["answer"])
 
     explanation, f = None, None
-    if s["status"] == "answered" and explain and s["evidence"] and vlm is not None:
+    use_graph = trusted_query(s) if policy == "routed" else s["status"] == "answered"
+    if use_graph and explain and s["evidence"] and vlm is not None:
         yield _ev("E3", "explain", "running")
         x = qa_nl.explain(vlm, question, s["answer"], s["evidence"])
         explanation = x["text"]
         yield _ev("E3", "explain", "done", latency_s=x["latency_s"])
     else:
         yield _ev("E3", "explain", "skipped")
-    if needs_fallback(s, abstain_on_query_abstain) and vlm is not None:
-        yield _ev("E3", "fallback", "running")
-        f = qa_nl.grounded_answer(vlm, image, question, graph, choices)
-        yield _ev("E3", "fallback", "done", status=f["status"], latency_s=f["latency_s"])
+    if policy == "routed":
+        if not use_graph and vlm is not None:
+            yield _ev("E3", "fallback", "running")
+            f = qa_nl.direct_answer(vlm, image, question, choices)
+            yield _ev("E3", "fallback", "done", status="image_only", latency_s=f.get("latency_s"))
+        else:
+            yield _ev("E3", "fallback", "skipped")
+        res = route_e3(s, f)
     else:
-        yield _ev("E3", "fallback", "skipped")
-    res = combine_e3(s, f, graph, abstain_on_query_abstain)
+        if needs_fallback(s, abstain_on_query_abstain) and vlm is not None:
+            yield _ev("E3", "fallback", "running")
+            f = qa_nl.grounded_answer(vlm, image, question, graph, choices)
+            yield _ev("E3", "fallback", "done", status=f["status"], latency_s=f["latency_s"])
+        else:
+            yield _ev("E3", "fallback", "skipped")
+        res = combine_e3(s, f, graph, abstain_on_query_abstain)
     res.update(query=s, fallback=f, explanation=explanation, total_s=round(time.perf_counter() - t0, 2))
     yield _ev("E3", "answer", "done")
     yield {"pipeline": "E3", "result": res}
