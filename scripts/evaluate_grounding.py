@@ -20,7 +20,7 @@ Metrics
   * scene-graph region accuracy by region source (shape / grounded / label);
   * multiple-choice accuracy E2 vs E3 with McNemar.
 
-    python scripts/evaluate_grounding.py --n-parts 30 --n-flow 20        # ~3-4 h on an M4 (resumable)
+    python scripts/evaluate_grounding.py --n-parts 60 --n-flow 40        # ~6-8 h on an M4 (resumable)
     python scripts/evaluate_grounding.py --summarize-only
 
 Raw outputs (which quote AI2D text) stay in external/grounding_runs/; results/grounding_eval.json
@@ -83,7 +83,7 @@ def sample(n_parts: int, n_flow: int, seed: int, q_per: int):
     items = []
     for d in chosen:
         qs = sorted(d.questions, key=lambda q: q.qid)
-        rng.shuffle(qs)
+        random.Random(f"{seed}|{d.image_id}").shuffle(qs)  # per diagram: same questions at any sample size
         items += [(d, q) for q in qs[:q_per]]
     return chosen, items, anns
 
@@ -240,13 +240,27 @@ def summarize(diagrams, items, golds, cache: Cache, args) -> dict:
         f = cache.get(f"F|{q.qid}")
         if s["status"] != "answered" and f is None:
             continue
-        res = combine_e3(s, f, DiagramGraph.from_dict(dg["graph"]))
+        g = DiagramGraph.from_dict(dg["graph"])
+        res = combine_e3(s, f, g)
+        res_na = combine_e3(s, f, g, abstain_on_query_abstain=False)
         recs.append({"qid": q.qid, "category": d.category, "E2": int(e2.get("choice_index") == q.answer),
-                     "E3": int(res.get("choice_index") == q.answer), "query_status": s["status"]})
+                     "E3": int(res.get("choice_index") == q.answer), "E3_abstained": int(res.get("choice_index") is None),
+                     "E3_no_abstain": int(res_na.get("choice_index") == q.answer), "query_status": s["status"]})
     if recs:
         summary["multiple_choice"] = {"n": len(recs), "E2": accuracy([r["E2"] for r in recs]), "E3": accuracy([r["E3"] for r in recs]),
                                       "E2_vs_E3": mcnemar_exact([r["E2"] for r in recs], [r["E3"] for r in recs]),
-                                      "answered_by_query": sum(r["query_status"] == "answered" for r in recs)}
+                                      "answered_by_query": sum(r["query_status"] == "answered" for r in recs),
+                                      "E3_abstentions": sum(r["E3_abstained"] for r in recs),
+                                      # same pipeline, but when the query finds no supporting arrow, use the model fallback
+                                      "E3_no_abstain": accuracy([r["E3_no_abstain"] for r in recs]),
+                                      "E2_vs_E3_no_abstain": mcnemar_exact([r["E2"] for r in recs], [r["E3_no_abstain"] for r in recs])}
+        for cat_name, keep in (("parts", lambda r: r["category"] == "partsOfA"), ("flow", lambda r: r["category"] != "partsOfA")):
+            sub = [r for r in recs if keep(r)]
+            if sub:
+                summary["multiple_choice"][f"by_category_{cat_name}"] = {
+                    "n": len(sub), "E2": accuracy([r["E2"] for r in sub])["accuracy"],
+                    "E3": accuracy([r["E3"] for r in sub])["accuracy"],
+                    "E3_no_abstain": accuracy([r["E3_no_abstain"] for r in sub])["accuracy"]}
     return {"title": "Grounded explanations on AI2D: StudyLens vs the same VLM with native grounding",
             "dataset": "ai2d-grounding", "created": str(date.today()), "model": "Qwen/Qwen2.5-VL-3B-Instruct",
             "settings": vars(args), "summary": summary, "per_diagram": per_diag, "records": recs,

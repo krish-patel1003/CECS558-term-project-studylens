@@ -167,7 +167,7 @@ python -m pytest                                                     # tests, no
 python scripts/evaluate.py --no-model                                # pilot, gold graph + rules only, seconds
 python scripts/evaluate.py --adapter checkpoints/ai2d_lora_r16       # pilot E1/E2/E3 (~2.5 h on an M4, resumable)
 python scripts/get_ai2d.py --accept-license                          # AI2D into external/ (git-ignored)
-python scripts/evaluate_grounding.py --n-parts 30 --n-flow 20       # grounded explanations on AI2D (~5 h on an M4)
+python scripts/evaluate_grounding.py --n-parts 60 --n-flow 40       # grounded explanations on AI2D (~6 h on an M4)
 python scripts/evaluate_ai2d.py --adapter checkpoints/ai2d_lora_r16  # AI2D test split (several hours, resumable)
 # full runs on a GPU: notebooks/colab_full_eval.ipynb
 ```
