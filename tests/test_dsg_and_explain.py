@@ -128,6 +128,39 @@ def test_parse_explain_json_and_answer_boxes():
     assert parse_explain_json("Plain text answer.")[0] == "Plain text answer."
 
 
+def test_explain_uses_separate_box_call_and_strips_json():
+    from studylens.explain import BOX_PROMPT, clean_explanation
+
+    assert clean_explanation('Algae feed the water flea.\n\n### Parts with their Bounding Boxes:\n```json\n{"parts": []}\n```') \
+        == "Algae feed the water flea."
+    calls = []
+
+    class Stub:
+        last_latency_s = 0.1
+
+        def generate(self, image, prompt, max_new_tokens=250):
+            calls.append("explain")
+            return 'The Algae are eaten by the water flea.\n{"parts": [{"name": "Algae", "bbox_2d": [1, 1, 5, 5]}]}'
+
+        def generate_text(self, prompt, max_new_tokens=60):
+            return "{}"
+
+        def _generate(self, image, prompt, max_new_tokens):
+            calls.append("box" if prompt == BOX_PROMPT else "other")
+            return '{"explanation": "x", "parts": [{"name": "Algae", "bbox_2d": [100, 0, 140, 20]}]}', (2.0, 2.0)
+
+    g = chain_graph()
+    g.image_size = [200, 100]
+    r = pipelines.collect(pipelines.run_explain(Stub(), Image.new("RGB", (200, 100)), g, "Explain"))
+    assert calls == ["explain", "box"] and "parts" not in r["text"] and r["checks"]["answer_boxes"] == 1
+    algae = next(x for x in r["references"] if x["kind"] == "part" and x["label"].lower() == "algae")
+    assert algae["bbox"] == [50.0, 0.0, 70.0, 10.0]
+    calls.clear()     # boxes given by the caller (the evaluation reuses its B2 call): no second call
+    r = pipelines.collect(pipelines.run_explain(Stub(), Image.new("RGB", (200, 100)), g, "Explain",
+                                                box_parts=[{"name": "Algae", "bbox": [60, 0, 80, 10]}]))
+    assert calls == ["explain"] and next(x for x in r["references"] if x["label"].lower() == "algae")["bbox"] == [60, 0, 80, 10]
+
+
 def test_learned_grouping_path_merges_or_splits_by_model():
     img = boxed_image()
     texts = number_texts([{"text": "Load", "score": 0.99, "box": [290, 65, 340, 85]},

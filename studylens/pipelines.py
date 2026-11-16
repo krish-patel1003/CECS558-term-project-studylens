@@ -45,8 +45,12 @@ def collect(gen: Iterator[dict]) -> dict:
     return result
 
 
-def run_explain(vlm, image, graph: DiagramGraph, question: str, choices: list[str] | None = None, locator=None) -> Iterator[dict]:
-    """StudyLens's main answer: explanation with checked, clickable references (studylens/explain.py)."""
+def run_explain(vlm, image, graph: DiagramGraph, question: str, choices: list[str] | None = None, locator=None,
+                box_parts: list[dict] | None = None) -> Iterator[dict]:
+    """StudyLens's main answer: explanation with checked, clickable references (studylens/explain.py).
+
+    ``box_parts``: [{"name", "bbox"}] (original pixels) from an already generated BOX_PROMPT answer for this
+    image (the evaluation reuses its identical B2 call); otherwise the box call is made here."""
     t0 = time.perf_counter()
     yield _ev("EX", "image", "done")
     yield _ev("EX", "graph", "done", entities=len(graph.nodes), arrows=len(graph.edges), source=graph.source)
@@ -61,19 +65,20 @@ def run_explain(vlm, image, graph: DiagramGraph, question: str, choices: list[st
               parser=s["parser"], answer=s["answer"] if s["status"] == "answered" else None)
     yield _ev("EX", "explain", "running")
     facts = explain_mod.facts_block(s, graph)
-    if hasattr(vlm, "_generate"):  # explain-and-box: one call returns the explanation and a box per part
-        prompt = explain_mod.EXPLAIN_BOX_PROMPT.format(names=names, arrows=arrows, facts=facts, question=question)
-        t1 = time.perf_counter()
-        raw, scale = vlm._generate(image, prompt, 700)
-        latency = round(time.perf_counter() - t1, 2)
-    else:
-        prompt = explain_mod.EXPLAIN_PROMPT.format(names=names, arrows=arrows, facts=facts, question=question)
-        raw, scale = vlm.generate(image, prompt, max_new_tokens=250), (1.0, 1.0)
-        latency = getattr(vlm, "last_latency_s", None)
+    prompt = explain_mod.EXPLAIN_PROMPT.format(names=names, arrows=arrows, facts=facts, question=question)
+    raw = vlm.generate(image, prompt, max_new_tokens=250)
+    latency = getattr(vlm, "last_latency_s", None)
     yield _ev("EX", "explain", "done", latency_s=latency)
     yield _ev("EX", "check", "running")
-    body, parts = explain_mod.parse_explain_json(raw, scale)
-    g2, box_stats = explain_mod.augment_with_answer_boxes(graph, parts)
+    # second call: the model boxes the parts in its own explanation (only the boxes are kept)
+    box_raw = None
+    if box_parts is None:
+        box_parts = []
+        if hasattr(vlm, "_generate"):
+            box_raw, box_scale = vlm._generate(image, explain_mod.BOX_PROMPT, 700)
+            box_parts = explain_mod.parse_explain_json(box_raw, box_scale)[1]
+    body = explain_mod.clean_explanation(raw)
+    g2, box_stats = explain_mod.augment_with_answer_boxes(graph, box_parts)
     text, refs, stats = explain_mod.build_references(body, g2, s)
     for r in refs:
         if str(r.get("node", "")).startswith("a"):
@@ -88,7 +93,7 @@ def run_explain(vlm, image, graph: DiagramGraph, question: str, choices: list[st
         text = explain_mod._LOCATE.sub("", text)
         yield _ev("EX", "locate", "skipped")
     yield _ev("EX", "answer", "done")
-    yield {"pipeline": "EX", "result": {"text": text.strip(), "references": refs, "checks": stats, "query": s, "raw": raw,
+    yield {"pipeline": "EX", "result": {"text": text.strip(), "references": refs, "checks": stats, "query": s, "raw": raw, "box_raw": box_raw,
                                         "status": "explained", "total_s": round(time.perf_counter() - t0, 2)}}
 
 

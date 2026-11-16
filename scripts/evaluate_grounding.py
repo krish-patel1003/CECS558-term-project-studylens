@@ -46,7 +46,7 @@ os.environ.setdefault("QWEN_MAX_IMAGE_SIDE", "1024")  # the app's setting (OCR b
 
 from PIL import Image  # noqa: E402
 
-from studylens import qa_nl  # noqa: E402
+from studylens import explain as explain_mod, qa_nl  # noqa: E402
 from studylens.datasets import ai2d  # noqa: E402
 from studylens.evalkit import Cache, accuracy, mcnemar_exact, norm  # noqa: E402
 from studylens.pipelines import collect, combine_e3, route_e3, run_explain  # noqa: E402
@@ -56,9 +56,7 @@ from studylens.schema import DiagramGraph  # noqa: E402
 CACHE = ROOT / "external" / "grounding_runs" / "grounding_cache.jsonl"
 RESULTS = ROOT / "results"
 WALK_Q = "Explain this diagram to a student: go through its labelled parts one by one and, if there are arrows, describe the flow they show."
-B2_PROMPT = """Explain this diagram to a student: go through its labelled parts one by one and, if there are arrows, describe the flow they show.
-Then list every part you mentioned with its bounding box in this image.
-Reply with ONLY JSON: {"explanation": "...", "parts": [{"name": "...", "bbox_2d": [x1, y1, x2, y2]}]}"""
+B2_PROMPT = explain_mod.BOX_PROMPT  # the model explains and boxes parts itself; StudyLens reuses it for boxes
 FLOW_CATS = {"foodChainsWebs", "lifeCycles", "waterCNPCycle", "rockCycle", "photosynthesisRespiration"}
 
 
@@ -116,6 +114,8 @@ def main(argv=None) -> int:
     ap.add_argument("--summarize-only", action="store_true")
     ap.add_argument("--tag", default="", help="system version: '' = Phase-2 system; 'v2' = learned grouping + "
                     "explain-and-box + routed E3; 'v3' = v2 + DSG adapter (set QWEN_ADAPTER_PATH, ADAPTER_KIND=dsg)")
+    ap.add_argument("--explain-version", default=None, help=f"tagged runs: explanation version (default {EXPLAIN_VERSION!r}; "
+                    "'' = the one-call explain-and-box answers of the first v2 run)")
     ap.add_argument("--exclude", default="", help="file of AI2D image ids to leave out of the sample (e.g. the dev set)")
     ap.add_argument("--write-ids", default="", help="write the sampled image ids to this file")
     args = ap.parse_args(argv)
@@ -123,7 +123,8 @@ def main(argv=None) -> int:
     diagrams, items, golds = sample(args.n_parts, args.n_flow, args.seed, args.q_per_diagram, exclude)
     if args.write_ids:
         Path(args.write_ids).write_text("\n".join(d.image_id for d in diagrams) + "\n")
-    K = key_fn(args.tag)
+    K = key_fn(args.tag, args.explain_version)
+    ev = EXPLAIN_VERSION if args.explain_version is None else args.explain_version
     print(f"{len(diagrams)} diagrams, {len(items)} questions", flush=True)
     cache = Cache(CACHE)
     vlm = ocr = dsg = None
@@ -148,13 +149,16 @@ def main(argv=None) -> int:
             g = dsg.extract(img)
             cache.put(K("dsg", d.image_id), {"graph": g.to_dict(), "latency_s": round(dsg.last_latency_s, 1)})
         g = DiagramGraph.from_dict(cache.get(K("dsg", d.image_id))["graph"])
-        if cache.get(K("ours", d.image_id)) is None:
-            r = collect(run_explain(vlm, img, g, WALK_Q, locator=dsg.ground))
-            cache.put(K("ours", d.image_id), r)
         if cache.get(f"b2|{d.image_id}") is None:
             ts = time.perf_counter()
             raw, scale = vlm._generate(img, B2_PROMPT, 700)
             cache.put(f"b2|{d.image_id}", {"raw": raw, "parts": b2_parts(raw, scale), "latency_s": round(time.perf_counter() - ts, 1)})
+        if cache.get(K("ours", d.image_id)) is None:
+            # tagged systems box parts with the same call as B2 (identical prompt, greedy decoding): reuse it
+            boxes = ([{"name": p["label"], "bbox": p["bbox"]} for p in cache.get(f"b2|{d.image_id}")["parts"]]
+                     if args.tag else None)
+            r = collect(run_explain(vlm, img, g, WALK_Q, locator=dsg.ground, box_parts=boxes))
+            cache.put(K("ours", d.image_id), r)
         for q in by_img[d.image_id]:
             if cache.get(f"E2|{q.qid}") is None:
                 cache.put(f"E2|{q.qid}", qa_nl.direct_answer(vlm, img, q.text, q.choices))
@@ -166,20 +170,29 @@ def main(argv=None) -> int:
         print(f"[{i + 1}/{len(diagrams)}] {d.image_id} ({d.category}) {time.time() - t0:.0f}s", flush=True)
     out = summarize(diagrams, items, golds, cache, args)
     RESULTS.mkdir(exist_ok=True)
-    (RESULTS / f"grounding_eval{'_' + args.tag if args.tag else ''}{'_test' if args.exclude else ''}.json").write_text(json.dumps(out, indent=1))
+    (RESULTS / f"grounding_eval{'_' + args.tag if args.tag else ''}{'_' + ev if args.tag and ev else ''}{'_test' if args.exclude else ''}.json").write_text(json.dumps(out, indent=1))
     print(json.dumps(out["summary"], indent=1))
     if ocr is not None:
         ocr.close()
     return 0
 
 
-def key_fn(tag: str):
+EXPLAIN_VERSION = "x2"  # v2 explanations from two calls (text, then boxes); "" = the one-call explain-and-box run
+
+
+def key_fn(tag: str, explain_version: str | None = None):
     """Cache key per system version; the B2 baseline and E2 answers do not depend on it."""
-    return lambda kind, ident: f"{kind}{'_' + tag if tag and kind in ('dsg', 'ours', 'Q') else ''}|{ident}"
+    ev = EXPLAIN_VERSION if explain_version is None else explain_version
+
+    def key(kind, ident):
+        if not tag or kind not in ("dsg", "ours", "Q"):
+            return f"{kind}|{ident}"
+        return f"{kind}_{tag}{'_' + ev if kind == 'ours' and ev else ''}|{ident}"
+    return key
 
 
 def summarize(diagrams, items, golds, cache: Cache, args) -> dict:
-    K = key_fn(getattr(args, "tag", ""))
+    K = key_fn(getattr(args, "tag", ""), getattr(args, "explain_version", None))
     per_diag = []
     agg = {s: {"refs": 0, "matched": 0, "hits": 0, "gold": 0, "covered": 0, "unmatched": 0} for s in ("OURS", "B2")}
     flow = {"cited": 0, "gold": 0}

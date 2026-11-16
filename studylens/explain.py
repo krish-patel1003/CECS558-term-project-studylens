@@ -35,19 +35,23 @@ Answer in 3 to 6 sentences (use numbered steps if you describe a process or a fl
 
 _LOCATE = re.compile(r"\{\s*locate\s*:\s*([^}]{1,60})\}", re.I)
 
-# Explain-and-box (default since the AI2D dev analysis): the model explains AND boxes each part it
-# mentions in the same answer. On 100 AI2D dev diagrams its in-answer boxes were right 66% of the time
-# for the same part names where a separate "box each of these labels" call was right 47%.
-EXPLAIN_BOX_PROMPT = """You are a tutor helping a student understand this diagram.
-Parts labelled in the diagram: {names}
-Arrows extracted from the diagram (A -> B means an arrow from A to B; the extraction may contain mistakes, the image is the final authority):
-{arrows}
-{facts}
-Student's question: {question}
-
-Answer in 3 to 6 sentences (use numbered steps if you describe a process or a flow). Mention parts by their names exactly as labelled in the diagram. If the diagram does not show what is asked, say so.
+# Boxes come from a SECOND call: the model's native "explain and box the parts" answer (the B2 baseline
+# prompt of scripts/evaluate_grounding.py), of which only the boxes are used. On 100 AI2D dev diagrams
+# these in-answer boxes were right 69% of the time. Asking for the boxes inside the explanation call
+# instead (one JSON answer) cut explanations from ~170 to ~40 words and left raw JSON in 23 of 100
+# answers (docs/evaluation.md), so the explanation keeps its own plain-text call (EXPLAIN_PROMPT).
+BOX_PROMPT = """Explain this diagram to a student: go through its labelled parts one by one and, if there are arrows, describe the flow they show.
 Then list every part you mentioned with its bounding box in this image.
-Reply with ONLY JSON: {{"explanation": "...", "parts": [{{"name": "...", "bbox_2d": [x1, y1, x2, y2]}}]}}"""
+Reply with ONLY JSON: {"explanation": "...", "parts": [{"name": "...", "bbox_2d": [x1, y1, x2, y2]}]}"""
+
+_JSON_TAIL = re.compile(r"(?:\n[^\n]*bounding box[^\n]*\n)?\s*(?:```(?:json)?\s*)?\{\s*\"(?:parts|explanation)\"[\s\S]*$", re.I)
+
+
+def clean_explanation(text: str) -> str:
+    """Remove a JSON block (and the heading introducing it) that the model sometimes appends."""
+    text = _JSON_TAIL.sub("", text or "")
+    return re.sub(r"```(?:json)?|```", "", text).strip()
+
 
 _EXPL = re.compile(r'"explanation"\s*:\s*"((?:[^"\\]|\\.)*)', re.S)
 _PART_BOX = re.compile(r'"name"\s*:\s*"([^"]+)"\s*,\s*"bbox_2d"\s*:\s*\[\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)')
