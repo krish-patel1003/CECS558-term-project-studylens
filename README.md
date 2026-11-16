@@ -232,4 +232,4 @@ This is an academic prototype; we make no commercial-readiness claims. Details:
 
 ## Team
 
-`<TEAM_MEMBERS_PLACEHOLDER>`: names and contributions to be filled in by the team.
+**Krish Patel** (sole member): design, implementation, model training, evaluation and documentation.
