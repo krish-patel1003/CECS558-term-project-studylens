@@ -1,8 +1,9 @@
 # Evaluation
 
-Two evaluations exist:
+Evaluations so far:
 - the **synthetic pilot**, which is complete;
-- the **AI2D grounded-explanation evaluation** (100 test diagrams), which is complete.
+- the **AI2D grounded-explanation evaluation** (100 test diagrams) of the Phase 2 system (section 2);
+- the same 100 diagrams after the fixes it motivated (section 3); they are now the development set.
 
 The full AI2D runs are prepared for Colab (`notebooks/colab_full_eval.ipynb`). The first, smaller pilot (79
 templated questions) is kept for reference in `results/pilot_v1/`.
@@ -111,7 +112,7 @@ On **knowledge-free structural questions**, E3-zs scores 48.3% and E2 32.5% (p =
 - The keyword rules were debugged on these question templates, so E3 numbers are optimistic.
 - Scoring free text with string rules is imperfect; every raw answer is saved, so each decision can be audited.
 
-## 2. AI2D grounded-explanation evaluation (complete)
+## 2. AI2D grounded-explanation evaluation (Phase 2 system)
 
 `scripts/evaluate_grounding.py --n-parts 60 --n-flow 40`, seed 458, results in `results/grounding_eval.json`
 (ids and metrics only; explanations and question text stay in `external/` because of the AI2D licence):
@@ -199,3 +200,80 @@ On **knowledge-free structural questions**, E3-zs scores 48.3% and E2 32.5% (p =
 
 Limitations: one run, one seed, 100 diagrams; matching references to gold labels is by normalised name, so
 references with paraphrased names are not scored (184 StudyLens and 169 B2 references were unmatched).
+
+## 3. AI2D, after the fixes (v2, same 100 diagrams, now the dev set)
+
+The section 2 results led to four changes, evaluated on the **same 100 diagrams**. Because these diagrams
+guided the changes, they are now the **development set** (`external/grounding_runs/dev_ids.txt`) and the
+numbers below are optimistic. Final claims will come from a fresh, disjoint sample
+(`--exclude external/grounding_runs/dev_ids.txt`).
+
+**Changes:**
+1. **Learned text grouping.** A logistic regression over layout features of neighbouring OCR lines, trained
+   on 343 AI2D *train* diagrams (`scripts/train_grouping.py`). It replaces the hand rule that merged columns
+   of separate labels. On 86 held-out training diagrams it recovers 86.2% of labels exactly, vs 75.4% for the
+   hand rule.
+2. **Boxes from the model's own answer.** The model's explain-and-box answer (the B2 prompt) supplies a box
+   for each part it mentions. A box centred on the part's own label text is rejected. Extra parts are added
+   only if their name is OCR text in the diagram.
+3. **Explanation in its own call.** Asking for the explanation and the boxes in one JSON answer was tried
+   first (`--explain-version ''`). It cut explanations to about 40 words and left raw JSON in 23 of 100
+   answers, so the explanation keeps its plain-text prompt and the boxes come from a second call.
+4. **Routed E3.** The graph answers only questions the keyword rules parsed; every other question gets the
+   image-only answer (E2) instead of an abstention or a model fallback.
+
+`scripts/evaluate_grounding.py --n-parts 60 --n-flow 40 --tag v2`. Results are in
+`results/grounding_eval_v2_x2.json`; the one-call attempt is in `results/grounding_eval_v2.json`. The median
+time on the M4 is 109 s per scene graph plus 62 s for the explanation (B2's box answer was reused from the
+cache: same prompt, greedy decoding).
+
+### Pointing
+
+| | Phase 2 (section 2) | v2, one call | **v2, two calls** | B2 |
+|---|---|---|---|---|
+| Pointing accuracy | 49.9% | 50.8% | **57.7%** (272 / 471) | 65.3% |
+| Coverage (of 852) | 20.4% | 22.4% | **31.9%** | 36.7% |
+| References not matching a gold label | 184 | 78 | 182 | 169 |
+| Invented references | 0 | 0 | **0** | 38 |
+| Cited arrows that are gold arrows | 38.3% | 10.0% | **32.3%** (85 / 263) | -- |
+| Explanation length (words) | ~174 | ~40 | **~175** | -- |
+
+| By category (v2, two calls) | StudyLens accuracy | B2 accuracy | StudyLens coverage | B2 coverage |
+|---|---|---|---|---|
+| "Parts of" (673 gold) | 56.4% | 65.8% | 29.3% | 34.2% |
+| Arrows (179 gold) | 61.5% | 64.0% | 41.9% | 46.4% |
+
+**By where the highlighted box came from** (references matched to a gold label):
+
+| Box source | Correct | B2 on the same labels |
+|---|---|---|
+| the model's own box (answer) | 207 / 289 (71.6%) | 206 / 289 |
+| part named by the model, verified in OCR text | 20 / 27 | 20 / 27 |
+| scene-graph region (no box from the model) | 45 / 155 (29.0%) | 8 / 30 |
+
+### Multiple choice (125 questions)
+
+| Condition | Accuracy [95% CI] | vs E2 |
+|---|---|---|
+| E2: image → Qwen | 94.4% [90.4, 97.6] | -- |
+| E3, routed | **94.4%** [90.4, 97.6] | same answers (0 vs 0 discordant) |
+
+The graph answered only 8 questions, those parsed by the keyword rules; all 8 were correct, as were E2's
+answers. The other 117 used the image-only answer. So routed E3 no longer loses to the plain model, but on
+these mostly non-structural questions it does not beat it either.
+
+### What this shows
+
+- **Where StudyLens uses the model's own box, its highlights are as accurate as B2** (72% vs 71% on the same
+  labels). The remaining gap is entirely in parts the box call does not mention: they fall back to
+  scene-graph regions, which are right only 29% of the time. The next step is a better region finder for
+  those parts, or marking them as approximate.
+- **References are still never invented**, while 5.7% of B2's are.
+- **Arrows are unchanged and remain the weak point.** Arrow extraction F1 vs gold is about 0.26 in both
+  versions, so only a third of cited arrows are real. This is what the scene-graph LoRA adapter
+  (`notebooks/colab_train_dsg.ipynb`) targets.
+- **Combining tasks in one prompt hurt.** The one-call version shortened explanations fourfold and broke the
+  output format, so a single prompt that looks cheaper can cost quality.
+
+Limitations: development set (the changes were chosen on these diagrams); single run; no significance test on
+pointing yet.

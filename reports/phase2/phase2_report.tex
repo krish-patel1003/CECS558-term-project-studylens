@@ -33,7 +33,7 @@ Repository: \url{https://github.com/krish-patel1003/CECS558-term-project-studyle
 \section{Objective and value}
 Students increasingly ask general AI assistants about textbook figures, slides and system diagrams, but those answers cannot be checked against the figure: Phase~1 showed that vision-language models (VLMs) read labels well but get arrows wrong. \textbf{StudyLens helps a student understand any diagram} (flowcharts, architectures, food webs, life cycles, anatomy) by first building an explicit, editable \emph{scene graph} of the diagram, then answering in plain language where \textbf{every part or flow mentioned is a clickable reference that highlights it on the image}, and structural facts (``what feeds into X'', ``is there a path'') are \textbf{computed by NetworkX}, not guessed. Value over a general assistant: the student sees \emph{where} each claim comes from, can correct a wrong arrow, and gets the same exact answer every time for structural questions.
 
-\section{What is built (all in the repository, 100 automated tests)}
+\section{What is built (all in the repository, 103 automated tests)}
 \begin{itemize}
 \item \textbf{Upload and extraction} (FastAPI + single-page UI): any common image format ($\le$10\,MB, processed in memory, never stored); an \emph{Extract} button with a progress bar driven by real server events.
 \item \textbf{Diagram Scene Graph}, OCR-anchored so the model never writes coordinates: PaddleOCR text and boxes; deterministic grouping of text into parts; \textbf{enclosing-shape regions} by image analysis; arrows listed by Qwen2.5-VL-3B \emph{by part name}; one batch grounding call for parts outside shapes (anatomy-style labels). The graph is editable before asking.
@@ -52,7 +52,7 @@ Students increasingly ask general AI assistants about textbook figures, slides a
 \section{Data and models}
 \textbf{AI2D} (4,903 real science diagrams, human-written questions): training uses the official train split only; evaluation the test split. Its licence is the \emph{AI2 non-commercial licence} (no redistribution), correcting Phase~1's ``CC BY-SA''; the data, raw outputs and adapter stay out of the repository. \textbf{Synthetic pilot} (ours, committed): 27 diagrams, 304 questions with exact answers, varied wording, 12 knowledge-free graphs (nonsense labels) and 4 \emph{counterfactual} diagrams with reversed arrows. \textbf{Models:} Qwen2.5-VL-3B-Instruct (Qwen Research Licence, non-commercial); PaddleOCR PP-OCRv5 (Apache-2.0); \textbf{LoRA} (rank 16, attention projections, 800 AI2D training examples at 448\,px, bf16 on an Apple M4): validation loss 0.593 $\rightarrow$ 0.540.
 
-\needspace{14\baselineskip}
+
 \section{Results}
 \textbf{Synthetic pilot} (304 questions, single run, Apple M4; 95\% bootstrap CIs; exact McNemar tests vs E2):\\[2pt]
 {\small\begin{tabularx}{\textwidth}{@{}lLccc@{}}
@@ -69,23 +69,33 @@ E3* & graph query, gold graph (upper bound) & 91.8\% [88.8, 94.7] & 100\% & bett
 \end{tabularx}}\\[2pt]
 \textbf{Findings.} (1)~Structure helps when \emph{code} answers from it: E3 beats the plain VLM on structural questions (also on knowledge-free graphs: 48\% vs 33\%, $p$=0.002), while handing the graph to the model (E3-vlm) does not help. (2)~Extraction is the bottleneck: arrow F1 is 0.61 (zero-shot) and 0.56 (fine-tuned) vs 100\% with the gold graph. (3)~On reversed-arrow diagrams the extractor ``corrects'' arrows to textbook direction (E3 19--25\% vs E3* 100\%): the failure the proposal predicted shows up at extraction, and editing the graph fixes it. (4)~The LoRA adapter lowered loss but did not improve extraction on these out-of-domain diagrams ($p$=0.41 vs zero-shot). (5)~E3 abstains poorly on non-arrow questions. The keyword rules were debugged on pilot questions, so E3 numbers are optimistic.
 
-\textbf{Measured design decisions.} Zero-shot boxes from one JSON call: box centre on the right part only 11\% (the model invents a layout) $\rightarrow$ boxes now come from OCR and shape analysis: \textbf{148/149} pilot labels located exactly (IoU $\ge$ 0.7). Leader-line tracing reached only 35.6\% on AI2D training lines (not used). Arrows requested by part id were chained in list order; by name, arrow F1 0.67--0.91. Asked to write reference ids itself, the model wrote none $\rightarrow$ references are linked deterministically.
+\textbf{Measured design decisions.} Model-written boxes in one JSON call put the centre on the right part only 11\% of the time $\rightarrow$ pilot boxes come from OCR and shape analysis (\textbf{148/149} labels exact). Arrows requested by part id were chained in list order; by name, arrow F1 0.67--0.91. Asked to write reference ids, the model wrote none $\rightarrow$ references are linked deterministically.
 
-\textbf{AI2D grounded-explanation evaluation} (100 test diagrams: 60 ``parts of'', 40 with arrows; 852 annotated part locations; 125 multiple-choice questions; \texttt{evaluate\_grounding.py}). \emph{Pointing:} the same Qwen asked to explain and box the parts itself (B2, its native grounding) lands on the annotated part more often than StudyLens: \textbf{65.3\% vs 49.9\%} of references matched to a gold label (coverage 36.7\% vs 20.4\%); StudyLens invents no references, B2 names text absent from the diagram in 5.7\%. Our regions come mostly from the batch grounding call (50.9\% correct); the label-box fallback is rarely right (5.5\%). Only 38\% of cited arrows are gold arrows. \emph{Multiple choice:} E2 94.4\% vs E3 67.2\% with the pilot-tuned abstention (27 abstentions counted wrong) and 88.0\% without it ($p$=0.039): on these mostly non-structural real-diagram questions the graph does not help yet. A negative result for the current region finder and arrow extractor on real diagrams; it sets the final-phase fixes: regions by diagram type, no label-box fallback, abstain only on arrow questions, better arrows.
+\textbf{AI2D grounded-explanation evaluation} (100 test diagrams: 60 ``parts of'', 40 with arrows; 852 annotated part locations; 125 multiple-choice questions; \texttt{evaluate\_grounding.py}). B2 is the same Qwen asked to explain and box the parts itself (its native grounding).\\[2pt]
+{\small\begin{tabularx}{\textwidth}{@{}Lcccc@{}}
+\toprule
+& Pointing & Coverage (of 852) & Invented refs & Multiple choice (E2 94.4\%) \\
+\midrule
+StudyLens, Phase-2 system & 49.9\% & 20.4\% & 0 & 67.2\% (27 abstentions), $p<$0.001 \\
+StudyLens after the fixes (dev set) & \textbf{57.7\%} & \textbf{31.9\%} & 0 & \textbf{94.4\%}, same as E2 \\
+B2: Qwen boxes its own answer & 65.3\% & 36.7\% & 38 (5.7\%) & -- \\
+\bottomrule
+\end{tabularx}}\\[2pt]
+The first run was negative: our regions trailed the model's own boxes, a hand-written grouping rule merged columns of labels, and the pilot-tuned abstention cost 27 questions. \textbf{Fixes:} text grouping learned from AI2D \emph{train} layouts (labels recovered exactly 75\%$\rightarrow$86\% on held-out train diagrams); a second model call boxes the parts it mentions (boxes on the label text are rejected; added names must be OCR text); the graph answers only rule-parsed questions, the rest get the image answer. With the model's box our references match B2 (72\% vs 71\%, same labels); the gap is parts left to scene-graph regions (29\%). Arrows are still weak (32\% of cited arrows are gold). These 100 diagrams guided the fixes; final claims will use a fresh test sample.
 
 \begin{center}
-\includegraphics[height=1.4in]{../../docs/figures/ui_2_answer.png}\hspace{0.15in}
-\includegraphics[height=1.4in]{../../docs/figures/ui_3_flow.png}\\[-1pt]
-{\small\textbf{Figure 2.} Left: answer to ``How does a request from the client reach the database?'' (green: computed by NetworkX; numbered chips: references linked to the graph; live pipeline). Right: clicking a flow reference animates its arrows.}
+\includegraphics[height=1.2in]{../../docs/figures/ui_2_answer.png}\hspace{0.15in}
+\includegraphics[height=1.2in]{../../docs/figures/ui_3_flow.png}\\[-1pt]
+{\small\textbf{Figure 2.} Left: answer to ``How does a request from the client reach the database?'' (green: computed by NetworkX; numbered chips: linked references). Right: clicking a flow reference animates its arrows.}
 \end{center}
 
 \section{Changes from Phase 1}
-Plain HTML/JS front end instead of Next.js; AI2D's official split instead of a seeded 70/10/20 split; our own 304-question pilot instead of the Hou et al.\ suite (no licence); PaddleOCR used for the scene graph and E1. Stretch goals done: LoRA fine-tuning and graph correction (not yet: quizzes, PDFs, history). Emphasis moved from arrow questions to explaining whole diagrams with highlighted references.
+Plain HTML/JS front end instead of Next.js; AI2D's official split instead of a seeded 70/10/20 split; our own 304-question pilot instead of the Hou et al.\ suite (no licence). Stretch goals done: LoRA fine-tuning and graph correction. Emphasis moved from arrow questions to explaining whole diagrams with highlighted references.
 
 \section{Limitations}
-Answers are only as good as the extracted graph (10 of 29 arrows on a dense 40-box architecture; 38\% arrow precision on AI2D), and on AI2D anatomy diagrams our highlights are less accurate than the model's own boxes. Explanation sentences come from a 3B model and can state things the diagram does not show; references and computed facts are reliable, and the UI says so. Laptop speed: 45\,s--7.5\,min per scene graph. The adapter (older output format) is not used by the scene graph. English only; academic prototype, non-commercial (model and data licences).
+Answers are only as good as the extracted graph (10 of 29 arrows on a dense 40-box architecture; about a third of cited arrows correct on AI2D), and on AI2D our highlights are still less accurate than the model's own boxes (58\% vs 65\%). Explanation sentences come from a 3B model and can be wrong; references and computed facts are checked. Laptop speed: 45\,s--7.5\,min per scene graph, plus about a minute per explanation. English only; academic prototype, non-commercial (model and data licences).
 
-\section{Next steps (final submission, Dec 17)}
-Guided walkthrough and quiz generator; region finding by diagram type (the AI2D pointing gap); retrain the extractor on scene-graph targets and direction-randomised diagrams; verify each arrow; check explanation claims; full AI2D and FlowVQA runs on Colab; a small blind human rating; demo video and final report.
+\section{Next steps (final submission, Dec 11)}
+Guided walkthrough and quiz generator; better regions for parts the model does not box; scene-graph LoRA on an A100 for arrows (notebook ready); fresh AI2D test sample and FlowVQA; small blind human rating; demo video.
 
 \end{document}
