@@ -190,3 +190,16 @@ def test_gate_boxes_hides_label_only_and_on_label_regions():
     assert refs[0]["bbox"] is None and refs[0]["box_hidden"] == "label"
     assert refs[1]["bbox"] is None and refs[1]["box_hidden"] == "grounded"
     assert refs[2]["bbox"] == [0, 60, 100, 100] and "box_hidden" not in refs[2]
+
+
+def test_link_arrows_tail_to_head_by_arrowhead():
+    from studylens.arrows import link_arrows
+    from studylens.schema import Node
+
+    nodes = [Node(id="n1", label="Sun", bbox=[0, 0, 20, 20]), Node(id="n2", label="Plant", bbox=[80, 0, 100, 20]),
+             Node(id="n3", label="Deer", bbox=[80, 80, 100, 100])]
+    arrows = [{"points": [[22, 10], [50, 9], [78, 10]]},   # Sun -> Plant (head at the right end)
+              {"points": [[90, 22], [90, 50], [90, 78]]},   # Plant -> Deer (head at the bottom)
+              {"points": [[25, 40], [40, 60]]}]             # no arrowhead near either end: skipped
+    heads = [[72, 6, 78, 14], [86, 72, 94, 78]]
+    assert link_arrows(arrows, heads, nodes, (100, 100)) == [("n1", "n2"), ("n2", "n3")]

@@ -260,7 +260,7 @@ async def ask_stream(file: UploadFile = File(...), question: str = Form(...), gr
                     loc = None
                     if vlm is not None:
                         from .dsg import DSGExtractor
-                        loc = DSGExtractor(vlm, None).ground
+                        loc = DSGExtractor(vlm, None, arrow_detector=None).ground
                     gen = pipelines.run_explain(vlm, img, g, question, opts, locator=loc)
                 elif p == "E1":
                     gen = pipelines.run_e1(vlm, get_ocr(), img, question, opts, ocr_lines)

@@ -277,3 +277,35 @@ these mostly non-structural questions it does not beat it either.
 
 Limitations: development set (the changes were chosen on these diagrams); single run; no significance test on
 pointing yet.
+
+## 4. Next fixes (dev set, in progress)
+
+### Hiding unreliable boxes (x3)
+
+Scene-graph fallback regions were right only 29% of the time. Split by how the region was found (dev set,
+references matched to a gold label): the model's own box 229 / 318 (72%); the separate locator call 42 / 130
+(32%), but only 5 / 46 when its box is centred on the part's own label text; the label's text box alone
+1 / 22. StudyLens now keeps those references but **does not highlight** label-only regions or located
+regions centred on the label text (`explain.gate_boxes`; the interface shows "position uncertain, not
+highlighted"). Re-scored from the cached x2 explanations (the filter is deterministic, no new model calls):
+
+| | v2, two calls (x2) | **x3: unreliable boxes hidden** | B2 |
+|---|---|---|---|
+| Pointing accuracy | 57.7% (272 / 471) | **66.0%** (266 / 403) | 65.3% |
+| Coverage (of 852) | 31.9% | 31.2% | 36.7% |
+| Invented references | 0 | 0 | 38 |
+
+Results: `results/grounding_eval_v2_x3.json`. The rule was chosen on these diagrams, so the honest number
+is the one on fresh test diagrams (`--exclude external/grounding_runs/dev_ids.txt`).
+
+### Arrow detector (to train)
+
+Arrow F1 against gold on the dev set is 0.30 for the VLM's arrow list. Attaching AI2D's **true** arrow
+outlines to our scene-graph parts with a simple rule (tail and head to the nearest part; direction from
+the arrowhead) gives **0.53**; taking the union with the VLM's list gives 0.49 (lower precision), so the
+detector replaces the VLM's list rather than adding to it. The remaining ceiling is set by part
+extraction: only 71% of gold arrows have both ends among the parts our scene graph found.
+
+`studylens/arrows.py` (Mask R-CNN, arrows and arrowheads) is trained by `scripts/train_arrow_detector.py`
+on the AI2D train split (`notebooks/colab_train_arrows.ipynb`); the scene graph uses it automatically when
+`checkpoints/arrow_detector.pt` exists. The grounding evaluation of this system is `--tag v2d`.

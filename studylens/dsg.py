@@ -5,7 +5,9 @@
    same enclosing shape, or stacked lines); the title is the topmost text outside any shape.
    Arrowheads misread as text ("V", "-") are filtered by OCR confidence.
 3. **Arrows (AI)**: Qwen2.5-VL sees the image and the list of part NAMES and lists the drawn arrows
-   by name; names are matched back to parts deterministically. No coordinates are generated.
+   by name; names are matched back to parts deterministically. No coordinates are generated. If a trained
+   arrow detector is present (``studylens.arrows``), its arrows replace this call: each detected arrow's
+   tail and head are attached to the nearest part.
 4. **Regions (mostly no AI)**: for each part, the shape enclosing its label is found by image
    analysis (``regions.enclosing_box``). Only parts that are not inside a closed shape (e.g. an
    anatomy label connected to its part by a leader line) are located by a focused Qwen grounding
@@ -336,8 +338,12 @@ class DSGExtractor:
 
     name = "dsg (PaddleOCR + Qwen2.5-VL structure + regions)"
 
-    def __init__(self, vlm, ocr, max_grounding: int = 24, use_adapter: bool | None = None):
+    def __init__(self, vlm, ocr, max_grounding: int = 24, use_adapter: bool | None = None, arrow_detector="auto"):
         self.vlm, self.ocr, self.max_grounding = vlm, ocr, max_grounding
+        if arrow_detector == "auto":  # trained arrow detector (studylens.arrows) if its weights exist
+            from .arrows import load_detector
+            arrow_detector = load_detector()
+        self.arrow_detector = arrow_detector
         # The DSG adapter (scripts/train_dsg_lora.py) is used for grounding and arrows when the loaded
         # adapter is a DSG adapter (ADAPTER_KIND=dsg); question answering always uses the base weights.
         if use_adapter is None:
@@ -367,13 +373,19 @@ class DSGExtractor:
         parts, title = group_parts(texts, ink, image.size, model=self.grouping)
         yield {"stage": "ocr_done", "n_texts": len(texts), "entities": len(parts), "elapsed_s": round(time.perf_counter() - t0, 1)}
         yield {"stage": "structure"}
-        if self.use_adapter:
+        det = None
+        if self.arrow_detector is not None:  # detector arrows replace the VLM's arrow list
+            det = self.arrow_detector.detect(image)
+            arrows, warnings, self.last_raw_output = [], [], None
+        elif self.use_adapter:
             raw, _ = self.vlm._generate(image, build_arrow_prompt(parts), min(3072, 18 * len(parts) + 80), use_adapter=True)
         else:
             raw = self.vlm.generate(image, build_arrow_prompt(parts), max_new_tokens=min(3072, 18 * len(parts) + 80))
-        self.last_raw_output = raw
-        arrows, warnings = parse_arrows(raw, parts)
-        yield {"stage": "structure_done", "entities": len(parts), "arrows": len(arrows), "elapsed_s": round(time.perf_counter() - t0, 1)}
+        if det is None:
+            self.last_raw_output = raw
+            arrows, warnings = parse_arrows(raw, parts)
+        yield {"stage": "structure_done", "entities": len(parts), "arrows": len(arrows) if det is None else len(det[0]),
+               "elapsed_s": round(time.perf_counter() - t0, 1)}
         need = [q["label"] for q in parts if q["shape"] is None][: self.max_grounding]
         located = {}
         if need:
@@ -394,8 +406,13 @@ class DSGExtractor:
                 byid[t]["role"] = "label"
         if title:
             byid[title]["role"] = "title"
-        edges = [Edge(source=f"n{s_ + 1}", target=f"n{t_ + 1}") for s_, t_ in arrows]
-        g = DiagramGraph(nodes=nodes, edges=edges, source="dsg: PaddleOCR + Qwen2.5-VL-3B arrows + shape/grounded regions",
+        if det is None:
+            edges = [Edge(source=f"n{s_ + 1}", target=f"n{t_ + 1}") for s_, t_ in arrows]
+        else:
+            from .arrows import link_arrows
+            edges = [Edge(source=a, target=b) for a, b in link_arrows(det[0], det[1], nodes, image.size)]
+        how = "Qwen2.5-VL-3B arrows" if det is None else "arrow detector"
+        g = DiagramGraph(nodes=nodes, edges=edges, source=f"dsg: PaddleOCR + {how} + shape/grounded regions",
                          image_size=list(image.size), warnings=warnings, texts=texts, title=byid[title]["text"] if title else None)
         g.validate()
         self.last_latency_s = time.perf_counter() - t0

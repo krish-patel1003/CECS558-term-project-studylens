@@ -113,7 +113,8 @@ def main(argv=None) -> int:
     ap.add_argument("--seed", type=int, default=458)
     ap.add_argument("--summarize-only", action="store_true")
     ap.add_argument("--tag", default="", help="system version: '' = Phase-2 system; 'v2' = learned grouping + "
-                    "explain-and-box + routed E3; 'v3' = v2 + DSG adapter (set QWEN_ADAPTER_PATH, ADAPTER_KIND=dsg)")
+                    "explain-and-box + routed E3; 'v3' = v2 + DSG adapter (set QWEN_ADAPTER_PATH, ADAPTER_KIND=dsg); "
+                    "'v2d' = v2 + trained arrow detector")
     ap.add_argument("--explain-version", default=None, help=f"tagged runs: explanation version (default {EXPLAIN_VERSION!r}; "
                     "'' = the one-call explain-and-box answers of the first v2 run)")
     ap.add_argument("--exclude", default="", help="file of AI2D image ids to leave out of the sample (e.g. the dev set)")
@@ -136,7 +137,10 @@ def main(argv=None) -> int:
         vlm = QwenVLExtractor()
         vlm._load()
         ocr = get_ocr()
-        dsg = DSGExtractor(vlm, ocr)
+        # tags ending in "d" use the trained arrow detector (studylens/arrows.py) instead of the VLM's arrow list
+        dsg = DSGExtractor(vlm, ocr, arrow_detector="auto" if args.tag.endswith("d") else None)
+        if args.tag.endswith("d") and dsg.arrow_detector is None:
+            sys.exit("tag ends in 'd' but no arrow detector weights (checkpoints/arrow_detector.pt or ARROW_DETECTOR_PATH)")
     t0 = time.time()
     by_img = defaultdict(list)
     for d, q in items:
