@@ -190,6 +190,24 @@ def link_mentions(text: str, graph: DiagramGraph) -> list[tuple[int, int, str]]:
     return sorted(found)
 
 
+def gate_boxes(refs: list[dict], graph: DiagramGraph) -> int:
+    """Hide part boxes that are likely wrong, keeping the reference without a highlight: regions that are only
+    the label's own text box (right 1 time in 22 on the AI2D dev set) and model-located regions centred on the
+    part's label text (right 5 times in 46). Returns how many boxes were hidden."""
+    size = tuple(graph.image_size) if graph.image_size else None
+    nodes = {n.id: n for n in graph.nodes}
+    hidden = 0
+    for r in refs:
+        if r.get("kind") != "part" or not r.get("bbox"):
+            continue
+        src, n = r.get("region_source"), nodes.get(r.get("node"))
+        if src == "label" or (src == "grounded" and n is not None
+                              and _on_label_text(r["bbox"], getattr(n, "label_bbox", None), size)):
+            r["bbox"], r["box_hidden"] = None, src
+            hidden += 1
+    return hidden
+
+
 def build_references(text: str, graph: DiagramGraph, s: dict | None = None) -> tuple[str, list[dict], dict]:
     """Insert [[k]] markers after linked mentions; add flow references from graph arrows."""
     nodes = {n.id: n for n in graph.nodes}

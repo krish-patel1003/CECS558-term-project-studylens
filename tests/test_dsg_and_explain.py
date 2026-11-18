@@ -174,3 +174,19 @@ def test_learned_grouping_path_merges_or_splits_by_model():
     split, _ = group_parts(texts, binarise(img), img.size, model=never)
     assert len(split) == 4 and len(merged) < 4
     assert "Load Balancer" in {p["label"] for p in merged}
+
+
+def test_gate_boxes_hides_label_only_and_on_label_regions():
+    from studylens.explain import gate_boxes
+    from studylens.schema import DiagramGraph, Node
+
+    g = DiagramGraph(nodes=[Node(id="n1", label="Leaf", bbox=[10, 10, 30, 20], label_bbox=[10, 10, 30, 20], region_source="label"),
+                            Node(id="n2", label="Stem", bbox=[40, 40, 60, 50], label_bbox=[40, 40, 60, 50], region_source="grounded"),
+                            Node(id="n3", label="Root", bbox=[0, 60, 100, 100], label_bbox=[80, 50, 95, 55], region_source="grounded")],
+                     edges=[], image_size=[100, 100])
+    refs = [{"kind": "part", "node": n.id, "label": n.label, "bbox": list(n.bbox), "region_source": n.region_source} for n in g.nodes]
+    refs.append({"kind": "flow", "arrows": [], "label": "x"})
+    assert gate_boxes(refs, g) == 2
+    assert refs[0]["bbox"] is None and refs[0]["box_hidden"] == "label"
+    assert refs[1]["bbox"] is None and refs[1]["box_hidden"] == "grounded"
+    assert refs[2]["bbox"] == [0, 60, 100, 100] and "box_hidden" not in refs[2]

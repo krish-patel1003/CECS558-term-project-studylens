@@ -84,6 +84,7 @@ def run_explain(vlm, image, graph: DiagramGraph, question: str, choices: list[st
         if str(r.get("node", "")).startswith("a"):
             r["provenance"] = "located"  # named by the model, verified against the diagram's OCR text
     stats.update(box_stats)
+    stats["boxes_hidden"] = explain_mod.gate_boxes(refs, g2)
     yield _ev("EX", "check", "done", n_refs=stats["n_refs"], mentions=stats["n_mentions"], flows=stats["n_flows"])
     if explain_mod._LOCATE.search(text) and locator is not None:
         yield _ev("EX", "locate", "running")

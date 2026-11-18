@@ -153,6 +153,7 @@ def main(argv=None) -> int:
             ts = time.perf_counter()
             raw, scale = vlm._generate(img, B2_PROMPT, 700)
             cache.put(f"b2|{d.image_id}", {"raw": raw, "parts": b2_parts(raw, scale), "latency_s": round(time.perf_counter() - ts, 1)})
+        derive_x3(cache, K, d.image_id)
         if cache.get(K("ours", d.image_id)) is None:
             # tagged systems box parts with the same call as B2 (identical prompt, greedy decoding): reuse it
             boxes = ([{"name": p["label"], "bbox": p["bbox"]} for p in cache.get(f"b2|{d.image_id}")["parts"]]
@@ -177,7 +178,23 @@ def main(argv=None) -> int:
     return 0
 
 
-EXPLAIN_VERSION = "x2"  # v2 explanations from two calls (text, then boxes); "" = the one-call explain-and-box run
+EXPLAIN_VERSION = "x3"  # x3 = x2 + unreliable boxes hidden; x2 = two calls (text, then boxes); "" = one call
+
+
+def derive_x3(cache: Cache, K, image_id: str) -> None:
+    """x3 differs from x2 only by a deterministic filter (explain.gate_boxes), so it is derived from the cached
+    x2 explanation instead of re-running the model."""
+    import copy
+
+    k3 = K("ours", image_id)
+    if not k3.startswith("ours_") or "_x3|" not in k3 or cache.get(k3) is not None:
+        return
+    x2, dg = cache.get(k3.replace("_x3|", "_x2|")), cache.get(K("dsg", image_id))
+    if not (x2 and dg):
+        return
+    r = copy.deepcopy(x2)
+    r.setdefault("checks", {})["boxes_hidden"] = explain_mod.gate_boxes(r["references"], DiagramGraph.from_dict(dg["graph"]))
+    cache.put(k3, r)
 
 
 def key_fn(tag: str, explain_version: str | None = None):
@@ -199,6 +216,7 @@ def summarize(diagrams, items, golds, cache: Cache, args) -> dict:
     invented = {"OURS": 0, "B2": 0}
     region = defaultdict(lambda: [0, 0])
     for d in diagrams:
+        derive_x3(cache, K, d.image_id)
         dg, ours, b2 = cache.get(K("dsg", d.image_id)), cache.get(K("ours", d.image_id)), cache.get(f"b2|{d.image_id}")
         if not (dg and ours and b2):
             continue
@@ -211,7 +229,7 @@ def summarize(diagrams, items, golds, cache: Cache, args) -> dict:
             if k:
                 region[n.region_source or "none"][1] += 1
                 region[n.region_source or "none"][0] += ai2d.location_hit(n.bbox, gold[k], size)
-        ours_parts = [r for r in ours.get("references", []) if r["kind"] == "part"]
+        ours_parts = [r for r in ours.get("references", []) if r["kind"] == "part" and r.get("bbox")]
         systems = {"OURS": [{"label": r["label"], "bbox": r["bbox"]} for r in ours_parts], "B2": b2["parts"]}
         texts = {norm(t["text"]) for t in g.texts}
         row = {"image_id": d.image_id, "category": d.category, "n_gold_labels": len(gold), "dsg_s": dg["latency_s"],

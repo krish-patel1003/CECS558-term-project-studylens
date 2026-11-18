@@ -559,7 +559,7 @@ function renderExplanation(r) {
   const c = r.checks || {};
   h += `<p class="hint">The explanation is written by a 3B model and may include statements the diagram does not show; the <b>references</b> are linked to the scene graph by exact name matching (computed, not generated), and the green box above, when present, is computed by NetworkX. ${refs.length} reference(s). ${r.total_s ? r.total_s.toFixed(1) + " s." : ""}</p>`;
   box.innerHTML = h;
-  $("exRefs").innerHTML = refs.length ? `<h4>References</h4><ol class="reflist">${refs.map((x) => `<li><button type="button" class="ref ${x.provenance} ${x.kind}" data-ref="${x.num}">${x.num}</button> ${esc(x.label)} <span class="hint">${x.kind === "part" ? esc(PROV[x.provenance] || "") + (x.region_source === "label" ? " · label position only" : "") : x.kind === "flow" ? "flow of " + x.edges.length + " arrows" + (x.connected ? "" : " (not connected)") : "arrow"}</span></li>`).join("")}</ol>` : "";
+  $("exRefs").innerHTML = refs.length ? `<h4>References</h4><ol class="reflist">${refs.map((x) => `<li><button type="button" class="ref ${x.provenance} ${x.kind}" data-ref="${x.num}">${x.num}</button> ${esc(x.label)} <span class="hint">${x.kind === "part" ? esc(PROV[x.provenance] || "") + (x.box_hidden ? " · position uncertain, not highlighted" : "") : x.kind === "flow" ? "flow of " + x.edges.length + " arrows" + (x.connected ? "" : " (not connected)") : "arrow"}</span></li>`).join("")}</ol>` : "";
   document.querySelectorAll(".ref").forEach((b) => {
     b.onclick = () => showRef(+b.dataset.ref);
     b.onmouseenter = () => { if (!flowTimer) showRef(+b.dataset.ref, true); };
@@ -576,7 +576,7 @@ function showRef(n, quiet = false) {
   clearInterval(flowTimer); flowTimer = null;
   document.querySelectorAll(".ref").forEach((b) => b.classList.toggle("on", +b.dataset.ref === n));
   if (ref.kind === "part") {
-    focus = { boxes: ref.bbox ? [ref.bbox] : [], nodes: ref.node ? [ref.node] : [], arrows: [], located: ref.provenance === "located", label: ref.label };
+    focus = { boxes: ref.bbox ? [ref.bbox] : [], nodes: ref.node && !ref.box_hidden ? [ref.node] : [], arrows: [], located: ref.provenance === "located", label: ref.label };
     drawOverlay();
   } else {
     // animate the flow arrow by arrow
