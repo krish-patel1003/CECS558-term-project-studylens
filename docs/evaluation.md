@@ -330,3 +330,7 @@ graph's answer on only 8 (v2) and 6 (v2d) of the 125 questions, and both systems
 the graph abstains more often with the sparser, more precise edge set (43 vs 25 abstentions), and those
 questions fall back to E2. Detection runs in about 1.2 s per image on CPU.
 
+
+The final numbers come from 100 fresh AI2D test diagrams (127 questions, none from the dev set):
+`python scripts/evaluate_grounding.py --tag v2d --n-parts 60 --n-flow 40 --exclude external/grounding_runs/dev_ids.txt`,
+or on a Colab T4 with `notebooks/colab_eval_grounding.ipynb`. Output: `results/grounding_eval_v2d_x3_test.json`.
