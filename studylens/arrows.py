@@ -89,7 +89,7 @@ def link_arrows(arrows: list[dict], heads: list[list[float]], nodes, size: tuple
 class ArrowDetector:
     """Loads the trained detector; ``detect(image)`` -> (arrows, arrowhead boxes) in original pixels."""
 
-    def __init__(self, path: str | os.PathLike = DEFAULT_WEIGHTS, device: str | None = None, score: float = 0.5):
+    def __init__(self, path: str | os.PathLike = DEFAULT_WEIGHTS, device: str | None = None, score: float = 0.7):
         import torch
 
         self.torch = torch

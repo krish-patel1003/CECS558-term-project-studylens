@@ -239,7 +239,7 @@ def main(argv=None) -> int:
     ap.add_argument("--probe", action="store_true")
     ap.add_argument("--eval", action="store_true")
     ap.add_argument("--n-eval", type=int, default=150)
-    ap.add_argument("--score", type=float, default=0.5)
+    ap.add_argument("--score", type=float, default=0.7)
     args = ap.parse_args(argv)
     if args.eval:
         evaluate(args)
