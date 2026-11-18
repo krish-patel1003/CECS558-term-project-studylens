@@ -298,7 +298,7 @@ highlighted"). Re-scored from the cached x2 explanations (the filter is determin
 Results: `results/grounding_eval_v2_x3.json`. The rule was chosen on these diagrams, so the honest number
 is the one on fresh test diagrams (`--exclude external/grounding_runs/dev_ids.txt`).
 
-### Arrow detector (to train)
+### Arrow detector (v2d)
 
 Arrow F1 against gold on the dev set is 0.30 for the VLM's arrow list. Attaching AI2D's **true** arrow
 outlines to our scene-graph parts with a simple rule (tail and head to the nearest part; direction from
@@ -309,3 +309,24 @@ extraction: only 71% of gold arrows have both ends among the parts our scene gra
 `studylens/arrows.py` (Mask R-CNN, arrows and arrowheads) is trained by `scripts/train_arrow_detector.py`
 on the AI2D train split (`notebooks/colab_train_arrows.ipynb`); the scene graph uses it automatically when
 `checkpoints/arrow_detector.pt` exists. The grounding evaluation of this system is `--tag v2d`.
+
+Trained for 12 epochs on the AI2D train split with 150 diagrams held out. On those held-out diagrams,
+attaching its arrows to the gold parts gives arrow F1 0.729 at score threshold 0.7 (0.712 at 0.3, 0.724 at
+0.5); the true outlines give 0.798 there. On the dev set, with our extracted parts, arrow F1 rises from
+0.298 (VLM list) to 0.446 (precision 0.544, recall 0.378). Full grounding evaluation on the same 100 dev
+diagrams (`results/grounding_eval_v2d_x3.json`, boxes gated as in x3):
+
+| | v2 x3 (VLM arrows) | **v2d x3 (detector arrows)** | B2 |
+|---|---|---|---|
+| Cited-arrow precision | 32.3% (85 / 263) | **65.8%** (77 / 117) | n/a |
+| Pointing accuracy | 66.0% (266 / 403) | **68.5%** (274 / 400) | 65.3% |
+| Coverage (of 852) | 31.2% | 32.2% | 36.7% |
+| Multiple choice, routed E3 | 94.4% | 94.4% | n/a |
+| Answered by the graph query | 31 | 22 | n/a |
+
+The detector halves the arrows explanations cite but doubles how many are real: about the same number of
+true arrows, far fewer invented ones. Multiple-choice accuracy does not move: the routed system used the
+graph's answer on only 8 (v2) and 6 (v2d) of the 125 questions, and both systems got all of those right;
+the graph abstains more often with the sparser, more precise edge set (43 vs 25 abstentions), and those
+questions fall back to E2. Detection runs in about 1.2 s per image on CPU.
+
