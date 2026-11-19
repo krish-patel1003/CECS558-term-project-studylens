@@ -22,12 +22,16 @@
      filtered by confidence.
    * **Parts (no AI):** OCR lines are grouped into part labels. Lines inside the same enclosing shape
      form one label, as do stacked lines. The topmost text outside any shape is the title.
-   * **Arrows (AI):** Qwen2.5-VL sees the image and the list of part *names* and lists the drawn arrows
-     by name. The names are matched back to parts deterministically.
+   * **Arrows (AI):** a **Mask R-CNN arrow detector** trained on AI2D (`arrows.py`) finds each drawn arrow
+     and arrowhead; the arrow's two ends are attached to the nearest parts and its direction comes from
+     the arrowhead (no AI in that step). Without the detector's weights, Qwen2.5-VL sees the image and the
+     list of part *names* and lists the drawn arrows by name, matched back to parts deterministically.
    * **Regions (mostly no AI):** for each part, the shape enclosing its label is found by image
      analysis (`regions.enclosing_box`). Parts not inside a shape (e.g. anatomy labels with leader lines)
      are located with **one** batch grounding call to Qwen. Otherwise the label box is used. Each part
-     records its `region_source` (shape / grounded / label).
+     records its `region_source` (shape / grounded / label). A part whose position came only from its label
+     text is listed in answers but not highlighted (`explain.gate_boxes`); those positions were right
+     only 6 times in 68 on the AI2D dev set.
 
    Without the OCR environment, the older one-call extraction is used (`EXTRACTION_MODE=legacy`).
 3. **Review and correct** (browser). The graph is drawn over the image and listed with arrow
@@ -94,6 +98,7 @@ answers from a wrong graph. That is why the graph is shown and editable before a
 | Front end | Vanilla HTML/CSS/JS (`studylens/static/`) | Ask tab (1. upload + extraction + graph editing, 2. question + suggestions, 3. live E1/E2/E3 pipeline diagrams) and Evaluation tab |
 | API | FastAPI + Uvicorn (`studylens/app.py`) | Stateless endpoints and static files |
 | Extraction model | Qwen2.5-VL-3B + LoRA via `transformers` + `peft` (`extractors/qwen_vl.py`) | Image → graph |
+| Arrow detector | torchvision Mask R-CNN trained on AI2D arrows/arrowheads (`arrows.py`) | Drawn arrows → directed edges between parts |
 | Query parser | Rules (`graph_qa.rule_parse`, `query.food_web_parse`), else Qwen text-only (`query.PARSE_PROMPT`) | Question → structured graph operation |
 | Graph query | NetworkX (`graph_qa.execute`, `query.match_options`) | Deterministic E3 answer + supporting arrows |
 | QA model | Same base weights, adapter disabled (`qa_nl.py`) | Explanations; E3 fallback with cited arrow ids; E1 and E2 answers |

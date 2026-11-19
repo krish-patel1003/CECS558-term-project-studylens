@@ -6,9 +6,11 @@ studylens/
   config.py              All settings, read from environment variables / .env
   schema.py              DiagramGraph / Node / Edge: the shared graph format (+ to_networkx)
   uploads.py             Image intake: format detection, EXIF, transparency, colour modes, size limits (in memory)
-  dsg.py                 Diagram Scene Graph extraction: OCR parts (no AI), arrows by name (Qwen), regions
+  dsg.py                 Diagram Scene Graph extraction: OCR parts (no AI), arrows (detector, else Qwen by name), regions
+  arrows.py              Arrow detector: Mask R-CNN model, ArrowDetector.detect, link_arrows (ends -> nearest parts)
   regions.py             Image analysis (no AI): enclosing shape of a label; experimental leader-line tracer
-  explain.py             StudyLens answer: graph facts + Qwen explanation + deterministic reference linking
+  explain.py             StudyLens answer: graph facts + Qwen explanation + deterministic reference linking;
+                         gate_boxes hides highlights whose position came only from the label text
   pipelines.py           Pipelines as event generators: EX (StudyLens answer), E1 / E2 / E3 (comparison);
                          combine_e3 (E3 decision rule)
   query.py               E3 core: question -> structured graph query (rules, food-web rules, Qwen parser) ->
@@ -38,9 +40,12 @@ scripts/
   evaluate_ai2d.py       Main evaluation on the AI2D test split -> results/ai2d_eval.json
   make_synthetic.py      Pilot set: 27 diagrams (incl. counterfactual + knowledge-free), 304 questions, varied wording
   evaluate.py            Pilot evaluation E1 / E2 / E3 (resumable) -> results/pilot_eval.json
-  evaluate_grounding.py  Grounded explanations on AI2D vs native VLM grounding + MC -> results/grounding_eval.json
+  evaluate_grounding.py  Grounded explanations on AI2D vs native VLM grounding + MC -> results/grounding_eval*.json
+  train_arrow_detector.py  Arrow/arrowhead Mask R-CNN on AI2D train (150 held out) -> checkpoints/arrow_detector.pt
 notebooks/
   colab_full_eval.ipynb  Full AI2D evaluations on a Colab GPU (Drive-backed caches)
+  colab_train_arrows_inline.ipynb  Train the arrow detector on a Colab T4 (progress bars, threshold sweep)
+  colab_eval_grounding.ipynb       Final grounding evaluation on fresh AI2D test diagrams (dev set excluded)
   make_figures.py        docs/figures/architecture.png
 tests/                   pytest; no model or dataset needed (VLM replaced by stubs)
   test_qa_nl.py          prompts, JSON/option parsing, citation verification
@@ -63,6 +68,7 @@ results/                 committed evaluation outputs (ids + metrics only for AI
 | **Graph extraction (AI)** | `extractors/qwen_vl.py`: `EXTRACTION_PROMPT`, `QwenVLExtractor.extract(use_adapter=…)`, `parse_extraction` |
 | **Fine-tuning** | `scripts/train_lora.py`: `target_json` (training targets), `encode`, `loss_on_targets`, LoRA config |
 | **Scene graph (DSG)** | `dsg.DSGExtractor`: `number_texts`, `group_parts`, `ARROW_PROMPT` + `parse_arrows`, `ground`; `regions.enclosing_box` |
+| **Arrow detector** | `arrows.py`: `build_model`, `ArrowDetector.detect`, `arrow_ends`, `link_arrows`; trained by `scripts/train_arrow_detector.py` |
 | **Explanations + references** | `explain.py`: `EXPLAIN_PROMPT`, `link_mentions`, `build_references`; `pipelines.run_explain` |
 | **E3 graph query** | `query.structured_answer` → `graph_qa.rule_parse` / `query.food_web_parse` / `PARSE_PROMPT` → `graph_qa.execute` → `query.match_options` |
 | **E3 decision rule** | `pipelines.combine_e3` (graph answer / abstain / model fallback) |

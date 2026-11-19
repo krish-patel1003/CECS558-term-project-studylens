@@ -71,7 +71,8 @@ each drawn live.
 | Graph extraction with Qwen2.5-VL-3B + **LoRA adapter trained on AI2D** (zero-shot also available) | ✅ |
 | Truncated model output salvaged (complete entities/arrows kept, warning shown) | ✅ |
 | Overlay of boxes and arrows; edit the graph (add/remove arrows) before asking | ✅ |
-| **Diagram Scene Graph**: OCR parts (exact text and boxes), enclosing-shape regions, arrows by name, grounded regions for parts outside shapes | ✅ |
+| **Diagram Scene Graph**: OCR parts (exact text and boxes), enclosing-shape regions, grounded regions for parts outside shapes; arrows from the **trained arrow detector** (else Qwen lists them by name) | ✅ |
+| **Uncertain highlights hidden**: a part whose position was found only from its label text is listed but not highlighted | ✅ |
 | **Explanations with clickable references**: spotlight a part on the image; animate a flow along graph arrows; references linked deterministically | ✅ |
 | Free-form questions (any wording) and optional multiple-choice options; suggestions generated from the graph | ✅ |
 | **E3 graph query**: rules / Qwen parser → NetworkX → answer + arrows; deterministic option matching incl. "NOT" questions; abstention | ✅ |
@@ -114,8 +115,12 @@ redistribution). Train it with `scripts/get_ai2d.py --accept-license` then `scri
 (see [`docs/model_and_prompts.md`](docs/model_and_prompts.md#fine-tuning-what-we-trained)), or run
 zero-shot by leaving `QWEN_ADAPTER_PATH` empty.
 
-**Scene-graph adapter and learned grouping (final phase, in progress).** Two models address the failures
-measured on AI2D (`docs/evaluation.md`, section 2):
+**Arrow detector, learned grouping and scene-graph adapter.** These models address the failures
+measured on AI2D (`docs/evaluation.md`, sections 2 and 4):
+- `scripts/train_arrow_detector.py` (GPU; `notebooks/colab_train_arrows_inline.ipynb` on a Colab T4, about
+  1–2 h): a Mask R-CNN that finds arrows and arrowheads; `studylens/arrows.py` attaches each arrow's tail and
+  head to the nearest part. Used automatically when `checkpoints/arrow_detector.pt` exists (set
+  `ARROW_DETECTOR=0` to use Qwen's arrow list instead). Not committed (derived from AI2D).
 - `scripts/ocr_ai2d_train.py` then `scripts/train_grouping.py`: a small classifier, trained on AI2D train,
   that decides which OCR lines form one label (`checkpoints/grouping_model.json`, used automatically when present).
 - `scripts/train_dsg_lora.py` (GPU; `notebooks/colab_train_dsg.ipynb` for an A100): one LoRA adapter for
@@ -137,6 +142,7 @@ All settings are environment variables (or a local, git-ignored `.env`). See [`.
 | `EXTRACTION_MODE` | `dsg` | `dsg` = OCR-anchored scene graph (needs the OCR venv); `legacy` = one-call JSON extraction (uses the LoRA adapter) |
 | `MAX_UPLOAD_MB` / `MAX_IMAGE_PIXELS` | `10` / `40000000` | upload limits |
 | `ENABLE_DIRECT_VLM` | `1` | allow image-only answers (E2) |
+| `ARROW_DETECTOR` / `ARROW_DETECTOR_PATH` | `1` / `checkpoints/arrow_detector.pt` | use the trained arrow detector when its weights exist (`0` = Qwen's arrow list) |
 
 No API keys are needed. If you hit Hugging Face rate limits, put `HF_TOKEN` in `.env` (never commit it).
 
@@ -176,7 +182,10 @@ python scripts/evaluate.py --no-model                                # pilot, go
 python scripts/evaluate.py --adapter checkpoints/ai2d_lora_r16       # pilot E1/E2/E3 (~2.5 h on an M4, resumable)
 python scripts/get_ai2d.py --accept-license                          # AI2D into external/ (git-ignored)
 python scripts/evaluate_grounding.py --n-parts 60 --n-flow 40       # grounded explanations on AI2D (~6 h on an M4)
-python scripts/evaluate_grounding.py --n-parts 60 --n-flow 40 --tag v2   # same, current system (learned grouping, explain-and-box, routed E3)
+python scripts/evaluate_grounding.py --n-parts 60 --n-flow 40 --tag v2   # same, learned grouping, explain-and-box, routed E3
+python scripts/evaluate_grounding.py --n-parts 60 --n-flow 40 --tag v2d  # current system: v2 + arrow detector
+python scripts/evaluate_grounding.py --n-parts 60 --n-flow 40 --tag v2d \
+    --exclude external/grounding_runs/dev_ids.txt                    # final: fresh test diagrams (notebooks/colab_eval_grounding.ipynb)
 python scripts/evaluate_ai2d.py --adapter checkpoints/ai2d_lora_r16  # AI2D test split (several hours, resumable)
 # full runs on a GPU: notebooks/colab_full_eval.ipynb
 ```
