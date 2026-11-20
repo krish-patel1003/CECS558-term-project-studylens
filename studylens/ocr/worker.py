@@ -26,8 +26,11 @@ from PIL import Image  # noqa: E402
 
 DET = os.environ.get("OCR_DET_MODEL", "PP-OCRv5_mobile_det")
 REC = os.environ.get("OCR_REC_MODEL", "en_PP-OCRv5_mobile_rec")
+# oneDNN (x86 CPUs, e.g. Colab) crashes in PaddlePaddle 3.3 ("ConvertPirAttribute2RuntimeAttribute not
+# support"); it is never used on Apple silicon, so turning it off keeps results the same as on the Mac.
+MKLDNN = os.environ.get("OCR_ENABLE_MKLDNN", "0") == "1"
 ocr = PaddleOCR(use_doc_orientation_classify=False, use_doc_unwarping=False, use_textline_orientation=False,
-                text_detection_model_name=DET, text_recognition_model_name=REC)
+                text_detection_model_name=DET, text_recognition_model_name=REC, enable_mkldnn=MKLDNN)
 _proto.write(json.dumps({"ready": True, "det": DET, "rec": REC}) + "\n")
 
 for line in sys.stdin:
