@@ -1,0 +1,3397 @@
+{
+ "title": "Grounded explanations on AI2D: StudyLens vs the same VLM with native grounding",
+ "dataset": "ai2d-grounding",
+ "created": "2026-11-20",
+ "model": "Qwen/Qwen2.5-VL-3B-Instruct",
+ "settings": {
+  "n_parts": 60,
+  "n_flow": 40,
+  "q_per_diagram": 3,
+  "seed": 458,
+  "summarize_only": false,
+  "tag": "v2",
+  "explain_version": null,
+  "exclude": "external/grounding_runs/dev_ids.txt",
+  "write_ids": "external/grounding_runs/test_ids.txt"
+ },
+ "summary": {
+  "n_diagrams_scored": 100,
+  "pointing": {
+   "OURS": {
+    "refs": 531,
+    "matched": 412,
+    "hits": 242,
+    "gold": 831,
+    "covered": 242,
+    "unmatched": 119,
+    "pointing_accuracy": 0.587,
+    "coverage": 0.291
+   },
+   "B2": {
+    "refs": 606,
+    "matched": 448,
+    "hits": 272,
+    "gold": 831,
+    "covered": 271,
+    "unmatched": 158,
+    "pointing_accuracy": 0.607,
+    "coverage": 0.326
+   }
+  },
+  "flow_reference_precision": {
+   "cited_arrows": 201,
+   "gold_arrows": 74,
+   "precision": 0.368
+  },
+  "invented_references": {
+   "OURS": 0,
+   "B2": 18
+  },
+  "region_accuracy_by_source": {
+   "grounded": {
+    "hits": 256,
+    "n": 579,
+    "accuracy": 0.442
+   },
+   "label": {
+    "hits": 9,
+    "n": 133,
+    "accuracy": 0.068
+   },
+   "shape": {
+    "hits": 7,
+    "n": 10,
+    "accuracy": 0.7
+   }
+  },
+  "multiple_choice": {
+   "n": 127,
+   "E2": {
+    "correct": 115,
+    "n": 127,
+    "accuracy": 0.906,
+    "ci95": [
+     0.85,
+     0.953
+    ]
+   },
+   "E3": {
+    "correct": 114,
+    "n": 127,
+    "accuracy": 0.898,
+    "ci95": [
+     0.843,
+     0.945
+    ]
+   },
+   "E2_vs_E3": {
+    "only_first_correct": 1,
+    "only_second_correct": 0,
+    "p_value": 1.0
+   },
+   "answered_by_query": 21,
+   "E3_abstentions": 0,
+   "E3_no_abstain": {
+    "correct": 114,
+    "n": 127,
+    "accuracy": 0.898,
+    "ci95": [
+     0.843,
+     0.945
+    ]
+   },
+   "E2_vs_E3_no_abstain": {
+    "only_first_correct": 1,
+    "only_second_correct": 0,
+    "p_value": 1.0
+   },
+   "by_category_parts": {
+    "n": 48,
+    "E2": 0.979,
+    "E3": 0.979,
+    "E3_no_abstain": 0.979
+   },
+   "by_category_flow": {
+    "n": 79,
+    "E2": 0.861,
+    "E3": 0.848,
+    "E3_no_abstain": 0.848
+   }
+  }
+ },
+ "per_diagram": [
+  {
+   "image_id": "3756.png",
+   "category": "partsOfA",
+   "n_gold_labels": 12,
+   "dsg_s": 48.9,
+   "n_parts": 12,
+   "n_arrows": 10,
+   "OURS": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 2,
+    "matched": 2,
+    "hits": 1,
+    "covered": 1
+   }
+  },
+  {
+   "image_id": "2862.png",
+   "category": "partsOfA",
+   "n_gold_labels": 17,
+   "dsg_s": 64.9,
+   "n_parts": 17,
+   "n_arrows": 9,
+   "OURS": {
+    "refs": 9,
+    "matched": 9,
+    "hits": 4,
+    "covered": 4
+   },
+   "B2": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 3,
+    "covered": 3
+   }
+  },
+  {
+   "image_id": "1129.png",
+   "category": "partsOfA",
+   "n_gold_labels": 9,
+   "dsg_s": 37.6,
+   "n_parts": 14,
+   "n_arrows": 4,
+   "OURS": {
+    "refs": 11,
+    "matched": 7,
+    "hits": 4,
+    "covered": 4
+   },
+   "B2": {
+    "refs": 7,
+    "matched": 7,
+    "hits": 5,
+    "covered": 5
+   }
+  },
+  {
+   "image_id": "1095.png",
+   "category": "partsOfA",
+   "n_gold_labels": 4,
+   "dsg_s": 25.5,
+   "n_parts": 2,
+   "n_arrows": 0,
+   "OURS": {
+    "refs": 2,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 4,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "3874.png",
+   "category": "partsOfA",
+   "n_gold_labels": 5,
+   "dsg_s": 16.7,
+   "n_parts": 5,
+   "n_arrows": 1,
+   "OURS": {
+    "refs": 6,
+    "matched": 5,
+    "hits": 3,
+    "covered": 3
+   },
+   "B2": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 3,
+    "covered": 3
+   }
+  },
+  {
+   "image_id": "3637.png",
+   "category": "partsOfA",
+   "n_gold_labels": 8,
+   "dsg_s": 47.6,
+   "n_parts": 9,
+   "n_arrows": 8,
+   "OURS": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 3,
+    "covered": 3
+   },
+   "B2": {
+    "refs": 8,
+    "matched": 8,
+    "hits": 7,
+    "covered": 7
+   }
+  },
+  {
+   "image_id": "3210.png",
+   "category": "partsOfA",
+   "n_gold_labels": 6,
+   "dsg_s": 20.7,
+   "n_parts": 6,
+   "n_arrows": 5,
+   "OURS": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 1,
+    "covered": 1
+   },
+   "B2": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 1,
+    "covered": 1
+   }
+  },
+  {
+   "image_id": "2889.png",
+   "category": "partsOfA",
+   "n_gold_labels": 19,
+   "dsg_s": 50.0,
+   "n_parts": 18,
+   "n_arrows": 6,
+   "OURS": {
+    "refs": 10,
+    "matched": 10,
+    "hits": 3,
+    "covered": 3
+   },
+   "B2": {
+    "refs": 0,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "2907.png",
+   "category": "partsOfA",
+   "n_gold_labels": 6,
+   "dsg_s": 27.1,
+   "n_parts": 6,
+   "n_arrows": 0,
+   "OURS": {
+    "refs": 5,
+    "matched": 1,
+    "hits": 1,
+    "covered": 1
+   },
+   "B2": {
+    "refs": 6,
+    "matched": 1,
+    "hits": 1,
+    "covered": 1
+   }
+  },
+  {
+   "image_id": "2945.png",
+   "category": "partsOfA",
+   "n_gold_labels": 10,
+   "dsg_s": 35.4,
+   "n_parts": 11,
+   "n_arrows": 7,
+   "OURS": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "3189.png",
+   "category": "partsOfA",
+   "n_gold_labels": 14,
+   "dsg_s": 45.2,
+   "n_parts": 16,
+   "n_arrows": 9,
+   "OURS": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 3,
+    "covered": 3
+   }
+  },
+  {
+   "image_id": "2843.png",
+   "category": "partsOfA",
+   "n_gold_labels": 10,
+   "dsg_s": 43.4,
+   "n_parts": 15,
+   "n_arrows": 4,
+   "OURS": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 10,
+    "matched": 10,
+    "hits": 3,
+    "covered": 3
+   }
+  },
+  {
+   "image_id": "3550.png",
+   "category": "partsOfA",
+   "n_gold_labels": 13,
+   "dsg_s": 53.2,
+   "n_parts": 16,
+   "n_arrows": 6,
+   "OURS": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 1,
+    "covered": 1
+   },
+   "B2": {
+    "refs": 7,
+    "matched": 7,
+    "hits": 2,
+    "covered": 2
+   }
+  },
+  {
+   "image_id": "3646.png",
+   "category": "partsOfA",
+   "n_gold_labels": 12,
+   "dsg_s": 35.9,
+   "n_parts": 10,
+   "n_arrows": 5,
+   "OURS": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "3624.png",
+   "category": "partsOfA",
+   "n_gold_labels": 20,
+   "dsg_s": 60.5,
+   "n_parts": 19,
+   "n_arrows": 10,
+   "OURS": {
+    "refs": 6,
+    "matched": 5,
+    "hits": 1,
+    "covered": 1
+   },
+   "B2": {
+    "refs": 0,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "3217.png",
+   "category": "partsOfA",
+   "n_gold_labels": 5,
+   "dsg_s": 17.0,
+   "n_parts": 5,
+   "n_arrows": 1,
+   "OURS": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 4,
+    "covered": 4
+   },
+   "B2": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 4,
+    "covered": 4
+   }
+  },
+  {
+   "image_id": "1391.png",
+   "category": "partsOfA",
+   "n_gold_labels": 9,
+   "dsg_s": 23.4,
+   "n_parts": 6,
+   "n_arrows": 0,
+   "OURS": {
+    "refs": 7,
+    "matched": 7,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 9,
+    "matched": 9,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "3609.png",
+   "category": "partsOfA",
+   "n_gold_labels": 10,
+   "dsg_s": 40.5,
+   "n_parts": 13,
+   "n_arrows": 6,
+   "OURS": {
+    "refs": 0,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 2,
+    "covered": 2
+   }
+  },
+  {
+   "image_id": "3688.png",
+   "category": "partsOfA",
+   "n_gold_labels": 13,
+   "dsg_s": 41.5,
+   "n_parts": 11,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 7,
+    "matched": 7,
+    "hits": 6,
+    "covered": 6
+   },
+   "B2": {
+    "refs": 9,
+    "matched": 9,
+    "hits": 9,
+    "covered": 9
+   }
+  },
+  {
+   "image_id": "1170.png",
+   "category": "partsOfA",
+   "n_gold_labels": 19,
+   "dsg_s": 58.5,
+   "n_parts": 18,
+   "n_arrows": 11,
+   "OURS": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 4,
+    "covered": 4
+   },
+   "B2": {
+    "refs": 2,
+    "matched": 2,
+    "hits": 2,
+    "covered": 2
+   }
+  },
+  {
+   "image_id": "2875.png",
+   "category": "partsOfA",
+   "n_gold_labels": 6,
+   "dsg_s": 25.3,
+   "n_parts": 9,
+   "n_arrows": 0,
+   "OURS": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 4,
+    "covered": 4
+   },
+   "B2": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 5,
+    "covered": 5
+   }
+  },
+  {
+   "image_id": "3967.png",
+   "category": "partsOfA",
+   "n_gold_labels": 7,
+   "dsg_s": 43.0,
+   "n_parts": 9,
+   "n_arrows": 3,
+   "OURS": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 5,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "3960.png",
+   "category": "partsOfA",
+   "n_gold_labels": 4,
+   "dsg_s": 12.2,
+   "n_parts": 3,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 3,
+    "covered": 3
+   },
+   "B2": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 4,
+    "covered": 4
+   }
+  },
+  {
+   "image_id": "3504.png",
+   "category": "partsOfA",
+   "n_gold_labels": 17,
+   "dsg_s": 62.2,
+   "n_parts": 16,
+   "n_arrows": 9,
+   "OURS": {
+    "refs": 7,
+    "matched": 7,
+    "hits": 7,
+    "covered": 7
+   },
+   "B2": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 4,
+    "covered": 4
+   }
+  },
+  {
+   "image_id": "2958.png",
+   "category": "partsOfA",
+   "n_gold_labels": 10,
+   "dsg_s": 37.0,
+   "n_parts": 10,
+   "n_arrows": 9,
+   "OURS": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 3,
+    "covered": 3
+   },
+   "B2": {
+    "refs": 9,
+    "matched": 9,
+    "hits": 6,
+    "covered": 6
+   }
+  },
+  {
+   "image_id": "3536.png",
+   "category": "partsOfA",
+   "n_gold_labels": 18,
+   "dsg_s": 61.4,
+   "n_parts": 18,
+   "n_arrows": 13,
+   "OURS": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 1,
+    "matched": 1,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "3407.png",
+   "category": "partsOfA",
+   "n_gold_labels": 11,
+   "dsg_s": 41.1,
+   "n_parts": 12,
+   "n_arrows": 9,
+   "OURS": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 0,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "1108.png",
+   "category": "partsOfA",
+   "n_gold_labels": 4,
+   "dsg_s": 23.4,
+   "n_parts": 6,
+   "n_arrows": 1,
+   "OURS": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 2,
+    "matched": 2,
+    "hits": 2,
+    "covered": 2
+   }
+  },
+  {
+   "image_id": "3046.png",
+   "category": "partsOfA",
+   "n_gold_labels": 9,
+   "dsg_s": 27.1,
+   "n_parts": 10,
+   "n_arrows": 3,
+   "OURS": {
+    "refs": 8,
+    "matched": 6,
+    "hits": 4,
+    "covered": 4
+   },
+   "B2": {
+    "refs": 2,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "1147.png",
+   "category": "partsOfA",
+   "n_gold_labels": 14,
+   "dsg_s": 50.8,
+   "n_parts": 14,
+   "n_arrows": 5,
+   "OURS": {
+    "refs": 10,
+    "matched": 10,
+    "hits": 5,
+    "covered": 5
+   },
+   "B2": {
+    "refs": 13,
+    "matched": 11,
+    "hits": 5,
+    "covered": 5
+   }
+  },
+  {
+   "image_id": "2854.png",
+   "category": "partsOfA",
+   "n_gold_labels": 9,
+   "dsg_s": 41.5,
+   "n_parts": 9,
+   "n_arrows": 5,
+   "OURS": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 5,
+    "covered": 5
+   },
+   "B2": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 4,
+    "covered": 4
+   }
+  },
+  {
+   "image_id": "3249.png",
+   "category": "partsOfA",
+   "n_gold_labels": 21,
+   "dsg_s": 37.7,
+   "n_parts": 15,
+   "n_arrows": 0,
+   "OURS": {
+    "refs": 2,
+    "matched": 2,
+    "hits": 1,
+    "covered": 1
+   },
+   "B2": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 3,
+    "covered": 3
+   }
+  },
+  {
+   "image_id": "2953.png",
+   "category": "partsOfA",
+   "n_gold_labels": 8,
+   "dsg_s": 38.1,
+   "n_parts": 9,
+   "n_arrows": 4,
+   "OURS": {
+    "refs": 5,
+    "matched": 4,
+    "hits": 4,
+    "covered": 4
+   },
+   "B2": {
+    "refs": 8,
+    "matched": 7,
+    "hits": 7,
+    "covered": 7
+   }
+  },
+  {
+   "image_id": "3900.png",
+   "category": "partsOfA",
+   "n_gold_labels": 5,
+   "dsg_s": 25.1,
+   "n_parts": 6,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 3,
+    "covered": 3
+   },
+   "B2": {
+    "refs": 2,
+    "matched": 2,
+    "hits": 2,
+    "covered": 2
+   }
+  },
+  {
+   "image_id": "3007.png",
+   "category": "partsOfA",
+   "n_gold_labels": 5,
+   "dsg_s": 18.5,
+   "n_parts": 5,
+   "n_arrows": 0,
+   "OURS": {
+    "refs": 4,
+    "matched": 3,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 3,
+    "covered": 3
+   }
+  },
+  {
+   "image_id": "3803.png",
+   "category": "partsOfA",
+   "n_gold_labels": 16,
+   "dsg_s": 66.1,
+   "n_parts": 18,
+   "n_arrows": 10,
+   "OURS": {
+    "refs": 7,
+    "matched": 7,
+    "hits": 7,
+    "covered": 7
+   },
+   "B2": {
+    "refs": 15,
+    "matched": 15,
+    "hits": 10,
+    "covered": 10
+   }
+  },
+  {
+   "image_id": "1392.png",
+   "category": "partsOfA",
+   "n_gold_labels": 16,
+   "dsg_s": 59.1,
+   "n_parts": 17,
+   "n_arrows": 8,
+   "OURS": {
+    "refs": 1,
+    "matched": 1,
+    "hits": 1,
+    "covered": 1
+   },
+   "B2": {
+    "refs": 13,
+    "matched": 13,
+    "hits": 9,
+    "covered": 9
+   }
+  },
+  {
+   "image_id": "3038.png",
+   "category": "partsOfA",
+   "n_gold_labels": 8,
+   "dsg_s": 31.3,
+   "n_parts": 8,
+   "n_arrows": 9,
+   "OURS": {
+    "refs": 8,
+    "matched": 8,
+    "hits": 8,
+    "covered": 8
+   },
+   "B2": {
+    "refs": 8,
+    "matched": 8,
+    "hits": 8,
+    "covered": 8
+   }
+  },
+  {
+   "image_id": "3464.png",
+   "category": "partsOfA",
+   "n_gold_labels": 4,
+   "dsg_s": 31.4,
+   "n_parts": 8,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 5,
+    "matched": 2,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 3,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "3518.png",
+   "category": "partsOfA",
+   "n_gold_labels": 20,
+   "dsg_s": 72.0,
+   "n_parts": 21,
+   "n_arrows": 11,
+   "OURS": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 2,
+    "covered": 2
+   }
+  },
+  {
+   "image_id": "3872.png",
+   "category": "partsOfA",
+   "n_gold_labels": 14,
+   "dsg_s": 43.2,
+   "n_parts": 13,
+   "n_arrows": 10,
+   "OURS": {
+    "refs": 11,
+    "matched": 11,
+    "hits": 4,
+    "covered": 4
+   },
+   "B2": {
+    "refs": 9,
+    "matched": 9,
+    "hits": 4,
+    "covered": 4
+   }
+  },
+  {
+   "image_id": "2901.png",
+   "category": "partsOfA",
+   "n_gold_labels": 7,
+   "dsg_s": 26.4,
+   "n_parts": 6,
+   "n_arrows": 3,
+   "OURS": {
+    "refs": 7,
+    "matched": 6,
+    "hits": 5,
+    "covered": 5
+   },
+   "B2": {
+    "refs": 7,
+    "matched": 6,
+    "hits": 5,
+    "covered": 5
+   }
+  },
+  {
+   "image_id": "3309.png",
+   "category": "partsOfA",
+   "n_gold_labels": 19,
+   "dsg_s": 35.9,
+   "n_parts": 14,
+   "n_arrows": 6,
+   "OURS": {
+    "refs": 1,
+    "matched": 1,
+    "hits": 1,
+    "covered": 1
+   },
+   "B2": {
+    "refs": 0,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "2895.png",
+   "category": "partsOfA",
+   "n_gold_labels": 10,
+   "dsg_s": 32.5,
+   "n_parts": 11,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 5,
+    "covered": 5
+   },
+   "B2": {
+    "refs": 9,
+    "matched": 9,
+    "hits": 6,
+    "covered": 6
+   }
+  },
+  {
+   "image_id": "2917.png",
+   "category": "partsOfA",
+   "n_gold_labels": 6,
+   "dsg_s": 22.5,
+   "n_parts": 7,
+   "n_arrows": 1,
+   "OURS": {
+    "refs": 7,
+    "matched": 6,
+    "hits": 6,
+    "covered": 6
+   },
+   "B2": {
+    "refs": 6,
+    "matched": 5,
+    "hits": 5,
+    "covered": 5
+   }
+  },
+  {
+   "image_id": "1182.png",
+   "category": "partsOfA",
+   "n_gold_labels": 13,
+   "dsg_s": 67.1,
+   "n_parts": 16,
+   "n_arrows": 11,
+   "OURS": {
+    "refs": 7,
+    "matched": 7,
+    "hits": 5,
+    "covered": 5
+   },
+   "B2": {
+    "refs": 0,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "1119.png",
+   "category": "partsOfA",
+   "n_gold_labels": 9,
+   "dsg_s": 19.7,
+   "n_parts": 6,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 5,
+    "covered": 5
+   },
+   "B2": {
+    "refs": 10,
+    "matched": 9,
+    "hits": 9,
+    "covered": 9
+   }
+  },
+  {
+   "image_id": "3606.png",
+   "category": "partsOfA",
+   "n_gold_labels": 19,
+   "dsg_s": 35.8,
+   "n_parts": 18,
+   "n_arrows": 15,
+   "OURS": {
+    "refs": 0,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 1,
+    "matched": 1,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "3540.png",
+   "category": "partsOfA",
+   "n_gold_labels": 14,
+   "dsg_s": 59.4,
+   "n_parts": 14,
+   "n_arrows": 14,
+   "OURS": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 6,
+    "covered": 6
+   },
+   "B2": {
+    "refs": 9,
+    "matched": 9,
+    "hits": 9,
+    "covered": 9
+   }
+  },
+  {
+   "image_id": "3966.png",
+   "category": "partsOfA",
+   "n_gold_labels": 11,
+   "dsg_s": 35.7,
+   "n_parts": 15,
+   "n_arrows": 7,
+   "OURS": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 3,
+    "covered": 3
+   },
+   "B2": {
+    "refs": 9,
+    "matched": 9,
+    "hits": 4,
+    "covered": 4
+   }
+  },
+  {
+   "image_id": "3910.png",
+   "category": "partsOfA",
+   "n_gold_labels": 8,
+   "dsg_s": 29.7,
+   "n_parts": 8,
+   "n_arrows": 6,
+   "OURS": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 8,
+    "matched": 6,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "3451.png",
+   "category": "partsOfA",
+   "n_gold_labels": 3,
+   "dsg_s": 8.9,
+   "n_parts": 5,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 3,
+    "covered": 3
+   },
+   "B2": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 3,
+    "covered": 3
+   }
+  },
+  {
+   "image_id": "3596.png",
+   "category": "partsOfA",
+   "n_gold_labels": 15,
+   "dsg_s": 63.2,
+   "n_parts": 16,
+   "n_arrows": 14,
+   "OURS": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 6,
+    "covered": 6
+   },
+   "B2": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 4,
+    "covered": 4
+   }
+  },
+  {
+   "image_id": "3542.png",
+   "category": "partsOfA",
+   "n_gold_labels": 9,
+   "dsg_s": 50.6,
+   "n_parts": 13,
+   "n_arrows": 1,
+   "OURS": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 1,
+    "covered": 1
+   },
+   "B2": {
+    "refs": 1,
+    "matched": 1,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "3717.png",
+   "category": "partsOfA",
+   "n_gold_labels": 19,
+   "dsg_s": 42.4,
+   "n_parts": 16,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 6,
+    "covered": 6
+   },
+   "B2": {
+    "refs": 13,
+    "matched": 13,
+    "hits": 10,
+    "covered": 10
+   }
+  },
+  {
+   "image_id": "3342.png",
+   "category": "partsOfA",
+   "n_gold_labels": 3,
+   "dsg_s": 13.1,
+   "n_parts": 4,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 3,
+    "covered": 3
+   },
+   "B2": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 3,
+    "covered": 3
+   }
+  },
+  {
+   "image_id": "2906.png",
+   "category": "partsOfA",
+   "n_gold_labels": 11,
+   "dsg_s": 28.5,
+   "n_parts": 10,
+   "n_arrows": 3,
+   "OURS": {
+    "refs": 7,
+    "matched": 7,
+    "hits": 7,
+    "covered": 7
+   },
+   "B2": {
+    "refs": 7,
+    "matched": 7,
+    "hits": 7,
+    "covered": 7
+   }
+  },
+  {
+   "image_id": "3027.png",
+   "category": "partsOfA",
+   "n_gold_labels": 8,
+   "dsg_s": 28.6,
+   "n_parts": 8,
+   "n_arrows": 4,
+   "OURS": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 9,
+    "matched": 8,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "3380.png",
+   "category": "partsOfA",
+   "n_gold_labels": 9,
+   "dsg_s": 28.3,
+   "n_parts": 10,
+   "n_arrows": 3,
+   "OURS": {
+    "refs": 7,
+    "matched": 7,
+    "hits": 6,
+    "covered": 6
+   },
+   "B2": {
+    "refs": 7,
+    "matched": 7,
+    "hits": 6,
+    "covered": 6
+   }
+  },
+  {
+   "image_id": "3875.png",
+   "category": "partsOfA",
+   "n_gold_labels": 6,
+   "dsg_s": 19.3,
+   "n_parts": 6,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 6,
+    "matched": 5,
+    "hits": 1,
+    "covered": 1
+   }
+  },
+  {
+   "image_id": "2274.png",
+   "category": "lifeCycles",
+   "n_gold_labels": 6,
+   "dsg_s": 41.2,
+   "n_parts": 12,
+   "n_arrows": 4,
+   "OURS": {
+    "refs": 7,
+    "matched": 2,
+    "hits": 1,
+    "covered": 1
+   },
+   "B2": {
+    "refs": 12,
+    "matched": 4,
+    "hits": 3,
+    "covered": 3
+   }
+  },
+  {
+   "image_id": "2392.png",
+   "category": "lifeCycles",
+   "n_gold_labels": 2,
+   "dsg_s": 49.8,
+   "n_parts": 14,
+   "n_arrows": 5,
+   "OURS": {
+    "refs": 7,
+    "matched": 2,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 9,
+    "matched": 2,
+    "hits": 2,
+    "covered": 2
+   }
+  },
+  {
+   "image_id": "504.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 8,
+   "dsg_s": 31.1,
+   "n_parts": 8,
+   "n_arrows": 5,
+   "OURS": {
+    "refs": 6,
+    "matched": 4,
+    "hits": 1,
+    "covered": 1
+   },
+   "B2": {
+    "refs": 10,
+    "matched": 8,
+    "hits": 1,
+    "covered": 1
+   }
+  },
+  {
+   "image_id": "2419.png",
+   "category": "lifeCycles",
+   "n_gold_labels": 4,
+   "dsg_s": 18.4,
+   "n_parts": 4,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 3,
+    "matched": 2,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 4,
+    "covered": 4
+   }
+  },
+  {
+   "image_id": "639.png",
+   "category": "lifeCycles",
+   "n_gold_labels": 4,
+   "dsg_s": 27.2,
+   "n_parts": 5,
+   "n_arrows": 3,
+   "OURS": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 3,
+    "covered": 3
+   },
+   "B2": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 4,
+    "covered": 4
+   }
+  },
+  {
+   "image_id": "833.png",
+   "category": "lifeCycles",
+   "n_gold_labels": 3,
+   "dsg_s": 9.4,
+   "n_parts": 2,
+   "n_arrows": 0,
+   "OURS": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 1,
+    "covered": 1
+   },
+   "B2": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "810.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 6,
+   "dsg_s": 23.2,
+   "n_parts": 5,
+   "n_arrows": 3,
+   "OURS": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 3,
+    "covered": 3
+   }
+  },
+  {
+   "image_id": "1952.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 2,
+   "dsg_s": 42.6,
+   "n_parts": 12,
+   "n_arrows": 7,
+   "OURS": {
+    "refs": 6,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 11,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "2284.png",
+   "category": "lifeCycles",
+   "n_gold_labels": 8,
+   "dsg_s": 17.3,
+   "n_parts": 10,
+   "n_arrows": 7,
+   "OURS": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 8,
+    "matched": 8,
+    "hits": 1,
+    "covered": 1
+   }
+  },
+  {
+   "image_id": "478.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 5,
+   "dsg_s": 25.2,
+   "n_parts": 4,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 5,
+    "covered": 5
+   },
+   "B2": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 5,
+    "covered": 5
+   }
+  },
+  {
+   "image_id": "276.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 23,
+   "dsg_s": 45.5,
+   "n_parts": 23,
+   "n_arrows": 18,
+   "OURS": {
+    "refs": 5,
+    "matched": 4,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 14,
+    "matched": 13,
+    "hits": 6,
+    "covered": 6
+   }
+  },
+  {
+   "image_id": "2134.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 0,
+   "dsg_s": 12.9,
+   "n_parts": 3,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 4,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 7,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "441.png",
+   "category": "lifeCycles",
+   "n_gold_labels": 0,
+   "dsg_s": 7.2,
+   "n_parts": 3,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 3,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 3,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "113.png",
+   "category": "lifeCycles",
+   "n_gold_labels": 3,
+   "dsg_s": 15.7,
+   "n_parts": 2,
+   "n_arrows": 1,
+   "OURS": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 3,
+    "covered": 3
+   },
+   "B2": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 3,
+    "covered": 3
+   }
+  },
+  {
+   "image_id": "624.png",
+   "category": "lifeCycles",
+   "n_gold_labels": 4,
+   "dsg_s": 13.2,
+   "n_parts": 4,
+   "n_arrows": 3,
+   "OURS": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "634.png",
+   "category": "lifeCycles",
+   "n_gold_labels": 6,
+   "dsg_s": 37.5,
+   "n_parts": 6,
+   "n_arrows": 0,
+   "OURS": {
+    "refs": 3,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 6,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "4168.png",
+   "category": "rockCycle",
+   "n_gold_labels": 0,
+   "dsg_s": 46.4,
+   "n_parts": 13,
+   "n_arrows": 11,
+   "OURS": {
+    "refs": 6,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 5,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "704.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 0,
+   "dsg_s": 45.3,
+   "n_parts": 12,
+   "n_arrows": 3,
+   "OURS": {
+    "refs": 5,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 10,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "2014.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 7,
+   "dsg_s": 18.7,
+   "n_parts": 12,
+   "n_arrows": 4,
+   "OURS": {
+    "refs": 4,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 7,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "2499.png",
+   "category": "lifeCycles",
+   "n_gold_labels": 5,
+   "dsg_s": 21.7,
+   "n_parts": 4,
+   "n_arrows": 3,
+   "OURS": {
+    "refs": 6,
+    "matched": 5,
+    "hits": 3,
+    "covered": 3
+   },
+   "B2": {
+    "refs": 4,
+    "matched": 3,
+    "hits": 3,
+    "covered": 3
+   }
+  },
+  {
+   "image_id": "1317.png",
+   "category": "photosynthesisRespiration",
+   "n_gold_labels": 3,
+   "dsg_s": 20.3,
+   "n_parts": 7,
+   "n_arrows": 4,
+   "OURS": {
+    "refs": 7,
+    "matched": 3,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 7,
+    "matched": 3,
+    "hits": 1,
+    "covered": 1
+   }
+  },
+  {
+   "image_id": "2380.png",
+   "category": "lifeCycles",
+   "n_gold_labels": 8,
+   "dsg_s": 44.7,
+   "n_parts": 9,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 8,
+    "matched": 7,
+    "hits": 5,
+    "covered": 5
+   },
+   "B2": {
+    "refs": 7,
+    "matched": 7,
+    "hits": 5,
+    "covered": 5
+   }
+  },
+  {
+   "image_id": "895.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 0,
+   "dsg_s": 15.2,
+   "n_parts": 4,
+   "n_arrows": 3,
+   "OURS": {
+    "refs": 3,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 5,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "2020.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 8,
+   "dsg_s": 25.9,
+   "n_parts": 9,
+   "n_arrows": 3,
+   "OURS": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 4,
+    "covered": 4
+   },
+   "B2": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 4,
+    "covered": 4
+   }
+  },
+  {
+   "image_id": "1840.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 0,
+   "dsg_s": 22.1,
+   "n_parts": 6,
+   "n_arrows": 1,
+   "OURS": {
+    "refs": 4,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 5,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "2238.png",
+   "category": "lifeCycles",
+   "n_gold_labels": 3,
+   "dsg_s": 19.6,
+   "n_parts": 5,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 1,
+    "covered": 1
+   },
+   "B2": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 2,
+    "covered": 1
+   }
+  },
+  {
+   "image_id": "2068.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 0,
+   "dsg_s": 31.6,
+   "n_parts": 8,
+   "n_arrows": 6,
+   "OURS": {
+    "refs": 8,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 9,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "2062.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 3,
+   "dsg_s": 11.5,
+   "n_parts": 3,
+   "n_arrows": 2,
+   "OURS": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 3,
+    "covered": 3
+   },
+   "B2": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 3,
+    "covered": 3
+   }
+  },
+  {
+   "image_id": "2286.png",
+   "category": "lifeCycles",
+   "n_gold_labels": 8,
+   "dsg_s": 21.8,
+   "n_parts": 6,
+   "n_arrows": 4,
+   "OURS": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 4,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "2124.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 0,
+   "dsg_s": 40.4,
+   "n_parts": 10,
+   "n_arrows": 9,
+   "OURS": {
+    "refs": 9,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 12,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "2420.png",
+   "category": "lifeCycles",
+   "n_gold_labels": 6,
+   "dsg_s": 24.9,
+   "n_parts": 7,
+   "n_arrows": 6,
+   "OURS": {
+    "refs": 3,
+    "matched": 3,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "4155.png",
+   "category": "rockCycle",
+   "n_gold_labels": 6,
+   "dsg_s": 19.1,
+   "n_parts": 10,
+   "n_arrows": 4,
+   "OURS": {
+    "refs": 6,
+    "matched": 5,
+    "hits": 2,
+    "covered": 2
+   },
+   "B2": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 2,
+    "covered": 2
+   }
+  },
+  {
+   "image_id": "19.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 6,
+   "dsg_s": 26.6,
+   "n_parts": 6,
+   "n_arrows": 8,
+   "OURS": {
+    "refs": 4,
+    "matched": 4,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 6,
+    "matched": 6,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "500.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 0,
+   "dsg_s": 22.7,
+   "n_parts": 5,
+   "n_arrows": 4,
+   "OURS": {
+    "refs": 5,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 5,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "1966.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 0,
+   "dsg_s": 31.0,
+   "n_parts": 8,
+   "n_arrows": 7,
+   "OURS": {
+    "refs": 8,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 9,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "24.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 5,
+   "dsg_s": 19.9,
+   "n_parts": 6,
+   "n_arrows": 4,
+   "OURS": {
+    "refs": 6,
+    "matched": 5,
+    "hits": 3,
+    "covered": 3
+   },
+   "B2": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 3,
+    "covered": 3
+   }
+  },
+  {
+   "image_id": "1898.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 13,
+   "dsg_s": 23.5,
+   "n_parts": 13,
+   "n_arrows": 5,
+   "OURS": {
+    "refs": 7,
+    "matched": 7,
+    "hits": 7,
+    "covered": 7
+   },
+   "B2": {
+    "refs": 11,
+    "matched": 11,
+    "hits": 11,
+    "covered": 11
+   }
+  },
+  {
+   "image_id": "1854.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 12,
+   "dsg_s": 44.1,
+   "n_parts": 12,
+   "n_arrows": 10,
+   "OURS": {
+    "refs": 10,
+    "matched": 9,
+    "hits": 3,
+    "covered": 3
+   },
+   "B2": {
+    "refs": 13,
+    "matched": 12,
+    "hits": 2,
+    "covered": 2
+   }
+  },
+  {
+   "image_id": "874.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 0,
+   "dsg_s": 21.8,
+   "n_parts": 7,
+   "n_arrows": 6,
+   "OURS": {
+    "refs": 7,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   },
+   "B2": {
+    "refs": 7,
+    "matched": 0,
+    "hits": 0,
+    "covered": 0
+   }
+  },
+  {
+   "image_id": "282.png",
+   "category": "foodChainsWebs",
+   "n_gold_labels": 8,
+   "dsg_s": 38.7,
+   "n_parts": 10,
+   "n_arrows": 8,
+   "OURS": {
+    "refs": 5,
+    "matched": 5,
+    "hits": 5,
+    "covered": 5
+   },
+   "B2": {
+    "refs": 8,
+    "matched": 8,
+    "hits": 8,
+    "covered": 8
+   }
+  }
+ ],
+ "records": [
+  {
+   "qid": "3756.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "1129.png-0",
+   "category": "partsOfA",
+   "E2": 0,
+   "E3": 0,
+   "E3_abstained": 0,
+   "E3_no_abstain": 0,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "1129.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "3874.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "3874.png-2",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "3637.png-3",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "3637.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "3210.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "3210.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "2945.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "3189.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "2843.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "3550.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "3550.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "3646.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "3217.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "1391.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "3609.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "3504.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "3504.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "2958.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "2958.png-2",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "3536.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "1108.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "1147.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "2854.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "2854.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "2953.png-3",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "2953.png-2",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "3803.png-2",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "1392.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "1392.png-3",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "3464.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "3464.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "3518.png-3",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "3518.png-2",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "3872.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "2901.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "2901.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "2917.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "3606.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "3606.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "3596.png-2",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "3542.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "3717.png-2",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "3717.png-1",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "3380.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "3875.png-0",
+   "category": "partsOfA",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "2274.png-3",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "2274.png-0",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "2392.png-2",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "504.png-8",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "504.png-9",
+   "category": "foodChainsWebs",
+   "E2": 0,
+   "E3": 0,
+   "E3_abstained": 0,
+   "E3_no_abstain": 0,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "504.png-2",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "2419.png-0",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "2419.png-1",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "639.png-1",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "639.png-2",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "833.png-0",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "810.png-1",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "810.png-0",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "810.png-2",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "1952.png-5",
+   "category": "foodChainsWebs",
+   "E2": 0,
+   "E3": 0,
+   "E3_abstained": 0,
+   "E3_no_abstain": 0,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "1952.png-2",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "1952.png-6",
+   "category": "foodChainsWebs",
+   "E2": 0,
+   "E3": 0,
+   "E3_abstained": 0,
+   "E3_no_abstain": 0,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "2284.png-2",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "478.png-3",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "478.png-6",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "478.png-8",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "276.png-4",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "276.png-5",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "276.png-8",
+   "category": "foodChainsWebs",
+   "E2": 0,
+   "E3": 0,
+   "E3_abstained": 0,
+   "E3_no_abstain": 0,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "441.png-0",
+   "category": "lifeCycles",
+   "E2": 0,
+   "E3": 0,
+   "E3_abstained": 0,
+   "E3_no_abstain": 0,
+   "query_status": "answered",
+   "graph_used": 1
+  },
+  {
+   "qid": "624.png-1",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "634.png-0",
+   "category": "lifeCycles",
+   "E2": 0,
+   "E3": 0,
+   "E3_abstained": 0,
+   "E3_no_abstain": 0,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "4168.png-1",
+   "category": "rockCycle",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "4168.png-2",
+   "category": "rockCycle",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "704.png-0",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "704.png-2",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "704.png-3",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 0,
+   "E3_abstained": 0,
+   "E3_no_abstain": 0,
+   "query_status": "answered",
+   "graph_used": 1
+  },
+  {
+   "qid": "2014.png-11",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "2014.png-3",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "2014.png-2",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "2499.png-1",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "2499.png-2",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "1317.png-3",
+   "category": "photosynthesisRespiration",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "2380.png-2",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "2380.png-4",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "1840.png-4",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "1840.png-11",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "1840.png-7",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 1
+  },
+  {
+   "qid": "2238.png-0",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "2068.png-2",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "2068.png-5",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "2068.png-1",
+   "category": "foodChainsWebs",
+   "E2": 0,
+   "E3": 0,
+   "E3_abstained": 0,
+   "E3_no_abstain": 0,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "2062.png-1",
+   "category": "foodChainsWebs",
+   "E2": 0,
+   "E3": 0,
+   "E3_abstained": 0,
+   "E3_no_abstain": 0,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "2062.png-3",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "2062.png-7",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "2286.png-0",
+   "category": "lifeCycles",
+   "E2": 0,
+   "E3": 0,
+   "E3_abstained": 0,
+   "E3_no_abstain": 0,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "2124.png-6",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "2124.png-5",
+   "category": "foodChainsWebs",
+   "E2": 0,
+   "E3": 0,
+   "E3_abstained": 0,
+   "E3_no_abstain": 0,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "2124.png-3",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "2420.png-2",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "2420.png-0",
+   "category": "lifeCycles",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "unknown_entity",
+   "graph_used": 0
+  },
+  {
+   "qid": "4155.png-0",
+   "category": "rockCycle",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "4155.png-2",
+   "category": "rockCycle",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "19.png-6",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "19.png-12",
+   "category": "foodChainsWebs",
+   "E2": 0,
+   "E3": 0,
+   "E3_abstained": 0,
+   "E3_no_abstain": 0,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "19.png-7",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "500.png-5",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "500.png-1",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "500.png-8",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "1966.png-4",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "1966.png-5",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "1966.png-7",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "24.png-0",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "not_structural",
+   "graph_used": 0
+  },
+  {
+   "qid": "24.png-4",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "24.png-3",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "answered",
+   "graph_used": 0
+  },
+  {
+   "qid": "1898.png-2",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "1898.png-3",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "1898.png-8",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "874.png-1",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "874.png-9",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "874.png-0",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "abstained",
+   "graph_used": 0
+  },
+  {
+   "qid": "282.png-2",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "282.png-11",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  },
+  {
+   "qid": "282.png-4",
+   "category": "foodChainsWebs",
+   "E2": 1,
+   "E3": 1,
+   "E3_abstained": 0,
+   "E3_no_abstain": 1,
+   "query_status": "no_option_match",
+   "graph_used": 0
+  }
+ ],
+ "note": "Explanations and question text are not included (AI2D licence)."
+}

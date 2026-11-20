@@ -278,7 +278,7 @@ these mostly non-structural questions it does not beat it either.
 Limitations: development set (the changes were chosen on these diagrams); single run; no significance test on
 pointing yet.
 
-## 4. Next fixes (dev set, in progress)
+## 4. Next fixes (dev set)
 
 ### Hiding unreliable boxes (x3)
 
@@ -334,3 +334,32 @@ questions fall back to E2. Detection runs in about 1.2 s per image on CPU.
 The final numbers come from 100 fresh AI2D test diagrams (127 questions, none from the dev set):
 `python scripts/evaluate_grounding.py --tag v2d --n-parts 60 --n-flow 40 --exclude external/grounding_runs/dev_ids.txt`,
 or on a Colab T4 with `notebooks/colab_eval_grounding.ipynb`. Output: `results/grounding_eval_v2d_x3_test.json`.
+
+## 5. Fresh test set (final numbers for the current system)
+
+100 AI2D test diagrams never used during development (60 "parts of", 40 with arrows; 831 annotated part
+locations; 127 questions), same sampling rule and seed as the dev set with the dev diagrams excluded. Both
+StudyLens runs were on a Colab T4 (Qwen in fp16; the dev runs used bf16 on an Apple M4).
+
+| | StudyLens, Qwen's arrow list (v2) | **StudyLens, arrow detector (v2d)** | B2 |
+|---|---|---|---|
+| Pointing accuracy | 58.7% (242 / 412) | 57.3% (227 / 396) | **60.7%** (272 / 448) |
+| Coverage (of 831) | 29.1% | 27.3% | **32.6%** |
+| Cited arrows that are gold | 36.8% (74 / 201) | **77.3%** (75 / 97) | n/a |
+| Invented references | 0 | 0 | 18 |
+| Multiple choice, E3 / E2 | 89.8% / 90.6% (p = 1.0) | 90.6% / 90.6% (p = 1.0) | n/a |
+| Answered by the graph query | 21 | 12 | n/a |
+
+Results: `results/grounding_eval_v2_x3_test.json` and `results/grounding_eval_v2d_x3_test.json`.
+
+What holds on new diagrams:
+- **Arrows.** The detector cites as many gold arrows as the VLM's list (75 vs 74) with a fifth as many wrong
+  ones (22 vs 127): 77% of cited arrows are gold, higher than on the dev set (66%).
+- **No invented references** (B2 names 18 parts that are not in the image).
+
+What does not hold:
+- **Pointing.** The dev-set lead over B2 (68.5% vs 65.3%) becomes a 3-point deficit (57.3% vs 60.7%), and
+  coverage is lower. The box-hiding rule and other fixes were chosen on the dev diagrams, so the dev number
+  was optimistic. v2 vs v2d pointing (58.7% vs 57.3%) is within noise.
+- **Multiple choice.** E3 ties E2; the graph answers few AI2D questions (12–21 of 127), so it cannot move
+  accuracy much on this benchmark.
